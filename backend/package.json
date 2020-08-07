@@ -1,0 +1,28 @@
+{
+  "name": "vikingreviews",
+  "version": "1.0.0",
+  "description": "A course review website specifically made for Lawrence University students.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanguyen-vn/vikingreviews.git"
+  },
+  "author": "Hikari Mine, Kiet Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kanguyen-vn/vikingreviews/issues"
+  },
+  "homepage": "https://github.com/kanguyen-vn/vikingreviews#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "joi": "^17.2.0",
+    "joi-objectid": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.27",
+    "winston": "^3.3.3"
+  }
+}
