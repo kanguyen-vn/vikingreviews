@@ -43,4 +43,4 @@ function validateCourse(course) {
 }
 
 exports.Course = Course;
-exports.validate = validateCourse;
+exports.validateCourse = validateCourse;
