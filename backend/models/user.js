@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 5,
         maxlength: 255,
-        unique: true
+        unique: true,
+        match: /@lawrence.edu$/
     },
     password: { // API???
         type: String,
@@ -49,7 +50,7 @@ const User = mongoose.model('User', userSchema);
 function validateUser(user) {
     const schema = Joi.object({
         name: Joi.string().min(5).max(50).required(),
-        email: Joi.string().min(5).max(255).required().email(),
+        email: Joi.string().min(5).max(255).required().email().regex(/@lawrence.edu$/),
         password: Joi.string().min(5).max(255).required(),
         class: Joi.number().min(1900).required(),
         major: Joi.string().min(5).max(255).required(),
