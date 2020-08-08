@@ -1,3 +1,4 @@
 {
-    "jwtPrivateKey": ""
+    "jwtPrivateKey": "test",
+    "db": "mongodb+srv://<username>:<password>@vr-cluster.9eqgk.mongodb.net/<database>?retryWrites=true&w=majority"
 }
