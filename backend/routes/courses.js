@@ -27,7 +27,7 @@ router.post('/', [auth, admin, validate(validateCourse)], async (req, res) => {
     res.send(course);
 });
 
-router.put('/:id', [validateObjectId, validate(validateCourse)], async (req, res) => {
+router.put('/:id', [auth, admin, validateObjectId, validate(validateCourse)], async (req, res) => {
     const department = await Department.findById(req.body.department);
     if (!department) return res.status(400).send('Invalid department.');
 
