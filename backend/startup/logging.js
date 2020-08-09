@@ -1,5 +1,6 @@
 const winston = require('winston');
-// require('winston-mongodb');
+const config = require('config');
+require('winston-mongodb');
 require('express-async-errors');
 
 module.exports = function () {
@@ -12,8 +13,8 @@ module.exports = function () {
     });
 
     winston.add(new winston.transports.File({ filename: 'logs/logfile.log' }));
-    // winston.add(winston.transports.MongoDB, { 
-    //   db: 'mongodb://localhost/vidly',
-    //   level: 'info'
-    // });  
+    winston.add(winston.transports.MongoDB, { 
+        db: config.get('db'),
+        level: 'info'
+    });  
 }
