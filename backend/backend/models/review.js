@@ -70,4 +70,4 @@ function validateReview(review) {
 }
 
 exports.Review = Review;
-exports.validateReview = validateReview;
+exports.validate = validateReview;
