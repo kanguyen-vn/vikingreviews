@@ -1,4 +1,5 @@
 const express = require('express');
+const departments = require('../routes/departments');
 const courses = require('../routes/courses');
 const users = require('../routes/users');
 const reviews = require('../routes/reviews');
