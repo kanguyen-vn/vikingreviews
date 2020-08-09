@@ -1,5 +1,7 @@
 const { Course, validateCourse } = require('../models/course');
 const validate = require('../middleware/validate');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const { Department } = require('../models/department');
 const express = require('express');
 const router = express.Router();
@@ -9,7 +11,7 @@ router.get('/', async (req, res) => {
     res.send(courses);
 });
 
-router.post('/', validate(validateCourse), async (req, res) => {
+router.post('/', [auth, admin, validate(validateCourse)], async (req, res) => {
     const department = await Department.findById(req.body.department);
     if (!department) return res.status(400).send('Invalid department.');
 
