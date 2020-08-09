@@ -12,12 +12,12 @@ const departmentSchema = new mongoose.Schema({
 
 const Department = mongoose.model('Department', departmentSchema);
 
-function validateDepartment(dep) {
-    const schema = {
+function validateDepartment(department) {
+    const schema = Joi.object({
         name: Joi.string().min(5).max(255).required()
-    };
+    });
 
-    return Joi.validate(department, schema);
+    return schema.validate(department);
 }
 
 exports.departmentSchema = departmentSchema;

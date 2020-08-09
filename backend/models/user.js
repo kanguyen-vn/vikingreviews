@@ -1,9 +1,7 @@
-const config = require('config');
+const config = require('config'); // configuration
 const jwt = require('jsonwebtoken');
-const Joi = require('joi');
-const mongoose = require('mongoose');
-
-//var maxYear = new Date().getFullYear + 5;
+const Joi = require('joi'); // validation
+const mongoose = require('mongoose'); // mongoDb
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -37,7 +35,10 @@ const userSchema = new mongoose.Schema({
         minlength: 5,
         maxlength: 255
     },
-    isAdmin: Boolean
+    isAdmin: {
+        type: Boolean,
+        required: true
+    }
 });
 
 userSchema.methods.generateAuthToken = function () {
@@ -54,6 +55,7 @@ function validateUser(user) {
         password: Joi.string().min(5).max(255).required(),
         class: Joi.number().min(1900).required(),
         major: Joi.string().min(5).max(255).required(),
+        isAdmin: Joi.bool().required()
     });
 
     return schema.validate(user);

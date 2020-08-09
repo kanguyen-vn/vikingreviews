@@ -5,20 +5,17 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    const courses = await Course.find().sort('name');
+    const courses = await Course.find().sort('title');
     res.send(courses);
 });
 
 router.post('/', validate(validateCourse), async (req, res) => {
-    const department = await Department.findById(req.body.departmentId);
+    const department = await Department.findById(req.body.department);
     if (!department) return res.status(400).send('Invalid department.');
 
     const course = new Course({
         title: req.body.title,
-        department: {
-            _id: department._id,
-            name: department.name
-        },
+        department: req.body.department,
         units: req.body.units,
         user: req.body.user
     });
@@ -28,16 +25,13 @@ router.post('/', validate(validateCourse), async (req, res) => {
 });
 
 router.put('/:id', validate(validateCourse), async (req, res) => {
-    const department = await Department.findById(req.body.departmentId);
+    const department = await Department.findById(req.body.department);
     if (!department) return res.status(400).send('Invalid department.');
 
     const course = await Course.findByIdAndUpdate(req.params.id,
         {
             title: req.body.title,
-            department: {
-                _id: department._id,
-                name: department.name
-            },
+            department: req.body.department,
             units: req.body.units,
             user: req.body.user
         }, { new: true });
