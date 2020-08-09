@@ -43,4 +43,8 @@ function validateCourse(course) {
 }
 
 exports.Course = Course;
+<<<<<<< HEAD
 exports.validateCourse = validateCourse;
+=======
+exports.validate = validateCourse;
+>>>>>>> parent of 42b6f72... Added routes for courses, departments, fixed some bugs, database now works preliminarily
