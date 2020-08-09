@@ -11,22 +11,14 @@ router.get('/', async (req, res) => {
     res.send(departments);
 });
 
-<<<<<<< HEAD
 router.post('/', [auth, admin, validate(validateDepartment)], async (req, res) => {
-=======
-router.post('/', [auth, validate(validateDepartment)], async (req, res) => {
->>>>>>> 4579e3c266e1e4d962386b99d1f6250d363104bf
     let department = new Department({ name: req.body.name });
     department = await department.save();
 
     res.send(department);
 });
 
-<<<<<<< HEAD
 router.put('/:id', [admin, validateObjectId, validate(validateDepartment)], async (req, res) => {
-=======
-router.put('/:id', [validateObjectId, validate(validateDepartment)], async (req, res) => {
->>>>>>> 4579e3c266e1e4d962386b99d1f6250d363104bf
     const department = await Department.findByIdAndUpdate(req.params.id, { name: req.body.name }, {
         new: true
     });

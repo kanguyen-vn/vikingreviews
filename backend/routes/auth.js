@@ -1,10 +1,9 @@
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
-const _ = require('lodash');
 const validate = require('../middleware/validate');
 const { User } = require('../models/user');
 const express = require('express');
-const winston = require('winston/lib/winston/config');
+// const winston = require('winston/lib/winston/config');
 const router = express.Router();
 
 function validateUser(req) {
