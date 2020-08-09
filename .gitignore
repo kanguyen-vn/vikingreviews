@@ -1,2 +1,5 @@
 backend/node_modules/
+frontend/node_modules/
 backend/logs/
+frontend/logs/
+backend/config/default.json
