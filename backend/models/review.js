@@ -46,11 +46,15 @@ const reviewSchema = new mongoose.Schema({
     dislikes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+<<<<<<< HEAD
     }],
     original: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Review'
     }
+=======
+    }]
+>>>>>>> 2fdb931d0316dcc7e1834b68927bed314e472ba7
 });
 
 const Review = mongoose.model('Review', reviewSchema);
@@ -67,8 +71,12 @@ function validateReview(review) {
         user: Joi.objectId().required(),
         time: Joi.array().items(Joi.date().required()),
         likes: Joi.array().items(Joi.objectId()),
+<<<<<<< HEAD
         dislikes: Joi.array().items(Joi.objectId()),
         original: Joi.objectId()
+=======
+        dislikes: Joi.array().items(Joi.objectId())
+>>>>>>> 2fdb931d0316dcc7e1834b68927bed314e472ba7
     });
 
     return schema.validate(review);

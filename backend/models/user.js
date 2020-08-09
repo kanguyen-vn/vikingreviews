@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
         unique: true,
         match: /@lawrence.edu$/
     },
-    password: { // API???
+    password: {
         type: String,
         required: true,
         minlength: 5,

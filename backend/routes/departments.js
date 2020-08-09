@@ -18,7 +18,7 @@ router.post('/', [auth, admin, validate(validateDepartment)], async (req, res) =
     res.send(department);
 });
 
-router.put('/:id', [admin, validateObjectId, validate(validateDepartment)], async (req, res) => {
+router.put('/:id', [auth, admin, validateObjectId, validate(validateDepartment)], async (req, res) => {
     const department = await Department.findByIdAndUpdate(req.params.id, { name: req.body.name }, {
         new: true
     });
