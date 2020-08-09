@@ -1,5 +1,5 @@
-const winston = require('winston');
-const express = require('express');
+const winston = require('winston'); // logging
+const express = require('express'); // HTTP requests or API
 const app = express();
 
 require('./startup/logging')();
