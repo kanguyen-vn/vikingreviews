@@ -1,14 +1,8 @@
 const auth = require('../middleware/auth');
-<<<<<<< HEAD
-=======
-const jwt = require('jsonwebtoken');
-const config = require('config');
->>>>>>> parent of 42b6f72... Added routes for courses, departments, fixed some bugs, database now works preliminarily
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { User, validateUser } = require('../models/user');
 const validate = require('../middleware/validate');
-// const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
