@@ -110,5 +110,9 @@ exports.validateReview = validateReview;
 }
 
 exports.Review = Review;
+<<<<<<< HEAD
 exports.validateReview = validateReview;
 >>>>>>> 4579e3c266e1e4d962386b99d1f6250d363104bf
+=======
+exports.validate = validateReview;
+>>>>>>> parent of 42b6f72... Added routes for courses, departments, fixed some bugs, database now works preliminarily

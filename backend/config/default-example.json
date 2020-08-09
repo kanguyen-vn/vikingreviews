@@ -1,4 +1,4 @@
 {
-    "jwtPrivateKey": "",
+    "jwtPrivateKey": "test",
     "db": "mongodb+srv://<username>:<password>@..."
 }
