@@ -8,7 +8,7 @@ const router = express.Router();
 
 function validateUser(req) {
     const schema = Joi.object({
-        email: Joi.string().min(5).max(255).required().email(),
+        email: Joi.string().min(5).max(255).required().email().regex(/@lawrence.edu$/),
         password: Joi.string().min(5).max(255).required()
     });
 

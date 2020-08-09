@@ -1,6 +1,9 @@
 const { Review, validateReview } = require('../models/review');
 const validate = require('../middleware/validate');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const { Course } = require('../models/course');
+const validateObjectId = require('../middleware/validateObjectId');
 const express = require('express');
 const router = express.Router();
 
@@ -25,14 +28,13 @@ router.post('/', validate(validateReview), async (req, res) => {
         time: [ req.body.time ],
         likes: [],
         dislikes: [],
-        original: null
     });
     await review.save();
 
     res.send(review);
 });
 
-router.put('/:id', validate(validateReview), async (req, res) => {
+router.put('/:id', [validateObjectId, validate(validateReview)], async (req, res) => {
     const review = await Review.findById(req.params.id);
     if (!review) return res.status(400).send('Invalid review.');
 
@@ -41,15 +43,15 @@ router.put('/:id', validate(validateReview), async (req, res) => {
             $push: {
                 content: req.body.content,
                 rating: req.body.rating, 
-                likes: req.body.likes,
-                dislikes: req.body.dislikes,
+                likes: req.body.like,
+                dislikes: req.body.dislike,
             }
         }, { new: true });
 
     res.send(review);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [auth, admin, validateObjectId], async (req, res) => {
     const review = await Review.findByIdAndRemove(req.params.id);
 
     if (!review) return res.status(404).send('The review with the given ID was not found.');
@@ -57,7 +59,7 @@ router.delete('/:id', async (req, res) => {
     res.send(review);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
     const review = await Course.findById(req.params.id);
 
     if (!review) return res.status(404).send('The review with the given ID was not found.');

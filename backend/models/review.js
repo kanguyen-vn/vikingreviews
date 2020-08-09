@@ -46,11 +46,7 @@ const reviewSchema = new mongoose.Schema({
     dislikes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }],
-    original: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Review'
-    }
+    }]
 });
 
 const Review = mongoose.model('Review', reviewSchema);
@@ -67,8 +63,7 @@ function validateReview(review) {
         user: Joi.objectId().required(),
         time: Joi.array().items(Joi.date().required()),
         likes: Joi.array().items(Joi.objectId()),
-        dislikes: Joi.array().items(Joi.objectId()),
-        original: Joi.objectId()
+        dislikes: Joi.array().items(Joi.objectId())
     });
 
     return schema.validate(review);
