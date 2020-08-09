@@ -75,8 +75,4 @@ function validateReview(review) {
 }
 
 exports.Review = Review;
-<<<<<<< HEAD
 exports.validateReview = validateReview;
-=======
-exports.validate = validateReview;
->>>>>>> parent of 42b6f72... Added routes for courses, departments, fixed some bugs, database now works preliminarily
