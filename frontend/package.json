@@ -9,8 +9,15 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "author": "@hikarimn",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanguyen-vn/vikingreviews.git"
+  },
+  "author": "Hikari Mine, Kiet Nguyen",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kanguyen-vn/vikingreviews/issues"
+  },
   "dependencies": {
     "fontsource-roboto": "^3.0.3",
     "react": "^16.13.1",
