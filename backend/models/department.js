@@ -22,4 +22,4 @@ function validateDepartment(department) {
 
 exports.departmentSchema = departmentSchema;
 exports.Department = Department;
-exports.validateDepartment = validateDepartment;
+exports.validate = validateDepartment;
