@@ -1,20 +1,17 @@
 const auth = require('../middleware/auth');
-// const jwt = require('jsonwebtoken');
-// const config = require('config');
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { User, validateUser } = require('../models/user');
 const validate = require('../middleware/validate');
-// const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
-router.get('/me', auth, async (req, res) => {
+router.get('/me', auth, async (req, res) => { // localhost:3000/api/users/me
     const user = await User.findById(req.user._id).select('-password');
     res.send(user);
 });
 
-router.post('/', validate(validateUser), async (req, res) => {
+router.post('/', validate(validateUser), async (req, res) => { // localhost:3000/api/users
     let user = await User.findOne({ email: req.body.email });
     if (user) return res.status(400).send('User is already registered.');
 

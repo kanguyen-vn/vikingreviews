@@ -4,8 +4,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 
 module.exports = function(app) {
-	app.use(helmet());
+	app.use(helmet()); // encrypt the jwt
     app.use(compression());
-    app.use(morgan('dev'));
+    app.use(morgan('dev')); // log HTTP requests
     app.use(cors())
 }
