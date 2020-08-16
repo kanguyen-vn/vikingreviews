@@ -8,7 +8,8 @@ import {
   IconButton,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Link } from "react-router-dom";
+import LogInDialog from "./LogInDialog";
+import SignUpDialog from "./SignUpDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,30 +21,53 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  barStyles: {
+    backgroundColor: "#1769aa",
+  },
 }));
 
 const ButtonAppBar = () => {
   const classes = useStyles();
 
+  const [openLogIn, setOpenLogIn] = React.useState(false);
+  const [openSignUp, setOpenSignUp] = React.useState(false);
+
+  const handleOpen = (type) => () => {
+    if (type === "logIn") setOpenLogIn(true);
+    else setOpenSignUp(true);
+  };
+
+  const handleClose = (type) => () => {
+    if (type === "logIn") setOpenLogIn(false);
+    else setOpenSignUp(false);
+  };
+
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.barStyles}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography variant="h6" className={classes.title}>
             Viking Reviews
           </Typography>
-          <Link to="/login">
-            <Button color="inherit">Login</Button>
-          </Link>
-          <Button color="inherit">Sign Up</Button>
+          <Button color="inherit" onClick={handleOpen("logIn")}>
+            Login
+          </Button>
+          <LogInDialog onClose={handleClose("logIn")} openState={openLogIn} />
+          <Button color="inherit" onClick={handleOpen("signUp")}>
+            Sign Up
+          </Button>
+          <SignUpDialog
+            onClose={handleClose("signUp")}
+            openState={openSignUp}
+          />
         </Toolbar>
       </AppBar>
     </div>

@@ -5,8 +5,6 @@ import NotFound from "./routes/NotFound";
 import AppBar from "./components/AppBar";
 
 class App extends Component {
-    
-
   render() {
     return (
       <main>
