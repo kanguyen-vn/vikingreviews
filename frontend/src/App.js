@@ -1,22 +1,24 @@
-import React from 'react'
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import Home from './Home'
-import GenericNotFound from './GenericNotFound'
+import React, { Component } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
+import Home from "./routes/Home";
+import NotFound from "./routes/NotFound";
+import AppBar from "./components/AppBar";
 
-function App() {
+class App extends Component {
+    
+
+  render() {
     return (
-        <main>
-            <BrowserRouter>
-
-            <Switch>
-                <Route path="/" component={Home} exact />
-                <Route path="/404" component={GenericNotFound} />
-                <Redirect to="/404" />
-            </Switch>
-            </BrowserRouter>
-
-        </main>
-    )
+      <main>
+        <AppBar />
+        <Switch>
+          <Route path="/404" component={NotFound} />
+          <Route path="/" component={Home} exact />
+          <Redirect to="/404" />
+        </Switch>
+      </main>
+    );
+  }
 }
 
 export default App;
