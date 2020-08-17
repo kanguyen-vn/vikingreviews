@@ -31,57 +31,59 @@ const Home = () => {
         alignItems="center"
         direction="row"
       >
-        <Grid item xs={1} sm={3} />
-        <Grid
-          container
-          className="lol"
-          justify="center"
-          alignItems="stretch"
-          direction="column"
-        >
-          <Typography variant="h3" gutterBottom>
-            Search by{" "}
-            {
-              <TextLoop className="searchBy">
-                <span>department:</span>
-                <span>course:</span>
-                <span>professor:</span>
-              </TextLoop>
-            }
-          </Typography>
-          <TextField
-            xs={10}
-            sm={6}
-            className={classes.margin}
-            id="input-with-icon-textfield"
-            variant="outlined"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
+        <Grid item xs={1} sm={4} />
+        <Grid item xs={10} sm={4}>
           <Grid
             container
-            direction="row"
-            justify="space-evenly"
-            alignItems="center"
+            className="lol"
+            justify="flex-start"
+            alignItems="stretch"
+            direction="column"
           >
-            <Button variant="contained" color="primary">
-              Search
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<BarChartIcon />}
+            <Typography variant="h3" gutterBottom>
+              Search by{" "}
+              {
+                <TextLoop className="searchBy">
+                  <span>department:</span>
+                  <span>course:</span>
+                  <span>professor:</span>
+                </TextLoop>
+              }
+            </Typography>
+            <TextField
+              xs={10}
+              sm={6}
+              className={classes.margin}
+              id="input-with-icon-textfield"
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Grid
+              container
+              direction="row"
+              justify="space-evenly"
+              alignItems="center"
             >
-              See statistics
-            </Button>
+              <Button variant="contained" color="primary">
+                Search
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<BarChartIcon />}
+              >
+                See stats
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={1} sm={3} />
+        <Grid item xs={1} sm={4} />
       </Grid>
     </div>
   );
