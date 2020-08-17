@@ -3,8 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./routes/Home";
 import NotFound from "./routes/NotFound";
 import AppBar from "./components/AppBar";
-import LogInDialog from "./components/LogInDialog";
-import SignUpDialog from "./components/SignUpDialog";
+import EditReview from "./routes/EditReview"
 
 
 class App extends Component {
@@ -15,7 +14,8 @@ class App extends Component {
         <Switch>
             <Route path="/" component={Home} exact />
             <Route path="/404" component={NotFound} />
-            <Route path="/dashboard" />
+            <Route path="/edit/review" component = {EditReview} />
+            <Route path="/edit/profile" component = {EditReview} />
             <Route path="/classes" />
             <Redirect to="/404" />
         </Switch>
