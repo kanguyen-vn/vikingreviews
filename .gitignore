@@ -2,5 +2,9 @@ backend/node_modules/
 frontend/node_modules/
 backend/logs/
 frontend/logs/
+<<<<<<< HEAD
+backend/config/default.json
+=======
 backend/config/default.json
 node_modules
+>>>>>>> b97afb87ce11b443ad327348290e8c775a2c2e41
