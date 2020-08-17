@@ -41,19 +41,19 @@ const ButtonAppBar = () => {
     if (type === "logIn") setOpenLogIn(false);
     else setOpenSignUp(false);
   };
-
+  
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.barStyles}>
         <Toolbar>
-          {/* <IconButton
+          <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
           >
             <MenuIcon />
-          </IconButton> */}
+          </IconButton>
           <Typography variant="h6" className={classes.title}>
             Viking Reviews
           </Typography>

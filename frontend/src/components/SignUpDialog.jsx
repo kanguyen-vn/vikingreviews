@@ -11,6 +11,10 @@ import {
   InputLabel,
   InputAdornment,
   IconButton,
+  Select,
+  MenuItem,
+  ListItemText,
+  Checkbox
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 
@@ -31,6 +35,19 @@ const SignUpDialog = ({ onClose, openState }) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const majors = [
+    'Oliver Hansen',
+    'Van Henry',
+    'April Tucker',
+    'Ralph Hubbard',
+    'Omar Alexander',
+    'Carlos Abbott',
+    'Miriam Wagner',
+    'Bradley Wilkerson',
+    'Virginia Andrews',
+    'Kelly Snyder',
+  ];
 
   const [selectedDate, handleDateChange] = useState(new Date().getFullYear());
 
@@ -70,6 +87,7 @@ const SignUpDialog = ({ onClose, openState }) => {
               </IconButton>
             </InputAdornment>
           }
+          fullWidth
         />
         <TextField
           autoFocus
