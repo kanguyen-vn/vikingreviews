@@ -13,6 +13,13 @@ import { Autocomplete } from "@material-ui/lab";
 import BarChartIcon from "@material-ui/icons/BarChart";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(3, 2),
+    height: 200,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
   margin: {
     margin: theme.spacing(1),
   },
@@ -23,69 +30,64 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   return (
-    <div className="home">
+    <Grid
+      container
+      className={classes.pageStyles}
+      justify="center"
+      alignItems="center"
+      direction="row"
+    >
       <Grid
+        item
+        xs={10}
+        sm={6}
         container
-        className={classes.pageStyles}
-        justify="center"
-        alignItems="center"
-        direction="row"
+        className="lol"
+        justify="flex-start"
+        alignItems="stretch"
+        direction="column"
       >
-        <Grid item xs={1} sm={4} />
-        <Grid item xs={10} sm={4}>
-          <Grid
-            container
-            className="lol"
-            justify="flex-start"
-            alignItems="stretch"
-            direction="column"
+        <Typography variant="h3" gutterBottom>
+          Search by{" "}
+          {
+            <TextLoop className="searchBy">
+              <span>department:</span>
+              <span>course:</span>
+              <span>professor:</span>
+            </TextLoop>
+          }
+        </Typography>
+        <TextField
+          className={classes.margin}
+          id="input-with-icon-textfield"
+          variant="outlined"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <Grid
+          container
+          direction="row"
+          justify="space-evenly"
+          alignItems="center"
+        >
+          <Button variant="contained" color="primary">
+            Search
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<BarChartIcon />}
           >
-            <Typography variant="h3" gutterBottom>
-              Search by{" "}
-              {
-                <TextLoop className="searchBy">
-                  <span>department:</span>
-                  <span>course:</span>
-                  <span>professor:</span>
-                </TextLoop>
-              }
-            </Typography>
-            <TextField
-              xs={10}
-              sm={6}
-              className={classes.margin}
-              id="input-with-icon-textfield"
-              variant="outlined"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Grid
-              container
-              direction="row"
-              justify="space-evenly"
-              alignItems="center"
-            >
-              <Button variant="contained" color="primary">
-                Search
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<BarChartIcon />}
-              >
-                See stats
-              </Button>
-            </Grid>
-          </Grid>
+            See stats
+          </Button>
         </Grid>
-        <Grid item xs={1} sm={4} />
       </Grid>
-    </div>
+    </Grid>
   );
 };
 
