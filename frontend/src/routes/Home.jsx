@@ -1,91 +1,91 @@
 import React from "react";
-import {
-  TextField,
-  InputAdornment,
-  Grid,
-  Typography,
-  Button,
-} from "@material-ui/core";
+import { TextField, Grid, Button, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
-import TextLoop from "react-text-loop";
 import { Autocomplete } from "@material-ui/lab";
-import BarChartIcon from "@material-ui/icons/BarChart";
+import Logo from "../components/common/Logo";
+import grey from "@material-ui/core/colors/grey";
 
 const useStyles = makeStyles((theme) => ({
   margin: {
-    margin: theme.spacing(1),
+    //margin: theme.spacing(1),
+    margin: "10px 0 0 0",
   },
-  pageStyles: {},
-  header: {},
+  pageStyles: {
+    height: "100vh",
+    background: theme.palette.secondary.main,
+  },
+  header: {
+    fontFamily: "Inter",
+    fontWeight: "bold",
+  },
+  textField: {
+    background: "white",
+    boxShadow: "5px 5px 0px 0px rgba(0,0,0,0.15)",
+    fontStyle: "italic",
+  },
+  button: {
+    boxShadow: "5px 5px 0px 0px rgba(0,0,0,0.15)",
+    fontFamily: "Inter",
+    fontWeight: "300",
+  },
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "white",
+  },
+  p: {
+    fontStyle: "italic",
+    color: grey[600],
+    fontSize: "85%",
+  },
 }));
 
 const Home = () => {
   const classes = useStyles();
   return (
-    <div className="home">
+    <Grid
+      container
+      className={classes.pageStyles}
+      justify="center"
+      alignItems="center"
+      direction="row"
+    >
       <Grid
+        item
+        xs={10}
+        sm={4}
         container
-        className={classes.pageStyles}
+        className="lol"
         justify="center"
-        alignItems="center"
-        direction="row"
+        alignItems="stretch"
+        direction="column"
       >
-        <Grid item xs={1} sm={4} />
-        <Grid item xs={10} sm={4}>
-          <Grid
-            container
-            className="lol"
-            justify="flex-start"
-            alignItems="stretch"
-            direction="column"
-          >
-            <Typography variant="h3" gutterBottom>
-              Search by{" "}
-              {
-                <TextLoop className="searchBy">
-                  <span>department:</span>
-                  <span>course:</span>
-                  <span>professor:</span>
-                </TextLoop>
-              }
-            </Typography>
-            <TextField
-              xs={10}
-              sm={6}
-              className={classes.margin}
-              id="input-with-icon-textfield"
-              variant="outlined"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Grid
-              container
-              direction="row"
-              justify="space-evenly"
-              alignItems="center"
-            >
-              <Button variant="contained" color="primary">
-                Search
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<BarChartIcon />}
-              >
-                See stats
-              </Button>
-            </Grid>
-          </Grid>
+        <Grid container type="row" justify="center">
+          <Logo />
         </Grid>
-        <Grid item xs={1} sm={4} />
+        <TextField
+          id="input-with-icon-textfield"
+          variant="outlined"
+          placeholder="Search for department, class, or professor..."
+          InputProps={{
+            className: classes.textField,
+            classes: {
+              notchedOutline: classes.notchedOutline,
+            },
+          }}
+        />
+        <p className={classes.p}>...or type "All" to compare all courses!</p>
+        <Grid container type="row" justify="center">
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            size="large"
+          >
+            Search
+          </Button>
+        </Grid>
       </Grid>
-    </div>
+    </Grid>
   );
 };
 
