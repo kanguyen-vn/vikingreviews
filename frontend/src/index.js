@@ -3,14 +3,32 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import "fontsource-roboto";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { BrowserRouter } from "react-router-dom";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#59b4fe",
+      contrastText: "#fff",
+    },
+    secondary: {
+      main: "#d5ecff",
+    },
+    typography: {
+      fontFamily: "Inter",
+      fontWeight: "700",
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
