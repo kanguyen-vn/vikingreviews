@@ -14,7 +14,7 @@ import {
   Select,
   MenuItem,
   ListItemText,
-  Checkbox
+  Checkbox,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 
@@ -37,16 +37,16 @@ const SignUpDialog = ({ onClose, openState }) => {
   };
 
   const majors = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
+    "Oliver Hansen",
+    "Van Henry",
+    "April Tucker",
+    "Ralph Hubbard",
+    "Omar Alexander",
+    "Carlos Abbott",
+    "Miriam Wagner",
+    "Bradley Wilkerson",
+    "Virginia Andrews",
+    "Kelly Snyder",
   ];
 
   const [selectedDate, handleDateChange] = useState(new Date().getFullYear());
