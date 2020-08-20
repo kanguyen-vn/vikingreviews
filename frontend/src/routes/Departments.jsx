@@ -1,13 +1,18 @@
 import React, { Component } from "react";
+import axios from "axios";
+
+const URI = "localhost:3001";
 
 class Departments extends Component {
   state = {
-    departments: [
-      { name: "Computer Science", _id: 1 },
-      { name: "Art History", _id: 2 },
-      { name: "Economics", _id: 3 },
-    ],
+    departments: [],
   };
+
+  async componentDidMount() {
+    const { departments } = await axios.get(URI + "/api/departments");
+    this.setState({ departments });
+  }
+
   render() {
     return this.state.departments.map((department) => (
       <ul>
