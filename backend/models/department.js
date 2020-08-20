@@ -1,23 +1,30 @@
-const Joi = require('joi'); // validation
-const mongoose = require('mongoose'); // mongoDB
+const Joi = require("joi"); // validation
+const mongoose = require("mongoose"); // mongoDB
 
 const departmentSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 255
-    }
+  code: {
+    type: String,
+    required: true,
+    minlength: 4,
+    maxlength: 4,
+  },
+  name: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 255,
+  },
 });
 
-const Department = mongoose.model('Department', departmentSchema);
+const Department = mongoose.model("Department", departmentSchema);
 
 function validateDepartment(department) {
-    const schema = Joi.object({
-        name: Joi.string().min(5).max(255).required()
-    });
+  const schema = Joi.object({
+    code: Joi.string().min(4).max(4).required(),
+    name: Joi.string().min(5).max(255).required(),
+  });
 
-    return schema.validate(department);
+  return schema.validate(department);
 }
 
 exports.departmentSchema = departmentSchema;
