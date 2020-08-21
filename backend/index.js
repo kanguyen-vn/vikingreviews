@@ -3,11 +3,11 @@ const express = require("express"); // HTTP requests or API
 const app = express();
 
 require("./startup/logging")();
+require("./startup/prod")(app);
 require("./startup/routes")(app);
 require("./startup/db")();
 require("./startup/config")();
 require("./startup/validation")();
-require("./startup/prod")(app);
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () =>

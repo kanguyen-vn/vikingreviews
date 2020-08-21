@@ -8,26 +8,23 @@ import Courses from "./routes/Courses";
 import MenuButton from "./components/MenuButton";
 
 class App extends Component {
+  addMenu = (Component, home = false) => () => (
+    <div>
+      <MenuButton home={home} />
+      <Component />
+    </div>
+  );
+
   render() {
     return (
       <main>
         <Switch>
-          <Route
-            exact
-            path="/"
-            component={() => (
-              <div>
-                <MenuButton home={true} />
-                <Home />
-              </div>
-            )}
-          />
-          <Route path="/" component={MenuButton} />
-          <Route path="/404" component={NotFound} />
-          <Route path="/edit/review" component={EditReview} />
-          <Route path="/edit/profile" component={EditReview} />
-          <Route path="/courses" component={Courses} />
-          <Route path="/departments" component={Departments} />
+          <Route exact path="/" component={this.addMenu(Home, true)} />
+          <Route path="/404" component={this.addMenu(NotFound)} />
+          <Route path="/review/edit" component={this.addMenu(EditReview)} />
+          <Route path="/profile/edit" component={this.addMenu(EditReview)} />
+          <Route path="/courses" component={this.addMenu(Courses)} />
+          <Route path="/departments" component={this.addMenu(Departments)} />
           <Redirect to="/404" />
         </Switch>
       </main>
