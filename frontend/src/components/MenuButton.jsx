@@ -3,7 +3,7 @@ import { TextField, Fade, Slide, Zoom } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
-import { SpeedDial, SpeedDialAction } from "@material-ui/lab";
+import { SpeedDial, SpeedDialAction, Autocomplete } from "@material-ui/lab";
 import {
   faSignInAlt,
   faSignOutAlt,
@@ -12,6 +12,15 @@ import {
   faCog,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SearchBar from "./SearchBar";
+
+const top100Films = [
+  { title: "The Shawshank Redemption", year: 1994 },
+  { title: "The Godfather", year: 1972 },
+  { title: "The Godfather: Part II", year: 1974 },
+  { title: "The Dark Knight", year: 2008 },
+  { title: "12 Angry Men", year: 1957 },
+];
 
 const useStyles = makeStyles((theme) => ({
   speedDial: {
@@ -70,7 +79,7 @@ const MenuButton = ({ token, home = false }) => {
     <>
       {!home && (
         <Slide in={open} direction="down" mountOnEnter>
-          <TextField
+          {/* <TextField
             className={classes.textFieldPosition}
             variant="outlined"
             placeholder="Search..."
@@ -80,7 +89,28 @@ const MenuButton = ({ token, home = false }) => {
                 notchedOutline: classes.notchedOutline,
               },
             }}
-          />
+          />*/}
+          <SearchBar home={false} />
+          {/* <Autocomplete
+            id="combo-box-demo"
+            className={classes.textFieldPosition}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            style={{ width: 300 }}
+            InputProps={{
+              classes: {
+                notchedOutline: classes.notchedOutline,
+              },
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder="Combo box"
+                variant="outlined"
+                className={classes.textField}
+              />
+            )}
+          /> */}
         </Slide>
       )}
       <SpeedDial

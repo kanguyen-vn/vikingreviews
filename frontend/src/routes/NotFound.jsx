@@ -22,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 16,
   },
   notFound: {
+    padding: "0 50px 0 50px",
+    textAlign: "center",
     fontWeight: 300,
     fontStyle: "italic",
     color: theme.palette.secondary.dark,
@@ -33,7 +35,15 @@ const useStyles = makeStyles((theme) => ({
   },
   errorIcon: {
     color: theme.palette.primary.main,
-    fontSize: "300px",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "100px",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "200px",
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "300px",
+    },
   },
 }));
 
@@ -51,23 +61,18 @@ const NotFound = () => {
       <Grid
         item
         xs={10}
-        sm={4}
+        sm={8}
+        md={6}
+        lg={4}
         container
         className={classes.paperStyles}
         justify="center"
         alignItems="center"
         direction="column"
       >
-        <Grid container type="row" justify="center">
-          <Typography className={classes.notFound} variant="h4">
-            This page has been taken over
-          </Typography>
-        </Grid>
-        <Grid container type="row" justify="center">
-          <Typography className={classes.notFound} variant="h4">
-            by river bugs.
-          </Typography>
-        </Grid>
+        <Typography className={classes.notFound} variant="h4">
+          This page has been taken over by river bugs.
+        </Typography>
         <Grid container type="row" justify="center">
           <ErrorIcon className={classes.errorIcon} />
         </Grid>

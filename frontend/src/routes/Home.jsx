@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Autocomplete } from "@material-ui/lab";
 import Logo from "../components/common/Logo";
 import grey from "@material-ui/core/colors/grey";
+import SearchBar from "../components/SearchBar";
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -15,8 +16,7 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.secondary.main,
   },
   header: {
-    fontFamily: "Inter",
-    fontWeight: "bold",
+    textAlign: "center",
   },
   textField: {
     background: "white",
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     borderColor: "white",
   },
   p: {
+    textAlign: "center",
     fontStyle: "italic",
     color: grey[600],
     fontSize: "85%",
@@ -54,25 +55,17 @@ const Home = () => {
         xs={10}
         sm={4}
         container
-        className="lol"
         justify="center"
         alignItems="stretch"
         direction="column"
       >
-        <Grid container type="row" justify="center">
+        <div className={classes.header}>
           <Logo />
-        </Grid>
-        <TextField
-          id="input-with-icon-textfield"
-          variant="outlined"
-          placeholder="Search for department, class, or professor..."
-          InputProps={{
-            className: classes.textField,
-            classes: {
-              notchedOutline: classes.notchedOutline,
-            },
-          }}
-        />
+        </div>
+        <div width="inherit">
+          <SearchBar home={true} />
+        </div>
+
         <p className={classes.p}>...or type "All" to compare all courses!</p>
         <Grid container type="row" justify="center">
           <Button
