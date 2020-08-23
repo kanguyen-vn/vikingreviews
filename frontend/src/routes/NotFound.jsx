@@ -1,16 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Button } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import ErrorIcon from "@material-ui/icons/Error";
-import { grey } from "@material-ui/core/colors";
 import { useHistory } from "react-router-dom";
+import StyledButton from "../components/common/StyledButton";
 
 const useStyles = makeStyles((theme) => ({
-  margin: {
-    //margin: theme.spacing(1),
-    margin: "10px 0 0 0",
-  },
   pageStyles: {
     height: "100vh",
     background: theme.palette.secondary.main,
@@ -22,18 +18,20 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 16,
   },
   notFound: {
-    fontWeight: 300,
+    padding: "0 50px 0 50px",
+    textAlign: "center",
+    fontWeight: 500,
     fontStyle: "italic",
     color: theme.palette.secondary.dark,
   },
-  button: {
-    boxShadow: "5px 5px 0px 0px rgba(0,0,0,0.15)",
-    fontFamily: "Inter",
-    fontWeight: 300,
-  },
   errorIcon: {
     color: theme.palette.primary.main,
-    fontSize: "300px",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "200px",
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "300px",
+    },
   },
 }));
 
@@ -51,35 +49,22 @@ const NotFound = () => {
       <Grid
         item
         xs={10}
-        sm={4}
+        sm={8}
+        md={6}
+        lg={4}
         container
         className={classes.paperStyles}
         justify="center"
         alignItems="center"
         direction="column"
       >
-        <Grid container type="row" justify="center">
-          <Typography className={classes.notFound} variant="h4">
-            This page has been taken over
-          </Typography>
-        </Grid>
-        <Grid container type="row" justify="center">
-          <Typography className={classes.notFound} variant="h4">
-            by river bugs.
-          </Typography>
-        </Grid>
+        <Typography className={classes.notFound} variant="h4">
+          This page has been taken over by river bugs.
+        </Typography>
         <Grid container type="row" justify="center">
           <ErrorIcon className={classes.errorIcon} />
         </Grid>
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.button}
-          size="large"
-          onClick={() => history.push("/")}
-        >
-          Back to Home
-        </Button>
+        <StyledButton text="Back to Home" onClick={() => history.push("/")} />
       </Grid>
     </Grid>
   );

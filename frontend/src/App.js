@@ -5,12 +5,12 @@ import NotFound from "./routes/NotFound";
 import EditReview from "./routes/EditReview";
 import Departments from "./routes/Departments";
 import Courses from "./routes/Courses";
-import MenuButton from "./components/MenuButton";
+import Menu from "./components/Menu";
 
 class App extends Component {
   addMenu = (Component, home = false) => () => (
     <div>
-      <MenuButton home={home} />
+      <Menu home={home} />
       <Component />
     </div>
   );
