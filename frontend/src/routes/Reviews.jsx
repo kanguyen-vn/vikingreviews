@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import useWindowDimensions from '../misc/useWindowDimensions';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -39,19 +40,19 @@ function createData(department_code, course_num, class_name, review_sum, overall
 
 const rows = [
   createData('CMSC', 150, 'intro to CS', 2, 4.3, 2, 2, 2),
-  createData('CMSC', 250, 'intro to CS 2', 2, 2.3, 2, 2, 2),
+  createData('ANTH', 374, ' IDenTITY AnD PLAce: DIAspOrA EXperIence In COmpArATIVe PerspecTIVe', 2, 2.3, 2, 2, 2),
   createData('CMSC', 410, ' Data Structures and Algorithm Analysis  Data Structures and Algorithm Analysis', 1, 4.3, 2, 1, 2),
   createData('CMSC', 510, 'Data Structures and Algorithm Analysis', 2, 2.3, 5, 2, 3),
   createData('ECON', 150, 'intro to ECON', 2, 4.3, 2, 2, 2),
-  createData('ECON', 250, 'intro to ECON', 2, 2.3, 2, 2, 2),
+  createData('ARHI', 205, ' VIKInGs TO VAULTInGs: ArT AnD ArchITecTUre Of MeDIeVAL NOrThern CULTUr', 1.3, 2.9, 2, 2.1, 2),
   createData('ENG', 452, 'Samuel Richardsons Clarissa and the #metoo Eighteenth Century', 1, 4.3, 1, 1, 2),
   createData('ENG', 410, 'Newtonian Lit: Chronicles of a Clockwork Universe', 2, 2.3, 5, 2, 3),
   createData('MUTH', 151, 'Music Fundamentals, Theory, and Analysis 1', 2, 4.3, 2, 2, 2),
-  createData('MUTH', 250, 'intro 2 to MUTH', 2, 2.3, 2, 2, 2),
+  createData('BIOL', 170, ' InTeGrATIVe BIOLOGY: EXperImenTAL DesIGn AnD STATIsTIc', 1, 2.3, 4.2, 4.2, 2.0),
   createData('MUTH', 699, 'Independent Study in Music Theory', 1, 4.1, 2, 1, 2),
   createData('MUTH', 402, 'Counterpoint in the Style of J.S. Bach II', 2, 2.3, 5, 2, 3),
   createData('MUTH', 152, 'Music Fundamentals, Theory, and Analysis 2', 2, 4.3, 2, 2, 2),
-  createData('MUTH', 251, 'intro 3 to MUTH', 2, 2.3, 2, 2, 2),
+  createData('ARHI', 251, 'The TrAnsfOrmATIOn Of The MODern CITY: TOKYO, SeOUL AnD ShAnGhAI (1860-1945)', 2, 2.3, 2, 2, 2),
   createData('MUTH', 698, 'Independent Study in Music Theory 2', 1, 4.1, 2, 1, 2),
   createData('MUTH', 401, 'Counterpoint in the Style of J.S. Bach III', 2, 2.3, 5, 2, 3),
 ];
@@ -139,7 +140,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-
 const useStyles = makeStyles((theme) => ({
   visuallyHidden: {
     border: 0,
@@ -167,8 +167,14 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 16,
   },
   tableStyles: {
-    height: "85vh",
-    width: '100vh',
+    height: "80vh",
+    [theme.breakpoints.down('md')]: {
+      width: '60vh',
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '130vh',
+    },
+    width: '130vh',
     background: "white",
     borderRadius: 16,
   },
@@ -216,7 +222,7 @@ export default function EnhancedTable() {
           <Table stickyHeader >
           <TableContainer
             className={classes.tableStyles}
-            
+  
           >
             <EnhancedTableHead
               classes={classes}
