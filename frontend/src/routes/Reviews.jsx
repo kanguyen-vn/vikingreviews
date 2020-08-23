@@ -44,7 +44,7 @@ const rows = [
   createData('CMSC', 410, ' Data Structures and Algorithm Analysis  Data Structures and Algorithm Analysis', 1, 4.3, 2, 1, 2),
   createData('CMSC', 510, 'Data Structures and Algorithm Analysis', 2, 2.3, 5, 2, 3),
   createData('ECON', 150, 'intro to ECON', 2, 4.3, 2, 2, 2),
-  createData('ARHI', 205, ' Vikings to Vaultings: ArT AnD ArchITecTUre Of MeDIeVAL NOrThern CULTUr', 1.3, 2.9, 2, 2.1, 2),
+  createData('ARHI', 205, ' Vikings to Vaultings: Art and Architecture of Medieval Northern Culture', 1.3, 2.9, 2, 2.1, 2),
   createData('ENG', 452, 'Samuel Richardsons Clarissa and the #metoo Eighteenth Century', 1, 4.3, 1, 1, 2),
   createData('ENG', 410, 'Newtonian Lit: Chronicles of a Clockwork Universe', 2, 2.3, 5, 2, 3),
   createData('MUTH', 151, 'Music Fundamentals, Theory, and Analysis 1', 2, 4.3, 2, 2, 2),
@@ -172,7 +172,7 @@ const useStyles = makeStyles((theme) => ({
     height: "80vh",
     [theme.breakpoints.between('xs', 'sm')]: {
       width: '30vh',
-      font: '12px',
+      font: '9px',
     },
     [theme.breakpoints.between('sm', 'md')]: {
       width: '55vh',
