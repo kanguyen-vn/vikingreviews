@@ -40,19 +40,19 @@ function createData(department_code, course_num, class_name, review_sum, overall
 
 const rows = [
   createData('CMSC', 150, 'intro to CS', 2, 4.3, 2, 2, 2),
-  createData('ANTH', 374, ' IDenTITY AnD PLAce: DIAspOrA EXperIence In COmpArATIVe PerspecTIVe', 2, 2.3, 2, 2, 2),
+  createData('ANTH', 374, ' Identity and Place: Diaspora Eeperience In Comparative Perspective', 2, 2.3, 2, 2, 2),
   createData('CMSC', 410, ' Data Structures and Algorithm Analysis  Data Structures and Algorithm Analysis', 1, 4.3, 2, 1, 2),
   createData('CMSC', 510, 'Data Structures and Algorithm Analysis', 2, 2.3, 5, 2, 3),
   createData('ECON', 150, 'intro to ECON', 2, 4.3, 2, 2, 2),
-  createData('ARHI', 205, ' VIKInGs TO VAULTInGs: ArT AnD ArchITecTUre Of MeDIeVAL NOrThern CULTUr', 1.3, 2.9, 2, 2.1, 2),
+  createData('ARHI', 205, ' Vikings to Vaultings: ArT AnD ArchITecTUre Of MeDIeVAL NOrThern CULTUr', 1.3, 2.9, 2, 2.1, 2),
   createData('ENG', 452, 'Samuel Richardsons Clarissa and the #metoo Eighteenth Century', 1, 4.3, 1, 1, 2),
   createData('ENG', 410, 'Newtonian Lit: Chronicles of a Clockwork Universe', 2, 2.3, 5, 2, 3),
   createData('MUTH', 151, 'Music Fundamentals, Theory, and Analysis 1', 2, 4.3, 2, 2, 2),
-  createData('BIOL', 170, ' InTeGrATIVe BIOLOGY: EXperImenTAL DesIGn AnD STATIsTIc', 1, 2.3, 4.2, 4.2, 2.0),
+  createData('BIOL', 170, ' Integrative BIOLOGY: EXperImenTAL DesIGn AnD STATIsTIc', 1, 2.3, 4.2, 4.2, 2.0),
   createData('MUTH', 699, 'Independent Study in Music Theory', 1, 4.1, 2, 1, 2),
   createData('MUTH', 402, 'Counterpoint in the Style of J.S. Bach II', 2, 2.3, 5, 2, 3),
   createData('MUTH', 152, 'Music Fundamentals, Theory, and Analysis 2', 2, 4.3, 2, 2, 2),
-  createData('ARHI', 251, 'The TrAnsfOrmATIOn Of The MODern CITY: TOKYO, SeOUL AnD ShAnGhAI (1860-1945)', 2, 2.3, 2, 2, 2),
+  createData('ARHI', 251, 'The Transformation Of The MODern CITY: TOKYO, SeOUL AnD ShAnGhAI (1860-1945)', 2, 2.3, 2, 2, 2),
   createData('MUTH', 698, 'Independent Study in Music Theory 2', 1, 4.1, 2, 1, 2),
   createData('MUTH', 401, 'Counterpoint in the Style of J.S. Bach III', 2, 2.3, 5, 2, 3),
 ];
@@ -86,16 +86,17 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: 'department_code', numeric: false, disablePadding: true, label: 'Department' },
-  { id: 'course_num', numeric: true, disablePadding: false, label: 'Course#' },
-  { id: 'class_name', numeric: true, disablePadding: false, label: 'Name' },
-  { id: 'overall', numeric: true, disablePadding: false, label: 'Overall' },
-  { id: 'workload', numeric: true, disablePadding: false, label: 'Workload' },
-  { id: 'enthusiasm', numeric: true, disablePadding: false, label: 'Enthusiasm' },
-  { id: 'textbook', numeric: true, disablePadding: false, label: 'Textbook' },
+  { id: 'course_num', numeric: true, disablePadding: true, label: 'Course#' },
+  { id: 'class_name', numeric: true, disablePadding: true, label: 'Name' },
+  { id: 'overall', numeric: true, disablePadding: true, label: 'Overall' },
+  { id: 'workload', numeric: true, disablePadding: true, label: 'Workload' },
+  { id: 'enthusiasm', numeric: true, disablePadding: true, label: 'Enthusiasm' },
+  { id: 'textbook', numeric: true, disablePadding: true, label: 'Textbook Usage' },
 ];
 
 function EnhancedTableHead(props) {
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { height, width } = useWindowDimensions();
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -158,6 +159,7 @@ const useStyles = makeStyles((theme) => ({
   },
   pageStyles: {
     height: "100vh",
+    weight: '100vh',
     background: theme.palette.secondary.main,
   },
   paperStyles: {
@@ -168,13 +170,23 @@ const useStyles = makeStyles((theme) => ({
   },
   tableStyles: {
     height: "80vh",
-    [theme.breakpoints.down('md')]: {
-      width: '60vh',
+    [theme.breakpoints.between('xs', 'sm')]: {
+      width: '30vh',
+      font: '12px',
     },
-    [theme.breakpoints.up('lg')]: {
-      width: '130vh',
+    [theme.breakpoints.between('sm', 'md')]: {
+      width: '55vh',
     },
-    width: '130vh',
+    [theme.breakpoints.between('md', 'lg')]: {
+      width: '80vh',
+    },
+    [theme.breakpoints.between('lg', 'xl')]: {
+      width: '115vh',
+    },
+    [theme.breakpoints.up('xl')]: {
+      width: '140vh',
+    },
+    // width: '130vh',
     background: "white",
     borderRadius: 16,
   },
@@ -184,7 +196,8 @@ export default function EnhancedTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
-
+  const { height, width } = useWindowDimensions();
+  console.log(width);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -219,47 +232,49 @@ export default function EnhancedTable() {
           justify='center'
           direction='row'
         >
-          <Table stickyHeader >
-          <TableContainer
-            className={classes.tableStyles}
-  
-          >
-            <EnhancedTableHead
-              classes={classes}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .map((row, index) => {
-                  const labelId = `enhanced-table-checkbox-${index}`;
+          <Table stickyHeader size="small">
+            <TableContainer
+              className={classes.tableStyles}
 
-                  return (
-                    <TableRow // !!!!!!!!!! do not change this !!!!!!!!!!!!!!!!!! 
-                      hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.name}
-                    >
+            >
+              <EnhancedTableHead
+                classes={classes}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {stableSort(rows, getComparator(order, orderBy))
+                  .map((row, index) => {
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                      <TableCell align='center' component="th" id={labelId} scope="row" padding="none">
-                        {row.department_code}
-                      </TableCell>
-                      <TableCell align="center">{row.course_num}</TableCell>
-                      <TableCell align="right">{row.class_name}</TableCell>
-                      <TableCell align="center">{row.overall}</TableCell>
-                      <TableCell align="center">{row.workload}</TableCell>
-                      <TableCell align="center">{row.enthusiasm}</TableCell>
-                      <TableCell align="center">{row.textbook}</TableCell>
-                    </TableRow>
-                  );
-                })}
+                    return (
+                      <TableRow // !!!!!!!!!! do not change this !!!!!!!!!!!!!!!!!! 
+                        hover
+                        onClick={(event) => handleClick(event, row.name)}
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.name}
+                      >
+                        
+                        <TableCell align='center' component="th" id={labelId} scope="row" padding="none">
+                          {row.department_code}
+                        </TableCell>
+                        <TableCell align="center">{row.course_num}</TableCell>
+                        {width < 1280 ? (
+                          <TableCell align="right">{row.class_name.substring(0, 10)}...</TableCell>
+                        ) : <TableCell align="right">{row.class_name}</TableCell>}
+                        <TableCell align="center">{row.overall}</TableCell>
+                        <TableCell align="center">{row.workload}</TableCell>
+                        <TableCell align="center">{row.enthusiasm}</TableCell>
+                        <TableCell align="center">{row.textbook}</TableCell>
+                      </TableRow>
+                    );
+                  })}
 
-            </TableBody>
-          </TableContainer>
+              </TableBody>
+            </TableContainer>
           </Table>
         </Grid>
       </Grid>
