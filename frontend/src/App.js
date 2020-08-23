@@ -4,8 +4,6 @@ import Home from "./routes/Home";
 import NotFound from "./routes/NotFound";
 import EditReview from "./routes/EditReview";
 import Departments from "./routes/Departments";
-import Courses from "./routes/Courses";
-import Courses2 from "./routes/Courses2";
 import Reviews from './routes/Reviews';
 import Menu from "./components/Menu";
 
@@ -26,7 +24,6 @@ class App extends Component {
           <Route path="/review/edit" component={this.addMenu(EditReview)} />
           <Route path="/profile/edit" component={this.addMenu(EditReview)} />
           <Route path="/reviews" component={this.addMenu(Reviews)} />
-          <Route path="/reviews_pre" component={this.addMenu(Courses2)} />
           <Redirect to="/404" />
         </Switch>
       </main>
