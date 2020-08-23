@@ -25,8 +25,8 @@ class App extends Component {
           <Route path="/404" component={this.addMenu(NotFound)} />
           <Route path="/review/edit" component={this.addMenu(EditReview)} />
           <Route path="/profile/edit" component={this.addMenu(EditReview)} />
-          <Route path="/courses" component={this.addMenu(Reviews)} />
-          <Route path="/departments" component={this.addMenu(Courses2)} />
+          <Route path="/reviews" component={this.addMenu(Reviews)} />
+          <Route path="/reviews_pre" component={this.addMenu(Courses2)} />
           <Redirect to="/404" />
         </Switch>
       </main>
