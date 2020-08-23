@@ -39,7 +39,10 @@ const rows = [
   createData('Marshmallow', 318, 0, 81, 2.0),
   createData('Nougat', 360, 19.0, 9, 37.0),
   createData('Oreo', 437, 18.0, 63, 4.0),
-  
+  createData('Lollipop2', 392, 0.2, 98, 0.0),
+  createData('Marshmallow2', 318, 0, 81, 2.0),
+  createData('Nougat2', 360, 19.0, 9, 37.0),
+  createData('Oreo2', 437, 18.0, 63, 4.0),
 ];
 
 function descendingComparator(a, b, orderBy) {
