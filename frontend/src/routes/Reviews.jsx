@@ -71,6 +71,56 @@ function stableSort(array, comparator) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
+const useStyles = makeStyles((theme) => ({
+    visuallyHidden: {
+      border: 0,
+      clip: 'rect(0 0 0 0)',
+      height: 1,
+      margin: -1,
+      overflow: 'hidden',
+      padding: 0,
+      position: 'absolute',
+      top: 20,
+      width: 1,
+    },
+    margin: {
+      //margin: theme.spacing(1),
+      margin: "10px 0 0 0",
+    },
+    pageStyles: {
+      height: "100vh",
+      weight: '100vh',
+      background: theme.palette.secondary.main,
+    },
+    paperStyles: {
+      height: "90vh",
+      background: "white",
+      boxShadow: "10px 10px 0px 0px rgba(0,0,0,0.15)",
+      borderRadius: 16,
+    },
+    tableStyles: {
+      height: "80vh",
+      [theme.breakpoints.between('xs', 'sm')]: {
+        width: '30vh',
+        font: '9px',
+      },
+      [theme.breakpoints.between('sm', 'md')]: {
+        width: '54vh',
+      },
+      [theme.breakpoints.between('md', 'lg')]: {
+        width: '84vh',
+      },
+      [theme.breakpoints.between('lg', 'xl')]: {
+        width: '115vh',
+      },
+      [theme.breakpoints.up('xl')]: {
+        width: '140vh',
+      },
+      // width: '130vh',
+      background: "white",
+      borderRadius: 16,
+    },
+  }));
 
 const headCells = [
   { id: 'department_code', numeric: false, disablePadding: true, label: 'Department' },
@@ -82,113 +132,9 @@ const headCells = [
   { id: 'textbook', numeric: true, disablePadding: true, label: 'Textbook Usage' },
 ];
 
-function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
 
-  return (
-    <TableHead>
-      <TableRow>
-
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align='center'
-            padding={headCell.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-
-const useStyles = makeStyles((theme) => ({
-  visuallyHidden: {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    top: 20,
-    width: 1,
-  },
-  margin: {
-    //margin: theme.spacing(1),
-    margin: "10px 0 0 0",
-  },
-  pageStyles: {
-    height: "100vh",
-    weight: '100vh',
-    background: theme.palette.secondary.main,
-  },
-  paperStyles: {
-    height: "90vh",
-    background: "white",
-    boxShadow: "10px 10px 0px 0px rgba(0,0,0,0.15)",
-    borderRadius: 16,
-  },
-  tableStyles: {
-    height: "80vh",
-    [theme.breakpoints.between('xs', 'sm')]: {
-      width: '30vh',
-      font: '9px',
-    },
-    [theme.breakpoints.between('sm', 'md')]: {
-      width: '54vh',
-    },
-    [theme.breakpoints.between('md', 'lg')]: {
-      width: '84vh',
-    },
-    [theme.breakpoints.between('lg', 'xl')]: {
-      width: '115vh',
-    },
-    [theme.breakpoints.up('xl')]: {
-      width: '140vh',
-    },
-    // width: '130vh',
-    background: "white",
-    borderRadius: 16,
-  },
-}));
-
-export default function EnhancedTable() {
+export default function Reviews() {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const { height, width } = useWindowDimensions();
-  console.log(width);
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
-  const handleClick = (event, name) => {
-  };
 
   return (
     <Grid
@@ -198,68 +144,6 @@ export default function EnhancedTable() {
       alignItems="center"
       direction="row"
     >
-      <Grid
-        item
-        xs={10}
-        sm={10}
-        container
-        className={classes.paperStyles}
-        justify="center"
-        alignItems="center"
-        direction="column"
-      >
-        <Grid
-          container
-          className={classes.tableStyles}
-          justify='center'
-          direction='row'
-        >
-          <Table stickyHeader size="small">
-            <TableContainer
-              className={classes.tableStyles}
-
-            >
-              <EnhancedTableHead
-                classes={classes}
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={handleRequestSort}
-                rowCount={rows.length}
-              />
-              <TableBody>
-                {stableSort(rows, getComparator(order, orderBy))
-                  .map((row, index) => {
-                    const labelId = `enhanced-table-checkbox-${index}`;
-
-                    return (
-                      <TableRow // !!!!!!!!!! do not change this !!!!!!!!!!!!!!!!!! 
-                        hover
-                        onClick={(event) => handleClick(event, row.name)}
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.name}
-                      >
-
-                        <TableCell align='center' component="th" id={labelId} scope="row" padding="none">
-                          {row.department_code}
-                        </TableCell>
-                        <TableCell align="center">{row.course_num}</TableCell>
-                        {width < 1280 ? (
-                          <TableCell align="right">{row.class_name.substring(0, 10)}...</TableCell>
-                        ) : <TableCell align="right">{row.class_name}</TableCell>}
-                        <TableCell align="center">{row.overall}</TableCell>
-                        <TableCell align="center">{row.workload}</TableCell>
-                        <TableCell align="center">{row.enthusiasm}</TableCell>
-                        <TableCell align="center">{row.textbook}</TableCell>
-                      </TableRow>
-                    );
-                  })}
-
-              </TableBody>
-            </TableContainer>
-          </Table>
-        </Grid>
-      </Grid>
-    </Grid>
+         </Grid>
   );
 }
