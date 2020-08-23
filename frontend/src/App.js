@@ -3,8 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./routes/Home";
 import NotFound from "./routes/NotFound";
 import EditReview from "./routes/EditReview";
-import Departments from "./routes/Departments";
-import Courses from "./routes/Courses";
+import Reviews from './routes/Reviews';
 import Menu from "./components/Menu";
 
 class App extends Component {
@@ -23,8 +22,7 @@ class App extends Component {
           <Route path="/404" component={this.addMenu(NotFound)} />
           <Route path="/review/edit" component={this.addMenu(EditReview)} />
           <Route path="/profile/edit" component={this.addMenu(EditReview)} />
-          <Route path="/courses" component={this.addMenu(Courses)} />
-          <Route path="/departments" component={this.addMenu(Departments)} />
+          <Route path="/reviews" component={this.addMenu(Reviews)} />
           <Redirect to="/404" />
         </Switch>
       </main>
