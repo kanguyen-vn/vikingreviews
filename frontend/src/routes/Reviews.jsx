@@ -54,13 +54,13 @@
 //     }
 //     return 0;
 //   }
-  
+
 //   function getComparator(order, orderBy) {
 //     return order === 'desc'
 //       ? (a, b) => descendingComparator(a, b, orderBy)
 //       : (a, b) => -descendingComparator(a, b, orderBy);
 //   }
-  
+
 //   function stableSort(array, comparator) {
 //     const stabilizedThis = array.map((el, index) => [el, index]);
 //     stabilizedThis.sort((a, b) => {
@@ -93,7 +93,7 @@
 //                             onClick={createSortHandler(headCell.id)}
 //                         >
 //                             {headCell.label}
-                          
+
 //                         </TableSortLabel>
 //                     </TableCell>
 //                 ))}
@@ -181,7 +181,7 @@
 //                 alignItems="center"
 //                 direction="column"
 //             >
-               
+
 //                     <TableContainer>
 //                         <Table
 //                             className={classes.table}
@@ -323,15 +323,15 @@ import Grid from '@material-ui/core/Grid';
 // ];
 
 function createData(department_code, course_num, class_name, review_sum, overall, workload, enthusiasm, textbook) {
-  return { 
-      department_code, 
-      course_num, 
-      class_name, 
-      review_sum, 
-      overall, 
-      workload, 
-      enthusiasm, 
-      textbook 
+  return {
+    department_code,
+    course_num,
+    class_name,
+    review_sum,
+    overall,
+    workload,
+    enthusiasm,
+    textbook
   };
 }
 
@@ -400,7 +400,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-       
+
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -439,16 +439,6 @@ EnhancedTableHead.propTypes = {
 
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
-  paper: {
-    width: '100%',
-    marginBottom: theme.spacing(2),
-  },
-  table: {
-    minWidth: 750,
-  },
   visuallyHidden: {
     border: 0,
     clip: 'rect(0 0 0 0)',
@@ -463,38 +453,23 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     //margin: theme.spacing(1),
     margin: "10px 0 0 0",
-},
-pageStyles: {
+  },
+  pageStyles: {
     height: "100vh",
     background: theme.palette.secondary.main,
-},
-paperStyles: {
+  },
+  paperStyles: {
     height: "90vh",
     background: "white",
     boxShadow: "10px 10px 0px 0px rgba(0,0,0,0.15)",
     borderRadius: 16,
-},
-tableStyles: {
+  },
+  tableStyles: {
     height: "85vh",
     width: '100vh',
     background: "white",
-    // boxShadow: "10px 10px 0px 0px rgba(0,0,0,0.15)",
     borderRadius: 16,
-},
-notFound: {
-    fontWeight: 300,
-    fontStyle: "italic",
-    color: theme.palette.secondary.dark,
-},
-button: {
-    boxShadow: "5px 5px 0px 0px rgba(0,0,0,0.15)",
-    fontFamily: "Inter",
-    fontWeight: 300,
-},
-errorIcon: {
-    color: theme.palette.primary.main,
-    fontSize: "300px",
-},
+  },
 }));
 
 export default function EnhancedTable() {
@@ -514,13 +489,13 @@ export default function EnhancedTable() {
 
   return (
     <Grid
-    container
-    className={classes.pageStyles}
-    justify="center"
-    alignItems="center"
-    direction="row"
->
-    <Grid
+      container
+      className={classes.pageStyles}
+      justify="center"
+      alignItems="center"
+      direction="row"
+    >
+      <Grid
         item
         xs={10}
         sm={10}
@@ -529,19 +504,15 @@ export default function EnhancedTable() {
         justify="center"
         alignItems="center"
         direction="column"
-    >
+      >
         <Grid
-            container
-            className={classes.tableStyles}
-            justify='center'
-            direction='row'
+          container
+          className={classes.tableStyles}
+          justify='center'
+          direction='row'
         >
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size='medium'
-            aria-label="enhanced table"
+          <TableContainer
+            className={classes.tableStyles}
           >
             <EnhancedTableHead
               classes={classes}
@@ -552,20 +523,19 @@ export default function EnhancedTable() {
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
-                // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
-                    <TableRow // do not change this! 
+                    <TableRow // !!!!!!!!!! do not change this !!!!!!!!!!!!!!!!!! 
                       hover
                       onClick={(event) => handleClick(event, row.name)}
                       role="checkbox"
                       tabIndex={-1}
                       key={row.name}
                     >
-                      
-                      <TableCell align = 'center' component="th" id={labelId} scope="row" padding="none">
+
+                      <TableCell align='center' component="th" id={labelId} scope="row" padding="none">
                         {row.department_code}
                       </TableCell>
                       <TableCell align="center">{row.course_num}</TableCell>
@@ -577,10 +547,11 @@ export default function EnhancedTable() {
                     </TableRow>
                   );
                 })}
-            
+
             </TableBody>
-          </Table>
-        </TableContainer> 
-      </Grid></Grid></Grid>
+          </TableContainer>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
