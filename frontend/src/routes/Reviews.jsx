@@ -16,16 +16,7 @@ import {
 } from "@material-ui/core";
 
 function createData(department_code, course_num, class_name, review_sum, overall, workload, enthusiasm, textbook) {
-    return { 
-        department_code, 
-        course_num, 
-        class_name, 
-        review_sum, 
-        overall, 
-        workload, 
-        enthusiasm, 
-        textbook 
-    };
+    return { department_code, course_num, class_name, review_sum, overall, workload, enthusiasm, textbook };
 }
 
 const rows = [
@@ -102,11 +93,11 @@ function EnhancedTableHead(props) {
                             onClick={createSortHandler(headCell.id)}
                         >
                             {headCell.label}
-                            {orderBy === headCell.id ? (
+                            {/* {orderBy === headCell.id ? (
                                 <span className={classes.visuallyHidden}>
                                     {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                                 </span>
-                            ) : null}
+                            ) : null} */}
                         </TableSortLabel>
                     </TableCell>
                 ))}
@@ -141,6 +132,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 16,
     },
     tableStyles: {
+        marginBottom: theme.spacing(2),
         height: "85vh",
         width: '100vh',
         background: "white",
@@ -176,14 +168,14 @@ export default function EnhancedTable() {
         setOrderBy(property);
     };
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
+    // const handleChangePage = (event, newPage) => {
+    //     setPage(newPage);
+    // };
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+    // const handleChangeRowsPerPage = (event) => {
+    //     setRowsPerPage(parseInt(event.target.value, 10));
+    //     setPage(0);
+    // };
 
 
     console.log(rows[0]);
@@ -226,7 +218,7 @@ export default function EnhancedTable() {
                             />
                             <TableBody>
                                 {stableSort(rows, getComparator(order, orderBy))
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row, index) => {
 
                                         return (
@@ -251,15 +243,6 @@ export default function EnhancedTable() {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[10]}
-                        component="div"
-                        count={rows.length}
-                        rowsPerPage='10'
-                        page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
 
                 </Grid>
             </Grid>
