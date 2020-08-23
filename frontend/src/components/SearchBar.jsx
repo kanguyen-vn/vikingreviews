@@ -1,58 +1,15 @@
 import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { Autocomplete } from "@material-ui/lab";
-
-// const useStyles = makeStyles((theme) => ({
-//   margin: {
-//     //margin: theme.spacing(1),
-//     margin: "10px 0 0 0",
-//   },
-//   textField: {
-//     background: "white",
-//     boxShadow: "5px 5px 0px 0px rgba(0,0,0,0.15)",
-//     fontStyle: "italic",
-//   },
-//   notchedOutline: {
-//     borderWidth: "1px",
-//     borderColor: "white",
-//   },
-//   textFieldPosition: {
-//     position: "absolute",
-//     top: theme.spacing(2),
-//     right: theme.spacing(12),
-//   },
-// }));
-
-// const SearchBar = ({ home = false }) => {
-//   const classes = useStyles();
-//   return (
-//     <TextField
-//       className={
-//         (!home && classes.textFieldPosition) || "input-with-icon-textfield"
-//       }
-//       variant="outlined"
-//       placeholder={
-//         (home && "Search for department, class, or professor...") || "Search..."
-//       }
-//       InputProps={{
-//         className: classes.textField,
-//         classes: {
-//           notchedOutline: classes.notchedOutline,
-//         },
-//       }}
-//     />
-//   );
-// };
 
 const useStyles = (theme) => ({
   margin: {
-    //margin: theme.spacing(1),
     margin: "10px 0 0 0",
   },
   textField: {
     background: "white",
-    boxShadow: "5px 5px 0px 0px rgba(0,0,0,0.15)",
+    boxShadow: "7px 7px 0px 0px rgba(0,0,0,0.15)",
     fontStyle: "italic",
   },
   notchedOutline: {
@@ -60,19 +17,37 @@ const useStyles = (theme) => ({
     borderColor: "white",
   },
   textFieldPosition: {
-    position: "absolute",
+    position: "fixed",
     top: theme.spacing(2),
     right: theme.spacing(12),
   },
-  home: {},
+  option: {
+    fontSize: 15,
+    "& > span": {
+      marginRight: 10,
+      fontSize: 18,
+      fontWeight: "bold",
+    },
+  },
 });
 
-const top100Films = [
-  { title: "The Shawshank Redemption", year: 1994 },
-  { title: "The Godfather", year: 1972 },
-  { title: "The Godfather: Part II", year: 1974 },
-  { title: "The Dark Knight", year: 2008 },
-  { title: "12 Angry Men", year: 1957 },
+const choices = [
+  // sort groups before display
+  { left: "CMSC", right: "Computer Science", type: "Department" },
+  { left: "ECON", right: "Economics", type: "Department" },
+  { left: "MUTH", right: "Music Theory", type: "Department" },
+  { left: "PSYC", right: "Psychology", type: "Department" },
+  { left: "SPAN", right: "Spanish", type: "Department" },
+  { left: "CMSC 150", right: "Intro to Computer Science", type: "Course" },
+  { left: "ECON 120", right: "Some Kind of Economics", type: "Course" },
+  { left: "MUTH 420", right: "Schenkerian Analysis", type: "Course" },
+  { left: "PSYC 270", right: "Social Psychology", type: "Course" },
+  { left: "SPAN 100", right: "Introduction to Spanish", type: "Course" },
+  { left: "Joseph Gregg", right: "CMSC", type: "Instructor" },
+  { left: "Barack Obama", right: "ECON", type: "Instructor" },
+  { left: "Ian Bates", right: "MUTH", type: "Instructor" },
+  { left: "Cardi B", right: "PSYC", type: "Instructor" },
+  { left: "Ariana Grande", right: "SPAN", type: "Instructor" },
 ];
 
 class SearchBar extends Component {
@@ -80,12 +55,20 @@ class SearchBar extends Component {
     const { home, classes } = this.props;
     return (
       <Autocomplete
-        id="combo-box-demo"
-        className={(!home && classes.textFieldPosition) || classes.home}
-        options={top100Films}
-        getOptionLabel={(option) => option.title}
-        style={{ width: 300 }}
-        fullWidth={home ? true : false}
+        className={(!home && classes.textFieldPosition) || {}}
+        options={choices}
+        getOptionLabel={(option) => `${option.left} ${option.right}`}
+        groupBy={(option) => option.type}
+        style={(!home && { width: 350 }) || {}}
+        classes={{
+          option: classes.option,
+        }}
+        renderOption={(option) => (
+          <React.Fragment>
+            <span>{option.left}</span>
+            {option.right}
+          </React.Fragment>
+        )}
         renderInput={(params) => (
           <TextField
             {...params}

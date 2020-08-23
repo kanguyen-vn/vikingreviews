@@ -10,14 +10,17 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       main: "#59b4fe",
+      dark: "#008dff",
       contrastText: "#fff",
     },
     secondary: {
       main: "#d5ecff",
     },
-    typography: {
-      fontFamily: "Inter",
-      fontWeight: "700",
+  },
+  typography: {
+    fontFamily: "Inter",
+    allVariants: {
+      textShadow: "5px 5px 0px 0px rgba(0,0,0,0.15)",
     },
   },
 });
