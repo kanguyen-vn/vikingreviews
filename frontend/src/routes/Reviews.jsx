@@ -382,7 +382,7 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'department_code', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
+  { id: 'department_code', numeric: false, disablePadding: true, label: 'department_code' },
   { id: 'course_num', numeric: true, disablePadding: false, label: 'course_num' },
   { id: 'class_name', numeric: true, disablePadding: false, label: 'class_name' },
   { id: 'overall', numeric: true, disablePadding: false, label: 'overall' },
@@ -501,9 +501,7 @@ export default function EnhancedTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
-  // const [page, setPage] = React.useState(0);
-  // const [dense, setDense] = React.useState(false);
-  // const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -513,19 +511,6 @@ export default function EnhancedTable() {
 
   const handleClick = (event, name) => {
   };
-
-  // const handleChangePage = (event, newPage) => {
-  //   setPage(newPage);
-  // };
-
-  // const handleChangeRowsPerPage = (event) => {
-  //   setRowsPerPage(parseInt(event.target.value, 10));
-  //   setPage(0);
-  // };
-
-  // const handleChangeDense = (event) => {
-  //   setDense(event.target.checked);
-  // };
 
   return (
     <Grid
@@ -572,7 +557,7 @@ export default function EnhancedTable() {
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
-                    <TableRow
+                    <TableRow // do not change this! 
                       hover
                       onClick={(event) => handleClick(event, row.name)}
                       role="checkbox"
