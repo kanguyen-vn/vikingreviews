@@ -11,7 +11,8 @@ import {
   faSignInAlt,
   faSignOutAlt,
   faUserPlus,
-  faHeart,
+  faQuestion,
+  faCommentDots,
   faCog,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,8 +20,9 @@ import SearchBar from "./SearchBar";
 import SlideInDrawer from "./SlideInDrawer";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import About from "./About";
+import FAQ from "./FAQ";
 import Settings from "./Settings";
+import ContactUs from "./ContactUs";
 
 const shadow = (px) => ({
   boxShadow: `${px}px ${px}px 0px 0px rgba(0,0,0,0.15)`,
@@ -63,10 +65,16 @@ const guestActions = [
     action: <SignUp />,
   },
   {
-    icon: <FontAwesomeIcon icon={faHeart} />,
-    name: "About",
+    icon: <FontAwesomeIcon icon={faQuestion} />,
+    name: "FAQ",
     highlighted: false,
-    action: <About />,
+    action: <FAQ />,
+  },
+  {
+    icon: <FontAwesomeIcon icon={faCommentDots} />,
+    name: "Contact Us",
+    highlighted: false,
+    action: <ContactUs />,
   },
 ];
 
@@ -90,10 +98,16 @@ const memberActions = [
     action: null,
   },
   {
-    icon: <FontAwesomeIcon icon={faHeart} />,
-    name: "About",
+    icon: <FontAwesomeIcon icon={faQuestion} />,
+    name: "FAQ",
     highlighted: false,
-    action: <About />,
+    action: <FAQ />,
+  },
+  {
+    icon: <FontAwesomeIcon icon={faCommentDots} />,
+    name: "Contact Us",
+    highlighted: false,
+    action: <ContactUs />,
   },
 ];
 
@@ -164,6 +178,7 @@ const Menu = ({ token, home = false }) => {
                 icon={action.icon}
                 tooltipTitle={action.name}
                 onClick={handleActionClick(action.action)}
+                tooltipOpen
                 FabProps={{
                   style: action.highlighted
                     ? {

@@ -1,26 +1,47 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-import Joi from "joi";
+import { grey, red } from "@material-ui/core/colors";
+import { withStyles } from "@material-ui/core/styles";
 import TextInput from "./common/TextInput";
 import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
+import Joi from "joi";
 
-class Login extends Component {
-  state = { data: { email: "", password: "" }, errors: {} };
+const useStyles = () => ({
+  p: {
+    fontStyle: "italic",
+    color: grey[800],
+  },
+  counter: {
+    fontStyle: "italic",
+    color: grey[800],
+    textAlign: "right",
+    margin: "0 0 5px 0",
+    fontSize: "85%",
+  },
+});
+
+const maxComment = 500;
+
+class ContactUs extends Component {
+  state = { data: { email: "", comment: "" }, errors: {} };
 
   schema = Joi.object({
     email: Joi.string()
-      .regex(/^([a-zA-Z0-9\.]+)@lawrence.edu$/)
+      .regex(/^([a-zA-Z0-9_\.]+)@lawrence.edu$/)
       .messages({
         "string.empty": "Email cannot be left empty.",
         "string.pattern.base":
           "Email must be a Lawrence account and can contain only alphanumeric characters, periods, and underscores.",
       }),
-    password: Joi.string().min(5).max(32).messages({
-      "string.empty": "Password cannot be left empty.",
-      "string.min": "Password should have a minimum length of 5.",
-      "string.max": "Password should have a maximum length of 32.",
-    }),
+    comment: Joi.string()
+      .min(10)
+      .max(maxComment)
+      .messages({
+        "string.empty": "Say something :-).",
+        "string.min": "Comment should have a minimum length of 10.",
+        "string.max": `Comment should have a maximum length of ${maxComment}.`,
+      }),
   });
 
   handleSubmit = () => {
@@ -58,13 +79,17 @@ class Login extends Component {
     console.log(data, errorMessage);
     this.setState({ data, errors });
   };
-
   render() {
-    const { errors } = this.state;
+    const { classes } = this.props;
+    const { data, errors } = this.state;
     return (
       <>
-        <DrawerHeader text="Login" />
-        <Grid item container direction="column" justify="center" spacing={2}>
+        <DrawerHeader text="Contact Us" />
+        <p className={classes.p}>
+          Fill out this form if you want to report incorrect information, report
+          a bug, or suggest new features.
+        </p>
+        <Grid container direction="column" justify="center" spacing={2}>
           <Grid item container direction="column" justify="center">
             <TextInput
               placeholder="Email"
@@ -76,20 +101,26 @@ class Login extends Component {
             />
           </Grid>
           <Grid item container direction="column" justify="center">
+            <p
+              className={classes.counter}
+              style={{
+                color: data.comment.length >= maxComment - 10 && red[300],
+              }}
+            >{`${maxComment - data.comment.length}/${maxComment}`}</p>
             <TextInput
-              placeholder="Password"
-              name="password"
-              password
+              placeholder="What do you want us to know about?"
+              multiline
+              name="comment"
+              autoFocus
               defaultValue=""
               onChange={this.handleChange}
-              errorText={errors && errors.password ? errors.password : null}
+              errorText={errors && errors.comment ? errors.comment : null}
             />
           </Grid>
           <Grid item container direction="row" justify="center">
             <StyledButton
-              text="Log in"
+              text="Submit"
               disabled={this.validate() ? true : false}
-              onClick={this.handleSubmit}
             />
           </Grid>
         </Grid>
@@ -98,23 +129,4 @@ class Login extends Component {
   }
 }
 
-// const Login = () => {
-//   return (
-//     <>
-//       <DrawerHeader text="Login" />
-//       <Grid container direction="column" justify="center" spacing={2}>
-//         <Grid item container direction="column" justify="center">
-//           <TextInput placeholder="Email" autoFocus />
-//         </Grid>
-//         <Grid item container direction="column" justify="center">
-//           <TextInput placeholder="Password" password />
-//         </Grid>
-//         <Grid item container direction="row" justify="center">
-//           <StyledButton text="Log in" />
-//         </Grid>
-//       </Grid>
-//     </>
-//   );
-// };
-
-export default Login;
+export default withStyles(useStyles)(ContactUs);

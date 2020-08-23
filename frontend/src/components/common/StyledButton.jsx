@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const StyledButton = ({ text, onClick }) => {
+const StyledButton = ({ text, onClick, disabled }) => {
   const classes = useStyles();
   return (
     <Button
@@ -22,6 +22,7 @@ const StyledButton = ({ text, onClick }) => {
       className={classes.button}
       size="large"
       onClick={onClick}
+      disabled={disabled}
     >
       {text}
     </Button>
