@@ -84,13 +84,13 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'department_code', numeric: false, disablePadding: true, label: 'department_code' },
-  { id: 'course_num', numeric: true, disablePadding: false, label: 'course_num' },
-  { id: 'class_name', numeric: true, disablePadding: false, label: 'class_name' },
-  { id: 'overall', numeric: true, disablePadding: false, label: 'overall' },
-  { id: 'workload', numeric: true, disablePadding: false, label: 'workload' },
-  { id: 'enthusiasm', numeric: true, disablePadding: false, label: 'enthusiasm' },
-  { id: 'textbook', numeric: true, disablePadding: false, label: 'textbook' },
+  { id: 'department_code', numeric: false, disablePadding: true, label: 'Department' },
+  { id: 'course_num', numeric: true, disablePadding: false, label: 'Course#' },
+  { id: 'class_name', numeric: true, disablePadding: false, label: 'Name' },
+  { id: 'overall', numeric: true, disablePadding: false, label: 'Overall' },
+  { id: 'workload', numeric: true, disablePadding: false, label: 'Workload' },
+  { id: 'enthusiasm', numeric: true, disablePadding: false, label: 'Enthusiasm' },
+  { id: 'textbook', numeric: true, disablePadding: false, label: 'Textbook' },
 ];
 
 function EnhancedTableHead(props) {
@@ -213,8 +213,10 @@ export default function EnhancedTable() {
           justify='center'
           direction='row'
         >
+          <Table stickyHeader >
           <TableContainer
             className={classes.tableStyles}
+            
           >
             <EnhancedTableHead
               classes={classes}
@@ -252,6 +254,7 @@ export default function EnhancedTable() {
 
             </TableBody>
           </TableContainer>
+          </Table>
         </Grid>
       </Grid>
     </Grid>
