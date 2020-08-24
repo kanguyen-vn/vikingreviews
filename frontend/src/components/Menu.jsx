@@ -15,7 +15,6 @@ import {
   faCommentDots,
   faCog,
 } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBar from "./SearchBar";
 import SlideInDrawer from "./SlideInDrawer";
@@ -129,7 +128,7 @@ const Menu = ({ user, home = false }) => {
     setOpen(false);
   };
 
-  const handleClick = () => {
+  const handleDialClick = () => {
     if (open) setOpen(false);
   };
 
@@ -173,7 +172,7 @@ const Menu = ({ user, home = false }) => {
         icon={<MenuIcon />}
         openIcon={<CloseIcon />}
         onOpen={handleOpen}
-        onClick={handleClick}
+        onClick={handleDialClick}
         direction="down"
         open={open}
         FabProps={{ style: shadow(5) }}
