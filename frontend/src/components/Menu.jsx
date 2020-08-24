@@ -15,6 +15,7 @@ import {
   faCommentDots,
   faCog,
 } from "@fortawesome/free-solid-svg-icons";
+import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBar from "./SearchBar";
 import SlideInDrawer from "./SlideInDrawer";
@@ -45,73 +46,76 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const guestActions = [
-  {
-    icon: <FontAwesomeIcon icon={faArrowRight} />,
-    name: "Search",
-    highlighted: true,
-    action: null,
-  },
-  {
-    icon: <FontAwesomeIcon icon={faSignInAlt} />,
-    name: "Login",
-    highlighted: false,
-    action: <Login />,
-  },
-  {
-    icon: <FontAwesomeIcon icon={faUserPlus} />,
-    name: "Sign Up",
-    highlighted: false,
-    action: <SignUp />,
-  },
-  {
-    icon: <FontAwesomeIcon icon={faQuestion} />,
-    name: "FAQ",
-    highlighted: false,
-    action: <FAQ />,
-  },
-  {
-    icon: <FontAwesomeIcon icon={faCommentDots} />,
-    name: "Contact Us",
-    highlighted: false,
-    action: <ContactUs />,
-  },
-];
+const Menu = ({ user, home = false }) => {
+  const guestActions = [
+    {
+      icon: <FontAwesomeIcon icon={faArrowRight} />,
+      name: "Search",
+      highlighted: true,
+      action: null,
+    },
+    {
+      icon: <FontAwesomeIcon icon={faSignInAlt} />,
+      name: "Login",
+      highlighted: false,
+      action: () => draw(Login),
+    },
+    {
+      icon: <FontAwesomeIcon icon={faUserPlus} />,
+      name: "Sign Up",
+      highlighted: false,
+      action: () => draw(SignUp),
+    },
+    {
+      icon: <FontAwesomeIcon icon={faQuestion} />,
+      name: "FAQ",
+      highlighted: false,
+      action: () => draw(FAQ),
+    },
+    {
+      icon: <FontAwesomeIcon icon={faCommentDots} />,
+      name: "Contact Us",
+      highlighted: false,
+      action: () => draw(ContactUs),
+    },
+  ];
 
-const memberActions = [
-  {
-    icon: <FontAwesomeIcon icon={faArrowRight} />,
-    name: "Search",
-    highlighted: true,
-    action: null,
-  },
-  {
-    icon: <FontAwesomeIcon icon={faCog} />,
-    name: "Settings",
-    highlighted: false,
-    action: <Settings />,
-  },
-  {
-    icon: <FontAwesomeIcon icon={faSignOutAlt} />,
-    name: "Logout",
-    highlighted: false,
-    action: null,
-  },
-  {
-    icon: <FontAwesomeIcon icon={faQuestion} />,
-    name: "FAQ",
-    highlighted: false,
-    action: <FAQ />,
-  },
-  {
-    icon: <FontAwesomeIcon icon={faCommentDots} />,
-    name: "Contact Us",
-    highlighted: false,
-    action: <ContactUs />,
-  },
-];
+  const memberActions = [
+    {
+      icon: <FontAwesomeIcon icon={faArrowRight} />,
+      name: "Search",
+      highlighted: true,
+      action: null,
+    },
+    {
+      icon: <FontAwesomeIcon icon={faCog} />,
+      name: "Settings",
+      highlighted: false,
+      action: () => draw(Settings),
+    },
+    {
+      icon: <FontAwesomeIcon icon={faSignOutAlt} />,
+      name: "Logout",
+      highlighted: false,
+      action: () => {
+        localStorage.removeItem("token");
+        window.location = "/";
+      },
+    },
+    {
+      icon: <FontAwesomeIcon icon={faQuestion} />,
+      name: "FAQ",
+      highlighted: false,
+      action: () => draw(FAQ),
+    },
+    {
+      icon: <FontAwesomeIcon icon={faCommentDots} />,
+      name: "Contact Us",
+      highlighted: false,
+      action: () => draw(ContactUs),
+    },
+  ];
 
-const Menu = ({ token, home = false }) => {
   const [open, setOpen] = React.useState(false);
   const [hidden, setHidden] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(false);
@@ -141,15 +145,19 @@ const Menu = ({ token, home = false }) => {
     setOpenDrawer(open);
   };
 
+  const draw = (Component) => {
+    setDrawerContent(<Component />);
+    toggleDrawer(true)();
+  };
+
   const handleActionClick = (action) => () => {
-    if (action) {
-      setDrawerContent(action);
-      toggleDrawer(true)();
+    if (action.action) {
+      action.action();
     }
   };
 
   const theme = useTheme();
-  const actions = token ? memberActions : guestActions;
+  const actions = user ? memberActions : guestActions;
   const classes = useStyles();
   return (
     <>
@@ -177,7 +185,7 @@ const Menu = ({ token, home = false }) => {
                 key={action.name}
                 icon={action.icon}
                 tooltipTitle={action.name}
-                onClick={handleActionClick(action.action)}
+                onClick={handleActionClick(action)}
                 tooltipOpen
                 FabProps={{
                   style: action.highlighted

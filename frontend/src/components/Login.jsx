@@ -4,6 +4,7 @@ import Joi from "joi";
 import TextInput from "./common/TextInput";
 import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
+import { login } from "../services/authService";
 
 class Login extends Component {
   state = { data: { email: "", password: "" }, errors: {} };
@@ -23,10 +24,19 @@ class Login extends Component {
     }),
   });
 
-  handleSubmit = () => {
-    const errors = this.validate();
-    console.log(errors);
-    this.setState({ errors });
+  handleSubmit = async () => {
+    try {
+      const { data } = this.state;
+      const { data: jwt } = await login(data.email, data.password);
+      localStorage.setItem("token", jwt);
+      window.location = "/";
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.email = ex.response.data;
+        this.setState({ errors });
+      }
+    }
   };
 
   validate = () => {
@@ -55,7 +65,6 @@ class Login extends Component {
     const data = { ...this.state.data };
     data[input.name] = input.value;
 
-    console.log(data, errorMessage);
     this.setState({ data, errors });
   };
 
@@ -97,24 +106,5 @@ class Login extends Component {
     );
   }
 }
-
-// const Login = () => {
-//   return (
-//     <>
-//       <DrawerHeader text="Login" />
-//       <Grid container direction="column" justify="center" spacing={2}>
-//         <Grid item container direction="column" justify="center">
-//           <TextInput placeholder="Email" autoFocus />
-//         </Grid>
-//         <Grid item container direction="column" justify="center">
-//           <TextInput placeholder="Password" password />
-//         </Grid>
-//         <Grid item container direction="row" justify="center">
-//           <StyledButton text="Log in" />
-//         </Grid>
-//       </Grid>
-//     </>
-//   );
-// };
 
 export default Login;

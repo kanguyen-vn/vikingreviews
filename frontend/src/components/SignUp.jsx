@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
 import Joi from "joi";
+import { register } from "../services/userService";
 
 const maxYear = new Date().getFullYear() + 5;
 
@@ -32,7 +33,8 @@ class SignUp extends Component {
       "string.min": "Password should have a minimum length of 5.",
       "string.max": "Password should have a maximum length of 32.",
     }),
-    name: Joi.string().max(32).messages({
+    name: Joi.string().min(5).max(32).messages({
+      "string.min": "Name should have a minimum length of 5.",
       "string.max": "Name should have a maximum length of 32.",
       "string.empty": "Name cannot be left empty.",
     }),
@@ -54,6 +56,20 @@ class SignUp extends Component {
       }),
   });
 
+  handleSubmit = async () => {
+    try {
+      const response = await register(this.state.data);
+      localStorage.setItem("token", response.headers["x-auth-token"]);
+      window.location = "/";
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.email = ex.response.data;
+        this.setState({ errors });
+      }
+    }
+  };
+
   validate = () => {
     const options = { abortEarly: false };
     const { error } = this.schema.validate(this.state.data, options);
@@ -69,11 +85,6 @@ class SignUp extends Component {
     const obj = { [name]: value };
     const { error } = this.schema.validate(obj);
     return error ? error.details[0].message : null;
-  };
-
-  handleSubmit = () => {
-    const errors = this.validate();
-    this.setState({ errors });
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -144,7 +155,10 @@ class SignUp extends Component {
           <Grid item container direction="row" justify="center">
             <StyledButton
               text="Sign Up"
-              disabled={this.validate() ? true : false}
+              disabled={
+                (this.validate() ? true : false) ||
+                Object.keys(errors).length !== 0
+              }
               onClick={this.handleSubmit}
             />
           </Grid>
