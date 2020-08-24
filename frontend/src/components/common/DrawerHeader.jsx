@@ -11,16 +11,18 @@ const useStyles = makeStyles((theme) => ({
     allVariants: {
       textShadow: "5px 5px 0px 0px rgba(0,0,0,0.15)",
     },
+    [theme.breakpoints.down("md")]: {
+      fontSize: theme.typography.h3.fontSize,
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: theme.typography.h2.fontSize,
+    },
   },
 }));
 
 const DrawerHeader = ({ text }) => {
   const classes = useStyles();
-  return (
-    <Typography className={classes.header} variant="h2">
-      {text}
-    </Typography>
-  );
+  return <Typography className={classes.header}>{text}</Typography>;
 };
 
 export default DrawerHeader;
