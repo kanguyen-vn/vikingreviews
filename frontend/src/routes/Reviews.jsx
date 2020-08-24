@@ -14,6 +14,7 @@ import {
     TableSortLabel,
     Typography
 } from '@material-ui/core';
+import AddReviewButton from "../components/AddReviewButton";
 import grey from "@material-ui/core/colors/grey";
 
 
@@ -159,37 +160,71 @@ const useStyles = makeStyles((theme) => ({
         background: theme.palette.secondary.main,
     },
     headerStyles: {
-        height: "15vh",
+        // height: "15vh",
+        [theme.breakpoints.between('xs', 'sm')]: {
+            height: "28vh",
+        },
+        [theme.breakpoints.up('sm')]: {
+            height: '15vh',
+        },
         background: "white",
         boxShadow: "10px 10px 0px 0px rgba(0,0,0,0.15)",
         borderRadius: 16,
     },
     courseNumberStyles: {
-        height: "3vh",
+        [theme.breakpoints.between('xs', 'sm')]: {
+            height: "6vh",
+        },
+        [theme.breakpoints.up('sm')]: {
+            height: '4vh',
+        },
         background: grey[100],
         borderRadius: 8,
     },
     courseNameStyles: {
-        height: "3vh",
+        [theme.breakpoints.between('xs', 'sm')]: {
+            height: "7vh",
+        },
+        [theme.breakpoints.up('sm')]: {
+            height: '4vh',
+        },
         background: grey[100],
         borderRadius: 8,
     },
 
     // courseDescriptionStyles: {},
     courseScoreStyle: {
-        height: "8vh",
+        // height: "8vh",
+        // [theme.breakpoints.between('xs', 'sm')]: {
+        //     height: "16vh",
+        // },
+        // [theme.breakpoints.up('sm')]: {
+        //     height: '8vh',
+        // },
         background: grey[100],
         borderRadius: 8,
     },
     courseScoreBoxStyles: {
-        height: "7vh",
+        // height: "7vh",
+        [theme.breakpoints.between('xs', 'sm')]: {
+            height: "7vh",
+        },
+        [theme.breakpoints.up('sm')]: {
+            height: '7vh',
+        },
         background: grey[200],
         borderRadius: 8,
     },
     addReviewButtonStyles: {},
 
     paperbodyStyles: {
-        height: "75vh",
+        // height: "65vh",
+        [theme.breakpoints.between('xs', 'sm')]: {
+            height: "65vh",
+        },
+        [theme.breakpoints.up('sm')]: {
+            height: '75vh',
+        },
         background: "white",
         boxShadow: "10px 10px 0px 0px rgba(0,0,0,0.15)",
         borderRadius: 16,
@@ -280,15 +315,27 @@ export default function EnhancedTable() {
                     justify="space-evenly"
                     alignItems="flex-start"
                 >
+                    {width < 370 ? (
                     <Typography
                         gutterBottom
-                        className={classes.p}
+                        // className={classes.p}
+                        variant='body2'
                     >
                         <Box textAlign="left">
                             Vikings to Vaultings: Art and Architecture of Medieval Northern Culture
                             </Box>
                     </Typography>
 
+
+                    ) : <Typography
+                        gutterBottom
+                        className={classes.p}
+                    >
+                            <Box textAlign="left">
+                                Vikings to Vaultings: Art and Architecture of Medieval Northern Culture
+                            </Box>
+                        </Typography>
+                    }
 
                 </Grid>
                 {/* score board */}
@@ -304,85 +351,154 @@ export default function EnhancedTable() {
                 >
                     <Grid
                         item
-                        xs={2.4}
+                        xs={3}
+                        sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        <Typography>
-                            <Box textAlign="center">
-                                Overall
-                        </Box>
-                        </Typography>
-                        <Typography>
-                            <Box textAlign="center">
-                                3.5
-                        </Box>
-                        </Typography>
+                        {width < 460 ? (
+                            <Typography variant='body2'>
+                                <Box textAlign="center" mx="auto">
+                                    Overall
+                                </Box>
+                            </Typography>
+
+
+                        ) : <Typography>
+                                <Box textAlign="center" mx="auto">
+                                    Overall
+                                    </Box>
+                            </Typography>
+                        }
+                        {width < 460 ? (
+                            <Typography variant='body2'>
+                                <Box textAlign="center" mx="auto">
+                                    3.2
+                                </Box>
+                            </Typography>
+
+
+                        ) : <Typography>
+                                <Box textAlign="center" mx="auto">
+                                    3.2
+                                    </Box>
+                            </Typography>
+                        }
                     </Grid>
 
                     <Grid
                         item
-                        xs={2.5}
+                        xs={3}
+                        sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        <Typography>
-                            <Box textAlign="center">
-                                Workload
-                        </Box>
-                        </Typography>
-                        <Typography>
-                            <Box textAlign="center">
-                                3.5
-                        </Box>
-                        </Typography>
+                        {width < 460 ? (
+                            <Typography variant='body2'>
+                                <Box textAlign="center" mx="auto">
+                                    Workload
+                                </Box>
+                            </Typography>
+
+
+                        ) : <Typography>
+                                <Box textAlign="center" mx="auto">
+                                    Workload
+                                    </Box>
+                            </Typography>
+                        }
+                        {width < 460 ? (
+                            <Typography variant='body2'>
+                                <Box textAlign="center" mx="auto">
+                                    3.2
+                                </Box>
+                            </Typography>
+
+
+                        ) : <Typography>
+                                <Box textAlign="center" mx="auto">
+                                    3.2
+                                    </Box>
+                            </Typography>
+                        }
                     </Grid>
 
                     <Grid
                         item
-                        xs={2.4}
+                        xs={3}
+                        sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        <Typography>
-                            <Box textAlign="center">
-                                Enthusiasm
-                        </Box>
-                        </Typography>
-                        <Typography>
-                            <Box textAlign="center">
-                                3.5
-                        </Box>
-                        </Typography>
+                        {width < 460 ? (
+                            <Typography variant='body2'>
+                                <Box textAlign="center" mx="auto">
+                                    Enthusiasm
+                                </Box>
+                            </Typography>
+
+
+                        ) : <Typography>
+                                <Box textAlign="center" mx="auto">
+                                    Enthusiasm
+                                    </Box>
+                            </Typography>
+                        }
+                        {width < 460 ? (
+                            <Typography variant='body2'>
+                                <Box textAlign="center" mx="auto">
+                                    3.2
+                                </Box>
+                            </Typography>
+
+
+                        ) : <Typography>
+                                <Box textAlign="center" mx="auto">
+                                    3.2
+                                    </Box>
+                            </Typography>
+                        }
                     </Grid>
                     <Grid
                         item
-                        xs={2.4}
+                        xs={6}
+                        sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        <Typography>
-                            <Box textAlign="center">
-                                Textbook Usage
-                            </Box>
-                        </Typography>
-                        <Typography>
-                            <Box textAlign="center">
-                                3.5
-                        </Box>
-                        </Typography>
+                        {width < 460 ? (
+                            <Typography variant='body2'>
+                                <Box textAlign="center" mx="auto">
+                                    Textbook
+                                </Box>
+                            </Typography>
+
+
+                        ) : <Typography>
+                                <Box textAlign="center" mx="auto">
+                                    Textbook
+                                    </Box>
+                            </Typography>
+                        }
+                        {width < 460 ? (
+                            <Typography variant='body2'>
+                                <Box textAlign="center" mx="auto">
+                                    3.2
+                                </Box>
+                            </Typography>
+
+
+                        ) : <Typography>
+                                <Box textAlign="center" mx="auto">
+                                    3.2
+                                    </Box>
+                            </Typography>
+                        }
                     </Grid>
                     <Grid
                         item
-                        xs={2.4}
+                        xs={6}
+                        sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        <Typography>
-                            <Box textAlign="center">
-                                Workload
-                            </Box>
-                        </Typography>
-                        <Typography>
-                            <Box textAlign="center">
-                                3.5
-                            </Box>
-                        </Typography>
+                        <AddReviewButton text= { width < 750 ? ("Add Review") : 'Add YOUR review'} />
+
                     </Grid>
                 </Grid>
 
