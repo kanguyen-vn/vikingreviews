@@ -321,7 +321,7 @@ export default function Reviews() {
 
                 </Grid>
                 {/* score board */}
-                {/* // Department, Course #, Name, Overall, Workload, Enthusiasm, Textboo Usage */}
+                {/* // Department, Course #, Name, Workload, Grading ,Enthusiasm, Textboo Usage */}
                 <Grid
                     item
                     container
