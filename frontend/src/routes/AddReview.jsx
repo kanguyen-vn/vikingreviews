@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import useWindowDimensions from '../misc/useWindowDimensions';
 import AddReviewButton from "../components/AddReviewButton";
+import CancelButton from "../components/common/CancelButton";
 import StyledButton from "../components/common/StyledButton";
 import ErrorIcon from "@material-ui/icons/Error";
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -402,15 +403,20 @@ export default function EditReview() {
                   rows={2}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid container xs={12} sm={12}   direction="row" justify="space-evenly" alignItems="center" spacing={2} >
+
+              <Grid item xs={3}>
                 <FormControlLabel
                   control={<Checkbox color="secondary" name="anonymous" value="yes" />}
-
                   label="Stay anonymous"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={3}>
+                <CancelButton text={width < 960 ? ("Cancel") : 'Cancel'} />
+              </Grid>
+              <Grid item xs={3}>
                 <AddReviewButton text={width < 960 ? ("Submit Review") : 'Submit your review'} />
+              </Grid>
               </Grid>
             </Grid>
           </Grid>
