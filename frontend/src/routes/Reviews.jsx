@@ -178,7 +178,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             height: '4vh',
         },
-        background: grey[100],
+        // background: grey[100],
         borderRadius: 8,
     },
     courseNameStyles: {
@@ -188,7 +188,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             height: '4vh',
         },
-        background: grey[100],
+        // background: grey[100],
         borderRadius: 8,
     },
 
@@ -201,7 +201,7 @@ const useStyles = makeStyles((theme) => ({
         // [theme.breakpoints.up('sm')]: {
         //     height: '8vh',
         // },
-        background: grey[100],
+        // background: grey[100],
         borderRadius: 8,
     },
     courseScoreBoxStyles: {
@@ -212,7 +212,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             height: '7vh',
         },
-        background: grey[200],
+        // background: grey[200],
         borderRadius: 8,
     },
     addReviewButtonStyles: {},
@@ -355,34 +355,16 @@ export default function EnhancedTable() {
                         sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        {width < 460 ? (
-                            <Typography variant='body2'>
+                        <Typography variant= { width < 460 ? ("body2") : 'body1'}>
                                 <Box textAlign="center" mx="auto">
                                     Overall
                                 </Box>
-                            </Typography>
-
-
-                        ) : <Typography>
+                            </Typography>                      
+                            <Typography variant= { width < 460 ? ("body2") : 'body1'}>
                                 <Box textAlign="center" mx="auto">
-                                    Overall
-                                    </Box>
-                            </Typography>
-                        }
-                        {width < 460 ? (
-                            <Typography variant='body2'>
-                                <Box textAlign="center" mx="auto">
-                                    3.2
+                                    4.5
                                 </Box>
                             </Typography>
-
-
-                        ) : <Typography>
-                                <Box textAlign="center" mx="auto">
-                                    3.2
-                                    </Box>
-                            </Typography>
-                        }
                     </Grid>
 
                     <Grid
@@ -391,34 +373,16 @@ export default function EnhancedTable() {
                         sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        {width < 460 ? (
-                            <Typography variant='body2'>
+                        <Typography variant= { width < 460 ? ("body2") : 'body1'}>
                                 <Box textAlign="center" mx="auto">
                                     Workload
                                 </Box>
-                            </Typography>
-
-
-                        ) : <Typography>
+                            </Typography>                      
+                            <Typography variant= { width < 460 ? ("body2") : 'body1'}>
                                 <Box textAlign="center" mx="auto">
-                                    Workload
-                                    </Box>
-                            </Typography>
-                        }
-                        {width < 460 ? (
-                            <Typography variant='body2'>
-                                <Box textAlign="center" mx="auto">
-                                    3.2
+                                    4.1
                                 </Box>
                             </Typography>
-
-
-                        ) : <Typography>
-                                <Box textAlign="center" mx="auto">
-                                    3.2
-                                    </Box>
-                            </Typography>
-                        }
                     </Grid>
 
                     <Grid
@@ -427,34 +391,16 @@ export default function EnhancedTable() {
                         sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        {width < 460 ? (
-                            <Typography variant='body2'>
+                        <Typography variant= { width < 460 ? ("body2") : 'body1'}>
                                 <Box textAlign="center" mx="auto">
                                     Enthusiasm
                                 </Box>
-                            </Typography>
-
-
-                        ) : <Typography>
+                            </Typography>                      
+                            <Typography variant= { width < 460 ? ("body2") : 'body1'}>
                                 <Box textAlign="center" mx="auto">
-                                    Enthusiasm
-                                    </Box>
-                            </Typography>
-                        }
-                        {width < 460 ? (
-                            <Typography variant='body2'>
-                                <Box textAlign="center" mx="auto">
-                                    3.2
+                                    3.9
                                 </Box>
                             </Typography>
-
-
-                        ) : <Typography>
-                                <Box textAlign="center" mx="auto">
-                                    3.2
-                                    </Box>
-                            </Typography>
-                        }
                     </Grid>
                     <Grid
                         item
@@ -462,34 +408,16 @@ export default function EnhancedTable() {
                         sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        {width < 460 ? (
-                            <Typography variant='body2'>
+                            <Typography variant= { width < 460 ? ("body2") : 'body1'}>
                                 <Box textAlign="center" mx="auto">
                                     Textbook
                                 </Box>
-                            </Typography>
-
-
-                        ) : <Typography>
-                                <Box textAlign="center" mx="auto">
-                                    Textbook
-                                    </Box>
-                            </Typography>
-                        }
-                        {width < 460 ? (
-                            <Typography variant='body2'>
+                            </Typography>                      
+                            <Typography variant= { width < 460 ? ("body2") : 'body1'}>
                                 <Box textAlign="center" mx="auto">
                                     3.2
                                 </Box>
                             </Typography>
-
-
-                        ) : <Typography>
-                                <Box textAlign="center" mx="auto">
-                                    3.2
-                                    </Box>
-                            </Typography>
-                        }
                     </Grid>
                     <Grid
                         item
