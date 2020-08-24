@@ -18,36 +18,26 @@ import AddReviewButton from "../components/AddReviewButton";
 import grey from "@material-ui/core/colors/grey";
 
 
-function createData(department_code, course_num, class_name, review_sum, overall, workload, enthusiasm, textbook) {
+function createData(edit_time, instructor, user, workload, grading, enthusiasm, textbook, review) {
     return {
-        department_code,
-        course_num,
-        class_name,
-        review_sum,
-        overall,
+        edit_time,
+        instructor,
+        user,
         workload,
+        grading,
         enthusiasm,
-        textbook
+        textbook,
+        review
     };
 }
 
 const rows = [
-    createData('CMSC', 150, 'intro to CS', 2, 4.3, 2, 2, 2),
-    createData('ANTH', 374, ' Identity and Place: Diaspora Eeperience In Comparative Perspective', 2, 2.3, 2, 2, 2),
-    createData('CMSC', 410, ' Data Structures and Algorithm Analysis  Data Structures and Algorithm Analysis', 1, 4.3, 2, 1, 2),
-    createData('CMSC', 510, 'Data Structures and Algorithm Analysis', 2, 2.3, 5, 2, 3),
-    createData('ECON', 150, 'intro to ECON', 2, 4.3, 2, 2, 2),
-    createData('ARHI', 205, ' Vikings to Vaultings: Art and Architecture of Medieval Northern Culture', 1.3, 2.9, 2, 2.1, 2),
-    createData('ENG', 452, 'Samuel Richardsons Clarissa and the #metoo Eighteenth Century', 1, 4.3, 1, 1, 2),
-    createData('ENG', 410, 'Newtonian Lit: Chronicles of a Clockwork Universe', 2, 2.3, 5, 2, 3),
-    createData('MUTH', 151, 'Music Fundamentals, Theory, and Analysis 1', 2, 4.3, 2, 2, 2),
-    createData('BIOL', 170, ' Integrative BIOLOGY: EXperImenTAL DesIGn AnD STATIsTIc', 1, 2.3, 4.2, 4.2, 2.0),
-    createData('MUTH', 699, 'Independent Study in Music Theory', 1, 4.1, 2, 1, 2),
-    createData('MUTH', 402, 'Counterpoint in the Style of J.S. Bach II', 2, 2.3, 5, 2, 3),
-    createData('MUTH', 152, 'Music Fundamentals, Theory, and Analysis 2', 2, 4.3, 2, 2, 2),
-    createData('ARHI', 251, 'The Transformation Of The MODern CITY: TOKYO, SeOUL AnD ShAnGhAI (1860-1945)', 2, 2.3, 2, 2, 2),
-    createData('MUTH', 698, 'Independent Study in Music Theory 2', 1, 4.1, 2, 1, 2),
-    createData('MUTH', 401, 'Counterpoint in the Style of J.S. Bach III', 2, 2.3, 5, 2, 3),
+    createData('2020-08-15', 'Instructor someone', 'Username A', 2.0, 3, 2, 5, 'The class was super informative. You would probably need to attend all the classes and get 80% for every exam to get C+. '),
+    createData('2020-08-15', 'Instructor someone', 'Username B', 2.0, 4.3, 2, 4.5, 'The class was super informative. You would probably need to attend all the classes and get 80% for every exam to get C+. '),
+    createData('2020-01-12', 'Barack Obama', 'Anonymous', 2.0, 4.3, 1.6, 2.9, 'The class was super informative. You would probably need to attend all the classes and get 80% for every exam to get C+. '),
+    createData('2020-08-15', 'Barack Obama', 'Username K', 2.0, 4.9, 2, 1.5, 'You would probably need to attend all the classes and get 80% for every exam to get C+. '),
+    createData('2020-08-15', 'Barack Obama', 'Anonymous', 4.0, 4.3, 2, 1.0, 'The class was super informative. You would probably need to attend all the classes and get 80% for every exam to get C+. '),
+    createData('2020-08-15', 'Instructor someone', 'Username C', 5.0, 4.3, 2, 4.2, 'The class was super informative. You would probably need to attend all the classes and get 80% for every exam to get C+. '),
 ];
 
 // Department, Course #, Name, Overall, Workload, Enthusiasm, Textboo Usage
@@ -77,15 +67,17 @@ function stableSort(array, comparator) {
     });
     return stabilizedThis.map((el) => el[0]);
 }
+// function createData(edit_time, instructor, user, workload, grading, enthusiasm, textbook, review) {
 
 const headCells = [
-    { id: 'department_code', numeric: false, disablePadding: true, label: 'Department' },
-    { id: 'course_num', numeric: true, disablePadding: true, label: 'Course#' },
-    { id: 'class_name', numeric: true, disablePadding: true, label: 'Name' },
-    { id: 'overall', numeric: true, disablePadding: true, label: 'Overall' },
+    { id: 'edit_time', numeric: false, disablePadding: true, label: 'Edit Time' },
+    { id: 'instructor', numeric: true, disablePadding: true, label: 'Instructor' },
+    { id: 'user', numeric: true, disablePadding: true, label: 'User' },
     { id: 'workload', numeric: true, disablePadding: true, label: 'Workload' },
+    { id: 'grading', numeric: true, disablePadding: true, label: 'Grading' },
     { id: 'enthusiasm', numeric: true, disablePadding: true, label: 'Enthusiasm' },
     { id: 'textbook', numeric: true, disablePadding: true, label: 'Textbook Usage' },
+    { id: 'review', numeric: true, disablePadding: true, label: 'Comment' },
 ];
 
 function EnhancedTableHead(props) {
@@ -253,12 +245,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function EnhancedTable() {
+export default function Reviews() {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
+    const [isLoggedIn] = React.useState(true);
     const { height, width } = useWindowDimensions();
     console.log(width);
+    console.log(rows[0]);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -455,7 +449,7 @@ export default function EnhancedTable() {
                                 {stableSort(rows, getComparator(order, orderBy))
                                     .map((row, index) => {
                                         const labelId = `enhanced-table-checkbox-${index}`;
-
+                                        // (edit_time, instructor, user, workload, grading, enthusiasm, textbook, review)
                                         return (
                                             <TableRow // !!!!!!!!!! do not change this !!!!!!!!!!!!!!!!!! 
                                                 hover
@@ -466,16 +460,19 @@ export default function EnhancedTable() {
                                             >
 
                                                 <TableCell align='center' component="th" id={labelId} scope="row" padding="none">
-                                                    {row.department_code}
+                                                    {row.edit_time}
                                                 </TableCell>
-                                                <TableCell align="center">{row.course_num}</TableCell>
                                                 {width < 1280 ? (
-                                                    <TableCell align="right">{row.class_name.substring(0, 10)}...</TableCell>
-                                                ) : <TableCell align="right">{row.class_name}</TableCell>}
-                                                <TableCell align="center">{row.overall}</TableCell>
+                                                    <TableCell align="right">{row.instructor.substring(0, 5)}...</TableCell>
+                                                ) : <TableCell align="right">{row.instructor}</TableCell>}
+                                                <TableCell align="center">{row.user}</TableCell>
                                                 <TableCell align="center">{row.workload}</TableCell>
+                                                <TableCell align="center">{row.grading}</TableCell>
                                                 <TableCell align="center">{row.enthusiasm}</TableCell>
                                                 <TableCell align="center">{row.textbook}</TableCell>
+                                                {isLoggedIn ? (
+                                                    <TableCell align="right">{row.review}</TableCell>
+                                                ) : <TableCell align="right">You need to log in to view this comment</TableCell>}
                                             </TableRow>
                                         );
                                     })}
