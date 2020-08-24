@@ -4,6 +4,7 @@ import useWindowDimensions from '../misc/useWindowDimensions';
 import AddReviewButton from "../components/AddReviewButton";
 import StyledButton from "../components/common/StyledButton";
 import ErrorIcon from "@material-ui/icons/Error";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useHistory } from "react-router-dom";
 
 import {
@@ -106,8 +107,22 @@ export default function EditReview() {
   const { height, width } = useWindowDimensions();
   const [isLoggedIn] = React.useState(true);
   const history = useHistory();
+  const [inputValueTerm, setInputValueTerm] = React.useState('');
 
-  if(!isLoggedIn){
+  const [autocompLength] = width < 460 ? ("37vh") : "50vh";
+
+  const newDate = new Date();
+  const thisYear = newDate.getFullYear();
+  const years = ['' + (thisYear - 3), '' + (thisYear - 2), '' + (thisYear - 1), '' + thisYear]
+  const terms = ['Fall', 'Winter', 'Spring', 'December'];
+  const [valueTerm, setValueTerm] = React.useState(terms[0]);
+  const [valueYear, setValueYear] = React.useState(years[3]);
+  const [inputValueYear, setInputValueYear] = React.useState('');
+  console.log(years);
+  console.log(terms);
+  console.log(typeof years[0]);
+
+  if (!isLoggedIn) {
     return (
       <Grid
         container
@@ -158,15 +173,15 @@ export default function EditReview() {
           alignItems="center"
           direction="column"
         >
-          <Grid 
-          container 
-          xs={11}
-          sm={8}
-          className = {classes.inputStyles}
+          <Grid
+            container
+            xs={11}
+            sm={8}
+            className={classes.inputStyles}
           >
-            <Typography 
-            variant={width < 460 ? ("caption") : "body1"}
-            gutterBottom
+            <Typography
+              variant={width < 460 ? ("caption") : "body1"}
+              gutterBottom
             >
               Leave your review
           </Typography>
@@ -202,7 +217,26 @@ export default function EditReview() {
                 />
               </Grid>
               <Grid item xs={6} sm={6}>
-                <TextField
+                <Autocomplete
+                  value={valueTerm}
+                  onChange={(event, newValue) => {
+                    setValueTerm(newValue);
+                  }}
+                  inputValue={inputValueTerm}
+                  onInputChange={(event, newInputValue) => {
+                    setInputValueTerm(inputValueTerm);
+                  }}
+                  id="controllable-states-demo"
+                  options={terms}
+                  style={{ width: autocompLength }}
+                  renderInput={(params) =>
+                    <TextField {...params}
+                      label="Term"
+                      variant="outlined"
+                      size={width < 460 ? ("small") : "normal"}
+                    />}
+                />
+                {/* <TextField
                   required
                   id="term"
                   name="term"
@@ -211,19 +245,22 @@ export default function EditReview() {
                   autoComplete="term"
                   variant="outlined"
                   size={width < 460 ? ("small") : "normal"}
-                />
+                /> */}
               </Grid>
               <Grid item xs={6} sm={6}>
-                <TextField
-                  required
-                  id="Year"
-                  name="Year"
-                  label="Year"
-                  multiline
-                  fullWidth
-                  autoComplete="Year"
-                  variant="outlined"
-                  size={width < 460 ? ("small") : "normal"}
+                <Autocomplete
+                  value={valueYear}
+                  onChange={(event, newValue) => {
+                    setValueYear(newValue);
+                  }}
+                  inputValue={inputValueYear}
+                  onInputChange={(event, newInputValue) => {
+                    setInputValueYear(newInputValue);
+                  }}
+                  id="controllable-states-demo"
+                  options={years}
+                  style={{ width: autocompLength }}
+                  renderInput={(params) => <TextField {...params} label="Year" variant="outlined" size={width < 460 ? ("small") : "normal"}/>}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
@@ -239,19 +276,19 @@ export default function EditReview() {
                 />
               </Grid>
               <Grid item xs={6} sm={3}>
-                <Typography 
-                id="discrete-slider" 
-                gutterBottom
-                variant={width < 460 ? ("caption") : "body1"}
+                <Typography
+                  id="discrete-slider"
+                  gutterBottom
+                  variant={width < 460 ? ("caption") : "body1"}
                 >
-                Workload 
+                  Workload
               </Typography>
-              <Typography 
-              id="discrete-slider" 
-              gutterBottom
-              variant={width < 460 ? ("caption") : "body1"}
-              >
-                (1: light - 5: heavy)
+                <Typography
+                  id="discrete-slider"
+                  gutterBottom
+                  variant={width < 460 ? ("caption") : "body1"}
+                >
+                  (1: light - 5: heavy)
               </Typography>
                 <Slider
                   defaultValue={3}
@@ -265,19 +302,19 @@ export default function EditReview() {
                 />
               </Grid>
               <Grid item xs={6} sm={3}>
-                <Typography 
-                id="discrete-slider" 
-                gutterBottom
-                variant={width < 460 ? ("caption") : "body1"}
+                <Typography
+                  id="discrete-slider"
+                  gutterBottom
+                  variant={width < 460 ? ("caption") : "body1"}
                 >
-                Grading
+                  Grading
               </Typography>
-              <Typography 
-              id="discrete-slider" 
-              gutterBottom
-              variant={width < 460 ? ("caption") : "body1"}
-              >
-                (1: easy - 5: hard)
+                <Typography
+                  id="discrete-slider"
+                  gutterBottom
+                  variant={width < 460 ? ("caption") : "body1"}
+                >
+                  (1: easy - 5: hard)
               </Typography>
                 <Slider
                   defaultValue={3}
@@ -291,19 +328,19 @@ export default function EditReview() {
                 />
               </Grid>
               <Grid item xs={6} sm={3}>
-                <Typography 
-                id="discrete-slider" 
-                gutterBottom
-                variant={width < 460 ? ("caption") : "body1"}
+                <Typography
+                  id="discrete-slider"
+                  gutterBottom
+                  variant={width < 460 ? ("caption") : "body1"}
                 >
-                Enthusiasm
+                  Enthusiasm
               </Typography>
-              <Typography 
-              id="discrete-slider" 
-              gutterBottom
-              variant={width < 460 ? ("caption") : "body1"}
-              >
-                (1: little - 5: lot)
+                <Typography
+                  id="discrete-slider"
+                  gutterBottom
+                  variant={width < 460 ? ("caption") : "body1"}
+                >
+                  (1: little - 5: lot)
               </Typography>
                 <Slider
                   defaultValue={3}
@@ -317,19 +354,19 @@ export default function EditReview() {
                 />
               </Grid>
               <Grid item xs={6} sm={3}>
-                <Typography 
-                id="discrete-slider" 
-                gutterBottom
-                variant={width < 460 ? ("caption") : "body1"}
+                <Typography
+                  id="discrete-slider"
+                  gutterBottom
+                  variant={width < 460 ? ("caption") : "body1"}
                 >
-                Textbook Usage
+                  Textbook Usage
               </Typography>
-              <Typography 
-              id="discrete-slider" 
-              gutterBottom
-              variant={width < 460 ? ("caption") : "body1"}
-              >
-                (1: light - 5: heavy)
+                <Typography
+                  id="discrete-slider"
+                  gutterBottom
+                  variant={width < 460 ? ("caption") : "body1"}
+                >
+                  (1: light - 5: heavy)
               </Typography>
                 <Slider
                   defaultValue={3}
@@ -357,13 +394,13 @@ export default function EditReview() {
               </Grid>
               <Grid item xs={6}>
                 <FormControlLabel
-                  control={<Checkbox color="secondary" name="anonymous" value="yes"/>}
-                  
-                  label="Stay anonymous" 
+                  control={<Checkbox color="secondary" name="anonymous" value="yes" />}
+
+                  label="Stay anonymous"
                 />
               </Grid>
               <Grid item xs={6}>
-              <AddReviewButton text={width < 960 ? ("Submit Review") : 'Submit your review'} />
+                <AddReviewButton text={width < 960 ? ("Submit Review") : 'Submit your review'} />
               </Grid>
             </Grid>
           </Grid>
