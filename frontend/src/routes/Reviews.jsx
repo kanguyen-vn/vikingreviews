@@ -315,27 +315,15 @@ export default function EnhancedTable() {
                     justify="space-evenly"
                     alignItems="flex-start"
                 >
-                    {width < 370 ? (
                     <Typography
                         gutterBottom
                         // className={classes.p}
-                        variant='body2'
+                        variant={width < 460 ? ("body2") : "body1"}
                     >
                         <Box textAlign="left">
                             Vikings to Vaultings: Art and Architecture of Medieval Northern Culture
                             </Box>
                     </Typography>
-
-
-                    ) : <Typography
-                        gutterBottom
-                        className={classes.p}
-                    >
-                            <Box textAlign="left">
-                                Vikings to Vaultings: Art and Architecture of Medieval Northern Culture
-                            </Box>
-                        </Typography>
-                    }
 
                 </Grid>
                 {/* score board */}
@@ -355,16 +343,16 @@ export default function EnhancedTable() {
                         sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        <Typography variant= { width < 460 ? ("body2") : 'body1'}>
-                                <Box textAlign="center" mx="auto">
-                                    Overall
+                        <Typography variant={width < 460 ? ("body2") : 'body1'}>
+                            <Box textAlign="center" mx="auto">
+                                Workload
                                 </Box>
-                            </Typography>                      
-                            <Typography variant= { width < 460 ? ("body2") : 'body1'}>
-                                <Box textAlign="center" mx="auto">
-                                    4.5
+                        </Typography>
+                        <Typography variant={width < 460 ? ("body2") : 'body1'}>
+                            <Box textAlign="center" mx="auto">
+                                4.5
                                 </Box>
-                            </Typography>
+                        </Typography>
                     </Grid>
 
                     <Grid
@@ -373,16 +361,16 @@ export default function EnhancedTable() {
                         sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        <Typography variant= { width < 460 ? ("body2") : 'body1'}>
-                                <Box textAlign="center" mx="auto">
-                                    Workload
+                        <Typography variant={width < 460 ? ("body2") : 'body1'}>
+                            <Box textAlign="center" mx="auto">
+                                Grading
                                 </Box>
-                            </Typography>                      
-                            <Typography variant= { width < 460 ? ("body2") : 'body1'}>
-                                <Box textAlign="center" mx="auto">
-                                    4.1
+                        </Typography>
+                        <Typography variant={width < 460 ? ("body2") : 'body1'}>
+                            <Box textAlign="center" mx="auto">
+                                4.1
                                 </Box>
-                            </Typography>
+                        </Typography>
                     </Grid>
 
                     <Grid
@@ -391,16 +379,16 @@ export default function EnhancedTable() {
                         sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        <Typography variant= { width < 460 ? ("body2") : 'body1'}>
-                                <Box textAlign="center" mx="auto">
-                                    Enthusiasm
+                        <Typography variant={width < 460 ? ("body2") : 'body1'}>
+                            <Box textAlign="center" mx="auto">
+                                Enthusiasm
                                 </Box>
-                            </Typography>                      
-                            <Typography variant= { width < 460 ? ("body2") : 'body1'}>
-                                <Box textAlign="center" mx="auto">
-                                    3.9
+                        </Typography>
+                        <Typography variant={width < 460 ? ("body2") : 'body1'}>
+                            <Box textAlign="center" mx="auto">
+                                3.9
                                 </Box>
-                            </Typography>
+                        </Typography>
                     </Grid>
                     <Grid
                         item
@@ -408,16 +396,16 @@ export default function EnhancedTable() {
                         sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                            <Typography variant= { width < 460 ? ("body2") : 'body1'}>
-                                <Box textAlign="center" mx="auto">
-                                    Textbook
+                        <Typography variant={width < 460 ? ("body2") : 'body1'}>
+                            <Box textAlign="center" mx="auto">
+                                Textbook
                                 </Box>
-                            </Typography>                      
-                            <Typography variant= { width < 460 ? ("body2") : 'body1'}>
-                                <Box textAlign="center" mx="auto">
-                                    3.2
+                        </Typography>
+                        <Typography variant={width < 460 ? ("body2") : 'body1'}>
+                            <Box textAlign="center" mx="auto">
+                                3.2
                                 </Box>
-                            </Typography>
+                        </Typography>
                     </Grid>
                     <Grid
                         item
@@ -425,7 +413,7 @@ export default function EnhancedTable() {
                         sm={2}
                         className={classes.courseScoreBoxStyles}
                     >
-                        <AddReviewButton text= { width < 750 ? ("Add Review") : 'Add YOUR review'} />
+                        <AddReviewButton text={width < 750 ? ("Add Review") : 'Add YOUR review'} />
 
                     </Grid>
                 </Grid>
