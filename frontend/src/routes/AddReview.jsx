@@ -18,6 +18,8 @@ import {
   ButtonGroup,
 } from '@material-ui/core'
 
+
+
 const useStyles = makeStyles((theme) => ({
   visuallyHidden: {
     border: 0,
@@ -107,17 +109,21 @@ export default function EditReview() {
   const { height, width } = useWindowDimensions();
   const [isLoggedIn] = React.useState(true);
   const history = useHistory();
-  const [inputValueTerm, setInputValueTerm] = React.useState('');
 
   const [autocompLength] = width < 460 ? ("37vh") : "50vh";
 
   const newDate = new Date();
   const thisYear = newDate.getFullYear();
-  const years = ['' + (thisYear - 3), '' + (thisYear - 2), '' + (thisYear - 1), '' + thisYear]
+  const years = ['' + (thisYear - 3), '' + (thisYear - 2), '' + (thisYear - 1), '' + thisYear, '' + (thisYear+1)]
   const terms = ['Fall', 'Winter', 'Spring', 'December'];
+  const departments = [ "CMSC Computer Science", "ECON Economics", "MUTH Music Theory", "PSYC Psychology", "SPAN Spanish" ];
   const [valueTerm, setValueTerm] = React.useState(terms[0]);
   const [valueYear, setValueYear] = React.useState(years[3]);
+  const [valueDept, setValueDept] = React.useState(departments[0]);
+  const [inputValueTerm, setInputValueTerm] = React.useState('');
   const [inputValueYear, setInputValueYear] = React.useState('');
+  const [inputValueDept, setInputValueDept] = React.useState('');
+
   console.log(years);
   console.log(terms);
   console.log(typeof years[0]);
@@ -193,15 +199,29 @@ export default function EditReview() {
               alignItems="baseline"
             >
               <Grid item xs={6} sm={6}>
-                <TextField
-                  required
-                  id="department"
-                  name="department"
-                  label="Department"
-                  autoComplete="given-name"
-                  variant="outlined"
-                  fullWidth
-                  size={width < 460 ? ("small") : "normal"}
+              <Autocomplete
+                  value={valueDept}
+                  onChange={(event, newValue) => {
+                    setValueDept(newValue);
+                  }}
+                  inputValue={inputValueDept}
+                  onInputChange={(event, newInputValue) => {
+                    setInputValueDept(newInputValue);
+                  }}
+                  id="controllable-states-demo"
+                  options={departments}
+                  style={{ width: autocompLength }}
+                  renderOption={(option) => (
+                    <React.Fragment>
+                      <span>{option}</span>
+                    </React.Fragment>
+                  )}
+                  renderInput={(params) =>
+                    <TextField {...params}
+                      label="Department"
+                      variant="outlined"
+                      size={width < 460 ? ("small") : "normal"}
+                    />}
                 />
               </Grid>
               <Grid item xs={6} sm={6}>
@@ -224,7 +244,7 @@ export default function EditReview() {
                   }}
                   inputValue={inputValueTerm}
                   onInputChange={(event, newInputValue) => {
-                    setInputValueTerm(inputValueTerm);
+                    setInputValueTerm(newInputValue);
                   }}
                   id="controllable-states-demo"
                   options={terms}
@@ -236,16 +256,6 @@ export default function EditReview() {
                       size={width < 460 ? ("small") : "normal"}
                     />}
                 />
-                {/* <TextField
-                  required
-                  id="term"
-                  name="term"
-                  label="Term"
-                  fullWidth
-                  autoComplete="term"
-                  variant="outlined"
-                  size={width < 460 ? ("small") : "normal"}
-                /> */}
               </Grid>
               <Grid item xs={6} sm={6}>
                 <Autocomplete
@@ -266,11 +276,11 @@ export default function EditReview() {
               <Grid item xs={12} sm={12}>
                 <TextField
                   required
-                  id="instructer"
-                  name="instructer"
-                  label="Instructer"
+                  id="instructor"
+                  name="instructor"
+                  label="Instructor"
                   fullWidth
-                  autoComplete="instructer"
+                  autoComplete="instructor"
                   variant="outlined"
                   size={width < 460 ? ("small") : "normal"}
                 />
