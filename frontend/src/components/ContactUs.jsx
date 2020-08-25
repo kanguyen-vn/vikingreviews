@@ -7,12 +7,9 @@ import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
 import { contactUsSchema, maxComment } from "../utils/validationSchemas";
 import { validate, validateProperty, handleChange } from "../utils/validation";
+import StyledParagraph from "./common/StyledParagraph";
 
 const useStyles = () => ({
-  p: {
-    fontStyle: "italic",
-    color: grey[800],
-  },
   counter: {
     fontStyle: "italic",
     color: grey[800],
@@ -25,7 +22,9 @@ const useStyles = () => ({
 class ContactUs extends Component {
   constructor(props) {
     super(props);
-    this.state = { data: { email: "", comment: "" }, errors: {} };
+    const state = { data: { email: "", comment: "" }, errors: {} };
+    if (props.user) state.data.email = props.user.email;
+    this.state = state;
     this.schema = contactUsSchema;
     this.validate = validate.bind(this);
     this.validateProperty = validateProperty.bind(this);
@@ -41,20 +40,21 @@ class ContactUs extends Component {
   render() {
     const { classes } = this.props;
     const { data, errors } = this.state;
+
     return (
       <>
         <DrawerHeader text="Contact Us" />
-        <p className={classes.p}>
+        <StyledParagraph>
           Fill out this form if you want to report incorrect information, report
           a bug, or suggest new features.
-        </p>
+        </StyledParagraph>
         <Grid container direction="column" justify="center" spacing={2}>
           <Grid item container direction="column" justify="center">
             <TextInput
               placeholder="Email"
               name="email"
               autoFocus
-              defaultValue=""
+              defaultValue={data.email}
               onChange={this.handleChange}
               errorText={errors && errors.email ? errors.email : null}
             />
@@ -70,7 +70,6 @@ class ContactUs extends Component {
               placeholder="What do you want us to know about?"
               multiline
               name="comment"
-              autoFocus
               defaultValue=""
               onChange={this.handleChange}
               errorText={errors && errors.comment ? errors.comment : null}

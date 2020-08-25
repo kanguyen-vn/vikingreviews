@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextInput from "./common/TextInput";
 import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
+import StyledParagraph from "./common/StyledParagraph";
 
 const useStyles = makeStyles(() => ({
   p: {
@@ -18,10 +19,10 @@ const FAQ = () => {
   return (
     <>
       <DrawerHeader text="FAQ" />
-      <p className={classes.p}>
+      <StyledParagraph>
         This project was created by Hikari Miné '20 and Kiet Nguyen '21. We hope
         you like it!
-      </p>
+      </StyledParagraph>
     </>
   );
 };

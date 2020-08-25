@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi, { allow } from "joi";
 
 const loginSchema = Joi.object({
   email: Joi.string()
@@ -57,11 +57,10 @@ const maxComment = 500;
 
 const contactUsSchema = Joi.object({
   email: Joi.string()
-    .regex(/^([a-zA-Z0-9_\.]+)@lawrence.edu$/)
+    .email({ tlds: { allow: false } })
     .messages({
       "string.empty": "Email cannot be left empty.",
-      "string.pattern.base":
-        "Email must be a Lawrence account and can contain only alphanumeric characters, periods, and underscores.",
+      "string.email": "This is not a valid email.",
     }),
   comment: Joi.string()
     .min(10)

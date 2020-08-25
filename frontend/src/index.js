@@ -19,8 +19,15 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: "Inter",
-    allVariants: {
-      textShadow: "5px 5px 0px 0px rgba(0,0,0,0.15)",
+  },
+  overrides: {
+    MuiTypography: {
+      h2: {
+        textShadow: "4px 4px 0px rgba(0,0,0,0.15)",
+      },
+      h3: {
+        textShadow: "4px 4px 0px rgba(0,0,0,0.15)",
+      },
     },
   },
 });
