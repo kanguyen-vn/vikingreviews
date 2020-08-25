@@ -6,6 +6,7 @@ import DrawerHeader from "./common/DrawerHeader";
 import { register } from "../services/userService";
 import { signUpSchema } from "../utils/validationSchemas";
 import { validate, validateProperty, handleChange } from "../utils/validation";
+import auth from "../services/authService";
 
 class SignUp extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class SignUp extends Component {
   handleSubmit = async () => {
     try {
       const response = await register(this.state.data);
-      localStorage.setItem("token", response.headers["x-auth-token"]);
+      auth.loginWithJwt(response.headers["x-auth-token"]);
       window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
