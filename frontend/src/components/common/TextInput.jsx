@@ -12,7 +12,9 @@ const useStyles = makeStyles(() => ({
   textField: {
     background: "white",
     boxShadow: "7px 7px 0px 0px rgba(0,0,0,0.15)",
-    fontStyle: "italic",
+  },
+  textFieldNoShadow: {
+    background: "white",
   },
   notchedOutline: {
     borderWidth: "1px",
@@ -41,6 +43,9 @@ const TextInput = ({
   onChange,
   defaultValue,
   name,
+  outline = false,
+  noShadow = false,
+  backgroundColor = "white",
 }) => {
   const classes = useStyles();
 
@@ -58,16 +63,17 @@ const TextInput = ({
     (password && (
       <>
         <OutlinedInput
-          className={classes.textField}
+          className={!noShadow ? classes.textField : classes.textFieldNoShadow}
           type={showPassword ? "text" : "password"}
           placeholder={placeholder}
           autoFocus={autoFocus}
           onChange={onChange}
+          classes={{ backgroundColor: backgroundColor }}
           name={name}
           classes={{
-            notchedOutline: errorText
-              ? classes.notchedOutlineRed
-              : classes.notchedOutline,
+            notchedOutline:
+              !outline &&
+              (errorText ? classes.notchedOutlineRed : classes.notchedOutline),
           }}
           endAdornment={
             <InputAdornment position="end">
@@ -85,12 +91,13 @@ const TextInput = ({
     )) || (
       <>
         <TextField
-          className={classes.textField}
+          className={!noShadow ? classes.textField : classes.textFieldNoShadow}
           placeholder={placeholder}
           variant="outlined"
           multiline={multiline}
           autoFocus={autoFocus}
           onChange={onChange}
+          classes={{ backgroundColor: backgroundColor }}
           name={name}
           defaultValue={defaultValue}
           InputProps={{
@@ -98,9 +105,11 @@ const TextInput = ({
               <InputAdornment position="start">{startAdornment}</InputAdornment>
             ),
             classes: {
-              notchedOutline: errorText
-                ? classes.notchedOutlineRed
-                : classes.notchedOutline,
+              notchedOutline:
+                !outline &&
+                (errorText
+                  ? classes.notchedOutlineRed
+                  : classes.notchedOutline),
             },
           }}
         />

@@ -1,26 +1,20 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import jwtDecode from "jwt-decode";
 import Home from "./routes/Home";
 import NotFound from "./routes/NotFound";
 import EditReview from "./routes/EditReview";
 import AddReview from "./routes/AddReview";
 import Reviews from "./routes/Reviews";
-import Courses from './routes/Courses';
+import Courses from "./routes/Courses";
 import Menu from "./components/Menu";
+import auth from "./services/authService";
 
 class App extends Component {
   state = { user: null };
 
   componentDidMount() {
-    try {
-      const jwt = localStorage.getItem("token");
-      const user = jwtDecode(jwt);
-      console.log(user);
-      this.setState({ user });
-    } catch (ex) {
-      console.log(ex);
-    }
+    const user = auth.getCurrentUser();
+    this.setState({ user });
   }
 
   addMenu = (Component, home = false) => () => (

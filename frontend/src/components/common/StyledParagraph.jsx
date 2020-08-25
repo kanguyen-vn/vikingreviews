@@ -2,14 +2,9 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
 
-const useStyles = () => ({
-  p: {
-    fontStyle: "italic",
-    color: grey[800],
-  },
-  pClickable: {
-    fontStyle: "italic",
-    color: grey[800],
+const useStyles = (theme) => ({
+  clickable: {
+    color: theme.palette.primary.dark,
     cursor: "pointer",
     textDecoration: "underline",
   },
@@ -17,14 +12,24 @@ const useStyles = () => ({
 
 class StyledParagraph extends Component {
   render() {
-    const { classes, children, onClick } = this.props;
+    const {
+      classes,
+      children,
+      onClick,
+      color = grey[800],
+      textAlign = "left",
+    } = this.props;
     if (onClick)
       return (
-        <p className={classes.pClickable} onClick={onClick}>
+        <p
+          className={classes.clickable}
+          onClick={onClick}
+          style={{ color, textAlign }}
+        >
           {children}
         </p>
       );
-    return <p className={classes.p}>{children}</p>;
+    return <p style={{ color, textAlign }}>{children}</p>;
   }
 }
 

@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import TextInput from "./common/TextInput";
 import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
-import { login } from "../services/authService";
+import auth from "../services/authService";
 import { loginSchema } from "../utils/validationSchemas";
 import { validate, validateProperty, handleChange } from "../utils/validation";
 import StyledParagraph from "./common/StyledParagraph";
@@ -21,8 +21,7 @@ class Login extends Component {
   handleSubmit = async () => {
     try {
       const { data } = this.state;
-      const { data: jwt } = await login(data.email, data.password);
-      localStorage.setItem("token", jwt);
+      await auth.login(data.email, data.password);
       window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -66,7 +65,7 @@ class Login extends Component {
               onClick={this.handleSubmit}
             />
           </Grid>
-          <StyledParagraph onClick={this.props.toSignUp}>
+          <StyledParagraph onClick={this.props.toSignUp} textAlign="center">
             Don't have an account yet? Click here to sign up!
           </StyledParagraph>
         </Grid>

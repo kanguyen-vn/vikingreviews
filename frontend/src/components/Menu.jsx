@@ -23,6 +23,7 @@ import SignUp from "./SignUp";
 import FAQ from "./FAQ";
 import Settings from "./Settings";
 import ContactUs from "./ContactUs";
+import auth from "../services/authService";
 
 const shadow = (px) => ({
   boxShadow: `${px}px ${px}px 0px 0px rgba(0,0,0,0.15)`,
@@ -103,7 +104,7 @@ const Menu = ({ user, home = false }) => {
       name: "Logout",
       highlighted: false,
       action: () => {
-        localStorage.removeItem("token");
+        auth.logout();
         window.location = "/";
       },
     },

@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
     height: "100vh",
     background: `linear-gradient(${theme.palette.primary.light}, ${theme.palette.secondary.main})`,
+    //background: theme.palette.primary.light,
   },
   button: {
     boxShadow: "5px 5px 0px 0px rgba(0,0,0,0.15)",
