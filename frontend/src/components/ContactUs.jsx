@@ -5,7 +5,8 @@ import { withStyles } from "@material-ui/core/styles";
 import TextInput from "./common/TextInput";
 import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
-import Joi from "joi";
+import { contactUsSchema, maxComment } from "../utils/validationSchemas";
+import { validate, validateProperty, handleChange } from "../utils/validation";
 
 const useStyles = () => ({
   p: {
@@ -21,28 +22,15 @@ const useStyles = () => ({
   },
 });
 
-const maxComment = 500;
-
 class ContactUs extends Component {
-  state = { data: { email: "", comment: "" }, errors: {} };
-
-  schema = Joi.object({
-    email: Joi.string()
-      .regex(/^([a-zA-Z0-9_\.]+)@lawrence.edu$/)
-      .messages({
-        "string.empty": "Email cannot be left empty.",
-        "string.pattern.base":
-          "Email must be a Lawrence account and can contain only alphanumeric characters, periods, and underscores.",
-      }),
-    comment: Joi.string()
-      .min(10)
-      .max(maxComment)
-      .messages({
-        "string.empty": "Say something :-).",
-        "string.min": "Comment should have a minimum length of 10.",
-        "string.max": `Comment should have a maximum length of ${maxComment}.`,
-      }),
-  });
+  constructor(props) {
+    super(props);
+    this.state = { data: { email: "", comment: "" }, errors: {} };
+    this.schema = contactUsSchema;
+    this.validate = validate.bind(this);
+    this.validateProperty = validateProperty.bind(this);
+    this.handleChange = handleChange.bind(this);
+  }
 
   handleSubmit = () => {
     const errors = this.validate();
@@ -50,35 +38,6 @@ class ContactUs extends Component {
     this.setState({ errors });
   };
 
-  validate = () => {
-    const options = { abortEarly: false };
-    const { error } = this.schema.validate(this.state.data, options);
-    if (!error) return null;
-    const errors = {};
-    error.details.map((item) => {
-      errors[item.path[0]] = item.message;
-    });
-    return errors;
-  };
-
-  validateProperty = ({ name, value }) => {
-    const obj = { [name]: value };
-    const { error } = this.schema.validate(obj);
-    return error ? error.details[0].message : null;
-  };
-
-  handleChange = ({ currentTarget: input }) => {
-    const errors = { ...this.state.errors };
-    const errorMessage = this.validateProperty(input);
-    if (errorMessage) errors[input.name] = errorMessage;
-    else delete errors[input.name];
-
-    const data = { ...this.state.data };
-    data[input.name] = input.value;
-
-    console.log(data, errorMessage);
-    this.setState({ data, errors });
-  };
   render() {
     const { classes } = this.props;
     const { data, errors } = this.state;
