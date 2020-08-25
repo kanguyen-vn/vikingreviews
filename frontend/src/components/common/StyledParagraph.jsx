@@ -5,11 +5,11 @@ import { grey } from "@material-ui/core/colors";
 const useStyles = () => ({
   p: {
     fontStyle: "italic",
-    color: grey[800],
+    //color: grey[800],
   },
   pClickable: {
     fontStyle: "italic",
-    color: grey[800],
+    //color: grey[800],
     cursor: "pointer",
     textDecoration: "underline",
   },
@@ -17,14 +17,18 @@ const useStyles = () => ({
 
 class StyledParagraph extends Component {
   render() {
-    const { classes, children, onClick } = this.props;
+    const { classes, children, onClick, color = grey[800] } = this.props;
     if (onClick)
       return (
-        <p className={classes.pClickable} onClick={onClick}>
+        <p className={classes.pClickable} onClick={onClick} style={{ color }}>
           {children}
         </p>
       );
-    return <p className={classes.p}>{children}</p>;
+    return (
+      <p className={classes.p} style={{ color }}>
+        {children}
+      </p>
+    );
   }
 }
 

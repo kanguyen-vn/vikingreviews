@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { BrowserRouter } from "react-router-dom";
 
-const theme = createMuiTheme({
+const themeObject = {
   palette: {
     primary: {
       main: "#59b4fe",
@@ -30,7 +30,18 @@ const theme = createMuiTheme({
       },
     },
   },
-});
+};
+
+themeObject.shadows = ["none"];
+Array.from(Array(24), (i) => i + 1).map(
+  (i) =>
+    (themeObject.shadows = [
+      ...themeObject.shadows,
+      `${i}px ${i}px 0px rgba(0,0,0,0.15)`,
+    ])
+);
+
+const theme = createMuiTheme(themeObject);
 
 ReactDOM.render(
   <React.StrictMode>
