@@ -10,7 +10,7 @@ const useStyles = (theme) => ({
   textField: {
     background: "white",
     boxShadow: "7px 7px 0px 0px rgba(0,0,0,0.15)",
-    fontStyle: "italic",
+    //fontStyle: "italic",
   },
   notchedOutline: {
     borderWidth: "1px",

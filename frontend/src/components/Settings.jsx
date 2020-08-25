@@ -4,6 +4,7 @@ import TextInput from "./common/TextInput";
 import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
 import StyledAccordion from "./common/StyledAccordion";
+import grey from "@material-ui/core/colors/grey";
 
 const Settings = () => {
   const [expanded, setExpanded] = React.useState("");
@@ -15,22 +16,6 @@ const Settings = () => {
   return (
     <>
       <DrawerHeader text="Settings" />
-      <StyledAccordion
-        header="Change your password"
-        expanded={expanded === "panel1"}
-        onChange={handleChange("panel1")}
-      >
-        <TextInput placeholder="test" />
-      </StyledAccordion>
-      <StyledAccordion
-        header="Change your basic information"
-        expanded={expanded === "panel2"}
-        onChange={handleChange("panel2")}
-      >
-        You can search for a course using the search bar, after which you can
-        read all the reviews for that course or add a new one. You can also
-        search for courses in a department or those taught by an instructor.
-      </StyledAccordion>
     </>
   );
 };

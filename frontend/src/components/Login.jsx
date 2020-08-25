@@ -65,7 +65,7 @@ class Login extends Component {
               onClick={this.handleSubmit}
             />
           </Grid>
-          <StyledParagraph onClick={this.props.toSignUp}>
+          <StyledParagraph onClick={this.props.toSignUp} textAlign="center">
             Don't have an account yet? Click here to sign up!
           </StyledParagraph>
         </Grid>

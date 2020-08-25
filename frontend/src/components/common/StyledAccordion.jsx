@@ -12,6 +12,8 @@ const useStyles = (theme) => ({
   },
   header: {
     backgroundColor: theme.palette.primary.light,
+    // backgroundColor: "white",
+    fontSize: "120%",
   },
 });
 
