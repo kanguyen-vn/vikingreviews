@@ -43,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: "1px",
     borderColor: "white",
   },
+  tooltip: {
+    whiteSpace: "nowrap",
+    fontSize: "0.8rem",
+    borderRadius: 0,
+    ...shadow(4),
+  },
 }));
 
 const Menu = ({ user, home = false }) => {
@@ -57,25 +63,25 @@ const Menu = ({ user, home = false }) => {
       icon: <FontAwesomeIcon icon={faSignInAlt} />,
       name: "Login",
       highlighted: false,
-      action: () => draw(Login),
+      action: () => draw(user)(Login),
     },
     {
       icon: <FontAwesomeIcon icon={faUserPlus} />,
       name: "Sign Up",
       highlighted: false,
-      action: () => draw(SignUp),
+      action: () => draw(user)(SignUp),
     },
     {
       icon: <FontAwesomeIcon icon={faQuestion} />,
       name: "FAQ",
       highlighted: false,
-      action: () => draw(FAQ),
+      action: () => draw(user)(FAQ),
     },
     {
       icon: <FontAwesomeIcon icon={faCommentDots} />,
       name: "Contact Us",
       highlighted: false,
-      action: () => draw(ContactUs),
+      action: () => draw(user)(ContactUs),
     },
   ];
 
@@ -90,7 +96,7 @@ const Menu = ({ user, home = false }) => {
       icon: <FontAwesomeIcon icon={faCog} />,
       name: "Settings",
       highlighted: false,
-      action: () => draw(Settings),
+      action: () => draw(user)(Settings),
     },
     {
       icon: <FontAwesomeIcon icon={faSignOutAlt} />,
@@ -105,13 +111,13 @@ const Menu = ({ user, home = false }) => {
       icon: <FontAwesomeIcon icon={faQuestion} />,
       name: "FAQ",
       highlighted: false,
-      action: () => draw(FAQ),
+      action: () => draw(user)(FAQ),
     },
     {
       icon: <FontAwesomeIcon icon={faCommentDots} />,
       name: "Contact Us",
       highlighted: false,
-      action: () => draw(ContactUs),
+      action: () => draw(user)(ContactUs),
     },
   ];
 
@@ -129,7 +135,7 @@ const Menu = ({ user, home = false }) => {
   };
 
   const handleDialClick = () => {
-    if (open) setOpen(false);
+    setOpen(!open);
   };
 
   const toggleDrawer = (open) => (event) => {
@@ -140,12 +146,25 @@ const Menu = ({ user, home = false }) => {
     ) {
       return;
     }
-
     setOpenDrawer(open);
   };
 
-  const draw = (Component) => {
-    setDrawerContent(<Component />);
+  const toSignUp = () => {
+    toggleDrawer(false)();
+    setTimeout(() => {
+      setDrawerContent(<SignUp />);
+      toggleDrawer(true)();
+    }, 500);
+  };
+
+  const draw = (user) => (Component) => {
+    if (user) {
+      setDrawerContent(<Component user={user} />);
+    } else {
+      if (Component === Login)
+        setDrawerContent(<Component toSignUp={toSignUp} />);
+      else setDrawerContent(<Component />);
+    }
     toggleDrawer(true)();
   };
 
@@ -171,7 +190,6 @@ const Menu = ({ user, home = false }) => {
         hidden={hidden}
         icon={<MenuIcon />}
         openIcon={<CloseIcon />}
-        onOpen={handleOpen}
         onClick={handleDialClick}
         direction="down"
         open={open}
@@ -186,6 +204,7 @@ const Menu = ({ user, home = false }) => {
                 tooltipTitle={action.name}
                 onClick={handleActionClick(action)}
                 tooltipOpen
+                classes={{ staticTooltipLabel: classes.tooltip }}
                 FabProps={{
                   style: action.highlighted
                     ? {

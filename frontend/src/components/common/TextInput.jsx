@@ -39,6 +39,7 @@ const TextInput = ({
   password = false,
   multiline = false,
   onChange,
+  defaultValue,
   name,
 }) => {
   const classes = useStyles();
@@ -91,6 +92,7 @@ const TextInput = ({
           autoFocus={autoFocus}
           onChange={onChange}
           name={name}
+          defaultValue={defaultValue}
           InputProps={{
             startAdornment: startAdornment && (
               <InputAdornment position="start">{startAdornment}</InputAdornment>

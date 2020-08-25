@@ -6,6 +6,7 @@ import DrawerHeader from "./common/DrawerHeader";
 import { login } from "../services/authService";
 import { loginSchema } from "../utils/validationSchemas";
 import { validate, validateProperty, handleChange } from "../utils/validation";
+import StyledParagraph from "./common/StyledParagraph";
 
 class Login extends Component {
   constructor(props) {
@@ -65,6 +66,9 @@ class Login extends Component {
               onClick={this.handleSubmit}
             />
           </Grid>
+          <StyledParagraph onClick={this.props.toSignUp}>
+            Don't have an account yet? Click here to sign up!
+          </StyledParagraph>
         </Grid>
       </>
     );

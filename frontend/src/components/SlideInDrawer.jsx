@@ -30,8 +30,7 @@ const useStyles = makeStyles((theme) => ({
     height: "80%",
     margin: 0,
     width: "100%",
-    overflow: "scroll",
-    wrap: "nowrap",
+    overflow: "auto",
   },
 }));
 
@@ -71,7 +70,7 @@ const SlideInDrawer = ({ onClose, content }) => {
         alignItems="center"
       >
         <Grid
-          // className={classes.scroll}
+          //className={classes.scroll}
           item
           xs={10}
           sm={6}
