@@ -19,6 +19,8 @@ import {
   ButtonGroup,
 } from '@material-ui/core'
 
+
+
 const useStyles = makeStyles((theme) => ({
   visuallyHidden: {
     border: 0,
@@ -123,6 +125,10 @@ export default function EditReview() {
   const [inputValueYear, setInputValueYear] = React.useState('');
   const [inputValueDept, setInputValueDept] = React.useState('');
 
+  console.log(years);
+  console.log(terms);
+  console.log(typeof years[0]);
+
   if (!isLoggedIn) {
     return (
       <Grid
@@ -184,7 +190,7 @@ export default function EditReview() {
               variant={width < 460 ? ("caption") : "body1"}
               gutterBottom
             >
-              Edit your review
+              Leave your review
           </Typography>
             <Grid
               container
@@ -398,6 +404,7 @@ export default function EditReview() {
                 />
               </Grid>
               <Grid container xs={12} sm={12}   direction="row" justify="space-evenly" alignItems="center" spacing={2} >
+
               <Grid item xs={3}>
                 <FormControlLabel
                   control={<Checkbox color="secondary" name="anonymous" value="yes" />}
@@ -405,13 +412,12 @@ export default function EditReview() {
                 />
               </Grid>
               <Grid item xs={3}>
-                <CancelButton text={width < 960 ? ("Cancel") : 'Cancel Editing'} />
+                <CancelButton text={width < 960 ? ("Cancel") : 'Cancel'} />
               </Grid>
               <Grid item xs={3}>
-                <AddReviewButton text={width < 960 ? ("Confirm") : 'Confirm your change'} />
+                <AddReviewButton text={width < 960 ? ("Submit Review") : 'Submit your review'} />
               </Grid>
               </Grid>
-              
             </Grid>
           </Grid>
         </Grid>
