@@ -14,6 +14,12 @@ const courseSchema = new mongoose.Schema({
     ref: "Department",
     required: true,
   },
+  number: {
+    type: Number,
+    required: true,
+    min: 100,
+    max: 999,
+  },
   units: {
     type: Number,
     required: true,
@@ -28,6 +34,7 @@ function validateCourse(course) {
   const schema = Joi.object({
     title: Joi.string().min(5).max(50).required(),
     department: Joi.objectId().required(),
+    number: Joi.number().min(100).max(999).required(),
     units: Joi.number().min(1).max(6).required(),
   });
 

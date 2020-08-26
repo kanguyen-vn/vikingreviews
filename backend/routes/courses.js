@@ -19,6 +19,7 @@ router.post("/", [auth, admin, validate(validateCourse)], async (req, res) => {
   const course = new Course({
     title: req.body.title,
     department: req.body.department,
+    number: req.body.number,
     units: req.body.units,
   });
   await course.save();
@@ -38,6 +39,7 @@ router.put(
       {
         title: req.body.title,
         department: req.body.department,
+        number: req.body.number,
         units: req.body.units,
       },
       { new: true }

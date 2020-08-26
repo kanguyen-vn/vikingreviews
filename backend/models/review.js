@@ -111,7 +111,7 @@ function validateReview(review) {
   const schema = Joi.object({
     course: Joi.objectId().required(),
     instructor: Joi.objectId().required(),
-    content: Joi.array().items(Joi.string().required()),
+    content: Joi.string().required(),
     workload: Joi.number().min(0).max(10).required(),
     lab: Joi.number().min(0).max(10).required(),
     homework: Joi.number().min(0).max(10).required(),
@@ -119,14 +119,12 @@ function validateReview(review) {
     instructorEnthusiasm: Joi.number().min(0).max(10).required(),
     grading: Joi.number().min(0).max(10).required(),
     flexibility: Joi.number().min(0).max(10).required(),
-    textbookUse: Joi.string().required(),
-    term: Joi.string().required,
+    textbookUse: Joi.string().valid("Never", "Sometimes", "Always").required(),
+    term: Joi.string().valid("F", "W", "S").required(),
     year: Joi.number().max(currentYear).required(),
     anonymous: Joi.bool().required(),
     user: Joi.objectId().required(),
-    time: Joi.array().items(Joi.date().required()),
-    likes: Joi.array().items(Joi.objectId()),
-    dislikes: Joi.array().items(Joi.objectId()),
+    time: Joi.date().required(),
   });
 
   return schema.validate(review);
