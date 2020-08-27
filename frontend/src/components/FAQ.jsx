@@ -1,18 +1,6 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import { grey } from "@material-ui/core/colors";
-import { makeStyles } from "@material-ui/core/styles";
-import TextInput from "./common/TextInput";
-import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
-import StyledParagraph from "./common/StyledParagraph";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
 import StyledAccordion from "./common/StyledAccordion";
-import { Typography } from "@material-ui/core";
 
 const FAQ = () => {
   const [expanded, setExpanded] = React.useState("");
@@ -23,7 +11,7 @@ const FAQ = () => {
 
   return (
     <>
-      <DrawerHeader text="FAQ" />
+      <DrawerHeader>FAQ</DrawerHeader>
       <StyledAccordion
         header="Who are the creators of this project?"
         expanded={expanded === "panel1"}

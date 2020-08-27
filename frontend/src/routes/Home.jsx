@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     background: "white",
-    boxShadow: "5px 5px 0px 0px rgba(0,0,0,0.15)",
+    boxShadow: theme.shadows[5],
     fontStyle: "italic",
   },
   p: {

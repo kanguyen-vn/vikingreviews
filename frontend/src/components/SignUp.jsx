@@ -5,7 +5,7 @@ import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
 import { register } from "../services/userService";
 import { signUpSchema } from "../utils/validationSchemas";
-import { validate, validateProperty, handleChange } from "../utils/validation";
+import * as validation from "../utils/validation";
 import auth from "../services/authService";
 
 class SignUp extends Component {
@@ -22,16 +22,17 @@ class SignUp extends Component {
       errors: {},
     };
     this.schema = signUpSchema;
-    this.validate = validate.bind(this);
-    this.validateProperty = validateProperty.bind(this);
-    this.handleChange = handleChange.bind(this);
+    this.validate = validation.validate.bind(this);
+    this.validateProperty = validation.validateProperty.bind(this);
+    this.handleChange = validation.handleChange.bind(this);
   }
 
-  handleSubmit = async () => {
+  handleSubmit = async (location) => {
     try {
       const response = await register(this.state.data);
       auth.loginWithJwt(response.headers["x-auth-token"]);
-      window.location = "/";
+      if (location) window.location = location.pathname;
+      else window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -43,9 +44,10 @@ class SignUp extends Component {
 
   render() {
     const { errors } = this.state;
+    const { location } = this.props;
     return (
       <>
-        <DrawerHeader text="Sign Up" />
+        <DrawerHeader>Sign Up</DrawerHeader>
         <Grid container direction="column" spacing={2}>
           <Grid item container direction="column" justify="center">
             <TextInput
@@ -101,7 +103,7 @@ class SignUp extends Component {
                 (this.validate() ? true : false) ||
                 Object.keys(errors).length !== 0
               }
-              onClick={this.handleSubmit}
+              onClick={() => this.handleSubmit(location)}
             />
           </Grid>
         </Grid>

@@ -9,7 +9,7 @@ const useStyles = (theme) => ({
   },
   textField: {
     background: "white",
-    boxShadow: "7px 7px 0px 0px rgba(0,0,0,0.15)",
+    boxShadow: theme.shadows[7],
     //fontStyle: "italic",
   },
   notchedOutline: {
@@ -55,7 +55,7 @@ class SearchBar extends Component {
     const { home, classes } = this.props;
     return (
       <Autocomplete
-        className={(!home && classes.textFieldPosition) || {}}
+        className={(!home && classes.textFieldPosition) || ""}
         options={choices}
         getOptionLabel={(option) => `${option.left} ${option.right}`}
         groupBy={(option) => option.type}

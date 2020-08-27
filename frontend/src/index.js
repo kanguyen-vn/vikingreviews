@@ -33,7 +33,7 @@ const themeObject = {
 };
 
 themeObject.shadows = ["none"];
-Array.from(Array(24), (i) => i + 1).map(
+Array.from(Array(24).keys(), (i) => i + 1).map(
   (i) =>
     (themeObject.shadows = [
       ...themeObject.shadows,

@@ -6,7 +6,7 @@ import TextInput from "./common/TextInput";
 import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
 import { contactUsSchema, maxComment } from "../utils/validationSchemas";
-import { validate, validateProperty, handleChange } from "../utils/validation";
+import * as validation from "../utils/validation";
 import StyledParagraph from "./common/StyledParagraph";
 
 const useStyles = () => ({
@@ -26,9 +26,9 @@ class ContactUs extends Component {
     if (props.user) state.data.email = props.user.email;
     this.state = state;
     this.schema = contactUsSchema;
-    this.validate = validate.bind(this);
-    this.validateProperty = validateProperty.bind(this);
-    this.handleChange = handleChange.bind(this);
+    this.validate = validation.validate.bind(this);
+    this.validateProperty = validation.validateProperty.bind(this);
+    this.handleChange = validation.handleChange.bind(this);
   }
 
   handleSubmit = () => {
@@ -43,7 +43,7 @@ class ContactUs extends Component {
 
     return (
       <>
-        <DrawerHeader text="Contact Us" />
+        <DrawerHeader>Contact Us</DrawerHeader>
         <StyledParagraph>
           Fill out this form if you want to report incorrect information, report
           a bug, or suggest new features.

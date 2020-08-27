@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   paperStyles: {
     height: "70vh",
     background: "white",
-    boxShadow: "10px 10px 0px 0px rgba(0,0,0,0.15)",
+    boxShadow: theme.shadows[10],
     borderRadius: 16,
   },
   notFound: {
