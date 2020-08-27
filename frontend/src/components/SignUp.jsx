@@ -5,8 +5,9 @@ import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
 import { register } from "../services/userService";
 import { signUpSchema } from "../utils/validationSchemas";
-import { validate, validateProperty, handleChange } from "../utils/validation";
+import * as validation from "../utils/validation";
 import auth from "../services/authService";
+import ScrollableGrid from "./common/ScrollableGrid";
 
 class SignUp extends Component {
   constructor(props) {
@@ -22,16 +23,17 @@ class SignUp extends Component {
       errors: {},
     };
     this.schema = signUpSchema;
-    this.validate = validate.bind(this);
-    this.validateProperty = validateProperty.bind(this);
-    this.handleChange = handleChange.bind(this);
+    this.validate = validation.validate.bind(this);
+    this.validateProperty = validation.validateProperty.bind(this);
+    this.handleChange = validation.handleChange.bind(this);
   }
 
-  handleSubmit = async () => {
+  handleSubmit = async (location) => {
     try {
       const response = await register(this.state.data);
       auth.loginWithJwt(response.headers["x-auth-token"]);
-      window.location = "/";
+      if (location) window.location = location.pathname;
+      else window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -43,68 +45,71 @@ class SignUp extends Component {
 
   render() {
     const { errors } = this.state;
+    const { location } = this.props;
     return (
       <>
-        <DrawerHeader text="Sign Up" />
-        <Grid container direction="column" spacing={2}>
-          <Grid item container direction="column" justify="center">
-            <TextInput
-              placeholder="Email"
-              name="email"
-              defaultValue=""
-              onChange={this.handleChange}
-              errorText={errors && errors.email ? errors.email : null}
-              autoFocus
-            />
+        <ScrollableGrid>
+          <DrawerHeader>Sign Up</DrawerHeader>
+          <Grid container direction="column" spacing={2}>
+            <Grid item container direction="column" justify="center">
+              <TextInput
+                placeholder="Email"
+                name="email"
+                defaultValue=""
+                onChange={this.handleChange}
+                errorText={errors && errors.email ? errors.email : null}
+                autoFocus
+              />
+            </Grid>
+            <Grid item container direction="column" justify="center">
+              <TextInput
+                placeholder="Password"
+                name="password"
+                defaultValue=""
+                onChange={this.handleChange}
+                errorText={errors && errors.password ? errors.password : null}
+                password
+              />
+            </Grid>
+            <Grid item container direction="column" justify="center">
+              <TextInput
+                placeholder="Name"
+                name="name"
+                defaultValue=""
+                onChange={this.handleChange}
+                errorText={errors && errors.name ? errors.name : null}
+              />
+            </Grid>
+            <Grid item container direction="column" justify="center">
+              <TextInput
+                placeholder="Major(s), minor(s)"
+                name="major"
+                defaultValue=""
+                onChange={this.handleChange}
+                errorText={errors && errors.major ? errors.major : null}
+              />
+            </Grid>
+            <Grid item container direction="column" justify="center">
+              <TextInput
+                startAdornment="Class of "
+                name="class"
+                defaultValue=""
+                onChange={this.handleChange}
+                errorText={errors && errors.class ? errors.class : null}
+              />
+            </Grid>
+            <Grid item container direction="row" justify="center">
+              <StyledButton
+                text="Sign Up"
+                disabled={
+                  (this.validate() ? true : false) ||
+                  Object.keys(errors).length !== 0
+                }
+                onClick={() => this.handleSubmit(location)}
+              />
+            </Grid>
           </Grid>
-          <Grid item container direction="column" justify="center">
-            <TextInput
-              placeholder="Password"
-              name="password"
-              defaultValue=""
-              onChange={this.handleChange}
-              errorText={errors && errors.password ? errors.password : null}
-              password
-            />
-          </Grid>
-          <Grid item container direction="column" justify="center">
-            <TextInput
-              placeholder="Name"
-              name="name"
-              defaultValue=""
-              onChange={this.handleChange}
-              errorText={errors && errors.name ? errors.name : null}
-            />
-          </Grid>
-          <Grid item container direction="column" justify="center">
-            <TextInput
-              placeholder="Major(s), minor(s)"
-              name="major"
-              defaultValue=""
-              onChange={this.handleChange}
-              errorText={errors && errors.major ? errors.major : null}
-            />
-          </Grid>
-          <Grid item container direction="column" justify="center">
-            <TextInput
-              startAdornment="Class of "
-              name="class"
-              defaultValue=""
-              onChange={this.handleChange}
-              errorText={errors && errors.class ? errors.class : null}
-            />
-          </Grid>
-          <Grid item container direction="row" justify="center">
-            <StyledButton
-              text="Sign Up"
-              disabled={
-                (this.validate() ? true : false) ||
-                Object.keys(errors).length !== 0
-              }
-              onClick={this.handleSubmit}
-            />
-          </Grid>
-        </Grid>
+        </ScrollableGrid>
       </>
     );
   }

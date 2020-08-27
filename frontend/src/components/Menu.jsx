@@ -25,10 +25,6 @@ import Settings from "./Settings";
 import ContactUs from "./ContactUs";
 import auth from "../services/authService";
 
-const shadow = (px) => ({
-  boxShadow: `${px}px ${px}px 0px 0px rgba(0,0,0,0.15)`,
-});
-
 const useStyles = makeStyles((theme) => ({
   speedDial: {
     position: "fixed",
@@ -38,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     background: "white",
     fontStyle: "italic",
-    ...shadow(4),
+    boxShadow: theme.shadows[4],
   },
   notchedOutline: {
     borderWidth: "1px",
@@ -48,11 +44,23 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
     fontSize: "0.8rem",
     borderRadius: 0,
-    ...shadow(4),
+    boxShadow: theme.shadows[4],
   },
 }));
 
-const Menu = ({ user, home = false }) => {
+const Menu = (props) => {
+  const {
+    user,
+    home,
+    handleDialClick,
+    toggleDrawer,
+    draw,
+    open,
+    openDrawer,
+    drawerContent,
+    ...other
+  } = props;
+
   const guestActions = [
     {
       icon: <FontAwesomeIcon icon={faArrowRight} />,
@@ -64,25 +72,25 @@ const Menu = ({ user, home = false }) => {
       icon: <FontAwesomeIcon icon={faSignInAlt} />,
       name: "Login",
       highlighted: false,
-      action: () => draw(user)(Login),
+      action: () => draw(other)(Login),
     },
     {
       icon: <FontAwesomeIcon icon={faUserPlus} />,
       name: "Sign Up",
       highlighted: false,
-      action: () => draw(user)(SignUp),
+      action: () => draw(other)(SignUp),
     },
     {
       icon: <FontAwesomeIcon icon={faQuestion} />,
       name: "FAQ",
       highlighted: false,
-      action: () => draw(user)(FAQ),
+      action: () => draw(other)(FAQ),
     },
     {
       icon: <FontAwesomeIcon icon={faCommentDots} />,
       name: "Contact Us",
       highlighted: false,
-      action: () => draw(user)(ContactUs),
+      action: () => draw(other)(ContactUs),
     },
   ];
 
@@ -97,7 +105,7 @@ const Menu = ({ user, home = false }) => {
       icon: <FontAwesomeIcon icon={faCog} />,
       name: "Settings",
       highlighted: false,
-      action: () => draw(user)(Settings),
+      action: () => draw(other)(Settings),
     },
     {
       icon: <FontAwesomeIcon icon={faSignOutAlt} />,
@@ -105,69 +113,23 @@ const Menu = ({ user, home = false }) => {
       highlighted: false,
       action: () => {
         auth.logout();
-        window.location = "/";
+        if (other.location) window.location = other.location.pathname;
+        else window.location = "/";
       },
     },
     {
       icon: <FontAwesomeIcon icon={faQuestion} />,
       name: "FAQ",
       highlighted: false,
-      action: () => draw(user)(FAQ),
+      action: () => draw(other)(FAQ),
     },
     {
       icon: <FontAwesomeIcon icon={faCommentDots} />,
       name: "Contact Us",
       highlighted: false,
-      action: () => draw(user)(ContactUs),
+      action: () => draw(other)(ContactUs),
     },
   ];
-
-  const [open, setOpen] = React.useState(false);
-  const [hidden, setHidden] = React.useState(false);
-  const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [drawerContent, setDrawerContent] = React.useState(<></>);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleDialClick = () => {
-    setOpen(!open);
-  };
-
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setOpenDrawer(open);
-  };
-
-  const toSignUp = () => {
-    toggleDrawer(false)();
-    setTimeout(() => {
-      setDrawerContent(<SignUp />);
-      toggleDrawer(true)();
-    }, 500);
-  };
-
-  const draw = (user) => (Component) => {
-    if (user) {
-      setDrawerContent(<Component user={user} />);
-    } else {
-      if (Component === Login)
-        setDrawerContent(<Component toSignUp={toSignUp} />);
-      else setDrawerContent(<Component />);
-    }
-    toggleDrawer(true)();
-  };
 
   const handleActionClick = (action) => () => {
     if (action.action) {
@@ -188,13 +150,16 @@ const Menu = ({ user, home = false }) => {
       <SpeedDial
         ariaLabel="Menu"
         className={classes.speedDial}
-        hidden={hidden}
         icon={<MenuIcon />}
         openIcon={<CloseIcon />}
         onClick={handleDialClick}
         direction="down"
         open={open}
-        FabProps={{ style: shadow(5) }}
+        FabProps={{
+          style: {
+            boxShadow: theme.shadows[5],
+          },
+        }}
       >
         {actions.map(
           (action) =>
@@ -211,9 +176,12 @@ const Menu = ({ user, home = false }) => {
                     ? {
                         backgroundColor: theme.palette.secondary.dark,
                         color: "white",
-                        ...shadow(4),
+
+                        boxShadow: theme.shadows[4],
                       }
-                    : shadow(4),
+                    : {
+                        boxShadow: theme.shadows[4],
+                      },
                 }}
               />
             )

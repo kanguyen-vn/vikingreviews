@@ -1,4 +1,4 @@
-function validate() {
+export function validate() {
   const options = { abortEarly: false };
   const { error } = this.schema.validate(this.state.data, options);
   if (!error) return null;
@@ -9,13 +9,13 @@ function validate() {
   return errors;
 }
 
-function validateProperty({ name, value }) {
+export function validateProperty({ name, value }) {
   const obj = { [name]: value };
   const { error } = this.schema.validate(obj);
   return error ? error.details[0].message : null;
 }
 
-function handleChange({ currentTarget: input }) {
+export function handleChange({ currentTarget: input }) {
   const errors = { ...this.state.errors };
   const errorMessage = this.validateProperty(input);
   if (errorMessage) errors[input.name] = errorMessage;
@@ -26,5 +26,3 @@ function handleChange({ currentTarget: input }) {
 
   this.setState({ data, errors });
 }
-
-export { validate, validateProperty, handleChange };

@@ -7,6 +7,15 @@ import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { BrowserRouter } from "react-router-dom";
 
 const themeObject = {
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 400,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
   palette: {
     primary: {
       main: "#59b4fe",
@@ -33,7 +42,7 @@ const themeObject = {
 };
 
 themeObject.shadows = ["none"];
-Array.from(Array(24), (i) => i + 1).map(
+Array.from(Array(24).keys(), (i) => i + 1).map(
   (i) =>
     (themeObject.shadows = [
       ...themeObject.shadows,
