@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 import ErrorIcon from "@material-ui/icons/Error";
 import StyledButton from "../components/common/StyledButton";
 import Login from "./../components/Login";
@@ -15,40 +16,67 @@ const useStyles = (theme) => ({
     height: "100vh",
     background: theme.palette.secondary.main,
   },
-  paperStyles: {
+  column: {
     height: "85vh",
-    // background: "white",
-    // boxShadow: theme.shadows[10],
-    borderRadius: 16,
+    width: "48%",
   },
-  notFound: {
-    padding: "0 50px 0 50px",
-    textAlign: "center",
-    fontWeight: 500,
-    fontStyle: "italic",
-    color: theme.palette.secondary.dark,
+  within: {
+    background: "white",
+    boxShadow: theme.shadows[10],
+    width: "100%",
+    height: "100%",
+    borderRadius: 10,
   },
-  errorIcon: {
-    color: theme.palette.primary.main,
+  withinHighlighted: {
+    background: theme.palette.primary.light,
+    boxShadow: theme.shadows[10],
+    width: "100%",
+    height: "100%",
+    borderRadius: 10,
+  },
+  topLeft: {
+    padding: "10px",
+    height: "30%",
+  },
+  bottomLeft: {
+    padding: "10px",
+    height: "70%",
+  },
+  topRight: {
+    padding: "10px",
+    height: "40%",
+  },
+  bottomRight: {
+    padding: "10px",
+    height: "60%",
+  },
+  prompt: {
     [theme.breakpoints.down("md")]: {
-      fontSize: "200px",
+      height: theme.typography.h6.fontSize * 2,
     },
     [theme.breakpoints.up("lg")]: {
-      fontSize: "300px",
+      height: theme.typography.h5.fontSize * 2,
+    },
+    width: "100%",
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: "10px 10px 0 0",
+  },
+  header: {
+    color: theme.palette.secondary.light,
+    margin: "0 0 10px 0",
+    fontWeight: "300",
+    [theme.breakpoints.down("md")]: {
+      fontSize: theme.typography.h6.fontSize,
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: theme.typography.h5.fontSize,
     },
   },
 });
 
 class AddReview2 extends Component {
-  state = { expanded: "" };
-
-  handleChange = (panel) => (event, newExpanded) => {
-    this.setState({ expanded: newExpanded ? panel : false });
-  };
-
   render() {
     const { classes, user, draw, ...other } = this.props;
-    const { expanded } = this.state;
     return (
       (!user && <LoginError draw={draw} {...other} />) || (
         <Grid
@@ -56,55 +84,131 @@ class AddReview2 extends Component {
           className={classes.pageStyles}
           justify="center"
           alignItems="center"
-          direction="row"
         >
           <Grid
             item
             xs={11}
             sm={8}
             container
-            className={classes.paperStyles}
-            justify="center"
+            justify="space-between"
             alignItems="center"
-            direction="column"
+            style={{ overflow: "auto", height: "85vh" }}
           >
-            <DrawerHeader primary>Add a Review</DrawerHeader>
-            <StyledAccordion
-              header="Course Information"
-              expanded={expanded === "panel1"}
-              onChange={this.handleChange("panel1")}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              container
+              className={classes.column}
+              direction="column"
+              justify="space-between"
             >
-              This project was created by Hikari Miné '20 and Kiet Nguyen '21 in
-              the summer of 2020. You can reach out to us using the "Contact us"
-              form.
-            </StyledAccordion>
-            <StyledAccordion
-              header="Workload"
-              expanded={expanded === "panel2"}
-              onChange={this.handleChange("panel2")}
+              <Grid
+                item
+                container
+                className={classes.topLeft}
+                justify="center"
+                alignItems="center"
+              >
+                <Grid
+                  container
+                  className={classes.withinHighlighted}
+                  direction="column"
+                >
+                  <Grid
+                    item
+                    container
+                    className={classes.prompt}
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <Typography className={classes.header}>COURSE</Typography>
+                    </Grid>
+                  </Grid>
+                  <SearchBar types={["Course"]} inherit />
+                </Grid>
+              </Grid>
+              <Grid
+                item
+                container
+                className={classes.bottomLeft}
+                justify="center"
+                alignItems="center"
+              >
+                <Grid container className={classes.within} direction="column">
+                  <Grid
+                    item
+                    container
+                    className={classes.prompt}
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <Typography className={classes.header}>
+                        PROFESSOR
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              container
+              className={classes.column}
+              direction="column"
+              justify="space-between"
             >
-              This project was created by Hikari Miné '20 and Kiet Nguyen '21 in
-              the summer of 2020. You can reach out to us using the "Contact us"
-              form.
-            </StyledAccordion>
-            <StyledAccordion
-              header="Professor"
-              expanded={expanded === "panel3"}
-              onChange={this.handleChange("panel3")}
-            >
-              This project was created by Hikari Miné '20 and Kiet Nguyen '21 in
-              the summer of 2020. You can reach out to us using the "Contact us"
-              form.
-            </StyledAccordion>
-            <StyledAccordion
-              header="Review"
-              expanded={expanded === "panel4"}
-              onChange={this.handleChange("panel4")}
-            >
-              This project was created by Hikari Miné '20 and Kiet Nguyen '21 in
-              the summer of 2020. You can reach out to us using the "Contact us"
-              form.
-            </StyledAccordion>
+              <Grid
+                item
+                container
+                className={classes.topRight}
+                justify="center"
+                alignItems="center"
+              >
+                <Grid container className={classes.within} direction="column">
+                  <Grid
+                    item
+                    container
+                    className={classes.prompt}
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <Typography className={classes.header}>
+                        WORKLOAD
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid
+                item
+                container
+                className={classes.bottomRight}
+                justify="center"
+                alignItems="center"
+              >
+                <Grid container className={classes.within} direction="column">
+                  <Grid
+                    item
+                    container
+                    className={classes.prompt}
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <Typography className={classes.header}>REVIEW</Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       )
@@ -113,40 +217,3 @@ class AddReview2 extends Component {
 }
 
 export default withStyles(useStyles)(AddReview2);
-
-// const NotFound = () => {
-//   const classes = useStyles();
-//   const history = useHistory();
-//   return (
-//     <Grid
-//       container
-//       className={classes.pageStyles}
-//       justify="center"
-//       alignItems="center"
-//       direction="row"
-//     >
-//       <Grid
-//         item
-//         xs={10}
-//         sm={8}
-//         md={6}
-//         lg={4}
-//         container
-//         className={classes.paperStyles}
-//         justify="center"
-//         alignItems="center"
-//         direction="column"
-//       >
-//         <Typography className={classes.notFound} variant="h4">
-//           This page has been taken over by river bugs.
-//         </Typography>
-//         <Grid container type="row" justify="center">
-//           <ErrorIcon className={classes.errorIcon} />
-//         </Grid>
-//         <StyledButton text="Back to Home" onClick={() => history.push("/")} />
-//       </Grid>
-//     </Grid>
-//   );
-// };
-
-// export default NotFound;

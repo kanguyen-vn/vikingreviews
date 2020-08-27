@@ -18,8 +18,15 @@ const useStyles = (theme) => ({
   },
   textFieldPosition: {
     position: "fixed",
-    top: theme.spacing(2),
-    right: theme.spacing(12),
+    width: 280,
+    [theme.breakpoints.down("xs")]: {
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+    },
+    [theme.breakpoints.up("sm")]: {
+      top: theme.spacing(2),
+      right: theme.spacing(12),
+    },
   },
   option: {
     fontSize: 15,
@@ -51,15 +58,22 @@ const choices = [
 ];
 
 class SearchBar extends Component {
+  filterChoices = (types) => {
+    let all = [];
+    types.map((type) => {
+      all = [...all, ...choices.filter((choice) => choice.type === type)];
+    });
+    return all;
+  };
+
   render() {
-    const { home, classes } = this.props;
+    const { home = false, classes, types, inherit = false } = this.props;
     return (
       <Autocomplete
-        className={(!home && classes.textFieldPosition) || ""}
-        options={choices}
+        className={(!inherit && !home && classes.textFieldPosition) || ""}
+        options={types ? this.filterChoices(types) : choices}
         getOptionLabel={(option) => `${option.left} ${option.right}`}
         groupBy={(option) => option.type}
-        style={(!home && { width: 350 }) || {}}
         classes={{
           option: classes.option,
         }}

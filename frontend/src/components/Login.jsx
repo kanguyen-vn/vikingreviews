@@ -8,6 +8,7 @@ import { loginSchema } from "../utils/validationSchemas";
 import * as validation from "../utils/validation";
 import StyledParagraph from "./common/StyledParagraph";
 import SignUp from "./SignUp";
+import ScrollableGrid from "./common/ScrollableGrid";
 
 class Login extends Component {
   constructor(props) {
@@ -39,42 +40,44 @@ class Login extends Component {
     const { location, switchTo, ...props } = this.props;
     return (
       <>
-        <DrawerHeader>Login</DrawerHeader>
-        <Grid item container direction="column" justify="center" spacing={2}>
-          <Grid item container direction="column" justify="center">
-            <TextInput
-              placeholder="Email"
-              name="email"
-              autoFocus
-              defaultValue=""
-              onChange={this.handleChange}
-              errorText={errors && errors.email ? errors.email : null}
-            />
+        <ScrollableGrid>
+          <DrawerHeader>Login</DrawerHeader>
+          <Grid item container direction="column" justify="center" spacing={2}>
+            <Grid item container direction="column" justify="center">
+              <TextInput
+                placeholder="Email"
+                name="email"
+                autoFocus
+                defaultValue=""
+                onChange={this.handleChange}
+                errorText={errors && errors.email ? errors.email : null}
+              />
+            </Grid>
+            <Grid item container direction="column" justify="center">
+              <TextInput
+                placeholder="Password"
+                name="password"
+                password
+                defaultValue=""
+                onChange={this.handleChange}
+                errorText={errors && errors.password ? errors.password : null}
+              />
+            </Grid>
+            <Grid item container direction="row" justify="center">
+              <StyledButton
+                text="Log in"
+                disabled={this.validate() ? true : false}
+                onClick={() => this.handleSubmit(location)}
+              />
+            </Grid>
+            <StyledParagraph
+              onClick={() => switchTo(SignUp, props)}
+              textAlign="center"
+            >
+              Don't have an account yet? Click here to sign up!
+            </StyledParagraph>
           </Grid>
-          <Grid item container direction="column" justify="center">
-            <TextInput
-              placeholder="Password"
-              name="password"
-              password
-              defaultValue=""
-              onChange={this.handleChange}
-              errorText={errors && errors.password ? errors.password : null}
-            />
-          </Grid>
-          <Grid item container direction="row" justify="center">
-            <StyledButton
-              text="Log in"
-              disabled={this.validate() ? true : false}
-              onClick={() => this.handleSubmit(location)}
-            />
-          </Grid>
-          <StyledParagraph
-            onClick={() => switchTo(SignUp, props)}
-            textAlign="center"
-          >
-            Don't have an account yet? Click here to sign up!
-          </StyledParagraph>
-        </Grid>
+        </ScrollableGrid>
       </>
     );
   }

@@ -12,9 +12,11 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     background: "white",
     boxShadow: theme.shadows[7],
+    borderRadius: 0,
   },
   textFieldNoShadow: {
     background: "white",
+    borderRadius: 0,
   },
   notchedOutline: {
     borderWidth: "1px",
