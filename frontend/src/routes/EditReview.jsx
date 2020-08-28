@@ -43,8 +43,9 @@ const useStyles = makeStyles((theme) => ({
   },
   pageStyles: {
     height: "100vh",
+    // height: useWindowDimensions()[0],
     weight: '100vh',
-    background: theme.palette.secondary.main,
+    // background: theme.palette.secondary.main,
   },
 
   paperStyles: {
@@ -55,8 +56,8 @@ const useStyles = makeStyles((theme) => ({
   },
   inputStyles: {
     height: "80vh",
-    background: "white",
-    borderRadius: 16,
+    background: 'transparent',
+
   },
 
   tableStyles: {
@@ -110,12 +111,14 @@ export default function EditReview() {
   const history = useHistory();
 
   const [autocompLength] = width < 460 ? ("37vh") : "50vh";
+  console.log(height);
+  console.log(width);
 
   const newDate = new Date();
   const thisYear = newDate.getFullYear();
-  const years = ['' + (thisYear - 3), '' + (thisYear - 2), '' + (thisYear - 1), '' + thisYear, '' + (thisYear+1)]
+  const years = ['' + (thisYear - 3), '' + (thisYear - 2), '' + (thisYear - 1), '' + thisYear, '' + (thisYear + 1)]
   const terms = ['Fall', 'Winter', 'Spring', 'December'];
-  const departments = [ "CMSC Computer Science", "ECON Economics", "MUTH Music Theory", "PSYC Psychology", "SPAN Spanish" ];
+  const departments = ["CMSC Computer Science", "ECON Economics", "MUTH Music Theory", "PSYC Psychology", "SPAN Spanish"];
   const [valueTerm, setValueTerm] = React.useState(terms[0]);
   const [valueYear, setValueYear] = React.useState(years[3]);
   const [valueDept, setValueDept] = React.useState(departments[0]);
@@ -164,7 +167,7 @@ export default function EditReview() {
         alignItems="center"
         direction="row"
       >
-        <Grid
+        {/* <Grid
           item
           xs={11}
           sm={8}
@@ -173,247 +176,265 @@ export default function EditReview() {
           justify="center"
           alignItems="center"
           direction="column"
+        > */}
+        <Grid
+          container
+          xs={11}
+          sm={8}
+          className={classes.inputStyles}
+          alignContent="flex-start"
+          direction="row"
         >
+          <Typography
+            variant={width < 460 ? ("h4") : "h4"}
+            gutterBottom
+            // font-weight='700'
+          >
+            Edit your review
+          </Typography>
           <Grid
             container
-            xs={11}
-            sm={8}
-            className={classes.inputStyles}
+            spacing={2}
+            direction="row"
+            justify="flex-start"
+            alignItems="baseline"
           >
-            <Typography
-              variant={width < 460 ? ("caption") : "body1"}
-              gutterBottom
-            >
-              Edit your review
-          </Typography>
-            <Grid
-              container
-              spacing={2}
-              direction="row"
-              justify="flex-start"
-              alignItems="baseline"
-            >
-              <Grid item xs={6} sm={6}>
+            <Grid item xs={12} sm={6}>
               <Autocomplete
-                  value={valueDept}
-                  onChange={(event, newValue) => {
-                    setValueDept(newValue);
-                  }}
-                  inputValue={inputValueDept}
-                  onInputChange={(event, newInputValue) => {
-                    setInputValueDept(newInputValue);
-                  }}
-                  id="controllable-states-demo"
-                  options={departments}
-                  style={{ width: autocompLength }}
-                  renderOption={(option) => (
-                    <React.Fragment>
-                      <span>{option}</span>
-                    </React.Fragment>
-                  )}
-                  renderInput={(params) =>
-                    <TextField {...params}
-                      label="Department"
-                      variant="outlined"
-                      size={width < 460 ? ("small") : "normal"}
-                    />}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <TextField
-                  required
-                  id="course_id"
-                  name="course_id"
-                  label="Course #"
-                  autoComplete="course_id"
-                  variant="outlined"
-                  fullWidth
-                  size={width < 460 ? ("small") : "normal"}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <Autocomplete
-                  value={valueTerm}
-                  onChange={(event, newValue) => {
-                    setValueTerm(newValue);
-                  }}
-                  inputValue={inputValueTerm}
-                  onInputChange={(event, newInputValue) => {
-                    setInputValueTerm(newInputValue);
-                  }}
-                  id="controllable-states-demo"
-                  options={terms}
-                  style={{ width: autocompLength }}
-                  renderInput={(params) =>
-                    <TextField {...params}
-                      label="Term"
-                      variant="outlined"
-                      size={width < 460 ? ("small") : "normal"}
-                    />}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <Autocomplete
-                  value={valueYear}
-                  onChange={(event, newValue) => {
-                    setValueYear(newValue);
-                  }}
-                  inputValue={inputValueYear}
-                  onInputChange={(event, newInputValue) => {
-                    setInputValueYear(newInputValue);
-                  }}
-                  id="controllable-states-demo"
-                  options={years}
-                  style={{ width: autocompLength }}
-                  renderInput={(params) => <TextField {...params} label="Year" variant="outlined" size={width < 460 ? ("small") : "normal"}/>}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  required
-                  id="instructor"
-                  name="instructor"
-                  label="Instructor"
-                  fullWidth
-                  autoComplete="instructor"
-                  variant="outlined"
-                  size={width < 460 ? ("small") : "normal"}
-                />
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant={width < 460 ? ("caption") : "body1"}
-                >
-                  Workload
-              </Typography>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant={width < 460 ? ("caption") : "body1"}
-                >
-                  (1: light - 5: heavy)
-              </Typography>
-                <Slider
-                  defaultValue={3}
-                  getAriaValueText={valuetext}
-                  aria-labelledby="discrete-slider"
-                  valueLabelDisplay="auto"
-                  step={0.1}
-                  marks
-                  min={1}
-                  max={5}
-                />
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant={width < 460 ? ("caption") : "body1"}
-                >
-                  Grading
-              </Typography>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant={width < 460 ? ("caption") : "body1"}
-                >
-                  (1: easy - 5: hard)
-              </Typography>
-                <Slider
-                  defaultValue={3}
-                  getAriaValueText={valuetext}
-                  aria-labelledby="discrete-slider"
-                  valueLabelDisplay="auto"
-                  step={0.1}
-                  marks
-                  min={1}
-                  max={5}
-                />
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant={width < 460 ? ("caption") : "body1"}
-                >
-                  Enthusiasm
-              </Typography>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant={width < 460 ? ("caption") : "body1"}
-                >
-                  (1: little - 5: lot)
-              </Typography>
-                <Slider
-                  defaultValue={3}
-                  getAriaValueText={valuetext}
-                  aria-labelledby="discrete-slider"
-                  valueLabelDisplay="auto"
-                  step={0.1}
-                  marks
-                  min={1}
-                  max={5}
-                />
-              </Grid>
-              <Grid item xs={6} sm={3}>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant={width < 460 ? ("caption") : "body1"}
-                >
-                  Textbook Usage
-              </Typography>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant={width < 460 ? ("caption") : "body1"}
-                >
-                  (1: light - 5: heavy)
-              </Typography>
-                <Slider
-                  defaultValue={3}
-                  getAriaValueText={valuetext}
-                  aria-labelledby="discrete-slider"
-                  valueLabelDisplay="auto"
-                  step={0.1}
-                  marks
-                  min={1}
-                  max={5}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  required
-                  id="review_text"
-                  name="review_text"
-                  label="Comment"
-                  fullWidth
-                  autoComplete="review_text"
-                  variant="outlined"
-                  size={width < 460 ? ("small") : "normal"}
-                  rows={2}
-                />
-              </Grid>
-              <Grid container xs={12} sm={12}   direction="row" justify="space-evenly" alignItems="center" spacing={2} >
-              <Grid item xs={3}>
-                <FormControlLabel
-                  control={<Checkbox color="secondary" name="anonymous" value="yes" />}
-                  label="Stay anonymous"
-                />
-              </Grid>
-              <Grid item xs={3}>
-                <CancelButton text={width < 960 ? ("Cancel") : 'Cancel Editing'} />
-              </Grid>
-              <Grid item xs={3}>
-                <AddReviewButton text={width < 960 ? ("Confirm") : 'Confirm your change'} />
-              </Grid>
-              </Grid>
-              
+                value={valueDept}
+                onChange={(event, newValue) => {
+                  setValueDept(newValue);
+                }}
+                inputValue={inputValueDept}
+                onInputChange={(event, newInputValue) => {
+                  setInputValueDept(newInputValue);
+                }}
+                id="controllable-states-demo"
+                options={departments}
+                style={{ width: autocompLength }}
+                renderOption={(option) => (
+                  <React.Fragment>
+                    <span>{option}</span>
+                  </React.Fragment>
+                )}
+                renderInput={(params) =>
+                  <TextField {...params}
+                    label="Department"
+                    variant="outlined"
+                    size={width < 460 ? ("small") : "normal"}
+                  />}
+              />
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="course_id"
+                name="course_id"
+                label="Course #"
+                autoComplete="course_id"
+                variant="outlined"
+                fullWidth
+                size={width < 460 ? ("small") : "normal"}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Autocomplete
+                value={valueTerm}
+                onChange={(event, newValue) => {
+                  setValueTerm(newValue);
+                }}
+                inputValue={inputValueTerm}
+                onInputChange={(event, newInputValue) => {
+                  setInputValueTerm(newInputValue);
+                }}
+                id="controllable-states-demo"
+                options={terms}
+                style={{ width: autocompLength }}
+                renderInput={(params) =>
+                  <TextField {...params}
+                    label="Term"
+                    variant="outlined"
+                    size={width < 460 ? ("small") : "normal"}
+                  />}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Autocomplete
+                value={valueYear}
+                onChange={(event, newValue) => {
+                  setValueYear(newValue);
+                }}
+                inputValue={inputValueYear}
+                onInputChange={(event, newInputValue) => {
+                  setInputValueYear(newInputValue);
+                }}
+                id="controllable-states-demo"
+                options={years}
+                style={{ width: autocompLength }}
+                renderInput={(params) => <TextField {...params} label="Year" variant="outlined" size={width < 460 ? ("small") : "normal"} />}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                required
+                id="instructor"
+                name="instructor"
+                label="Instructor"
+                fullWidth
+                autoComplete="instructor"
+                variant="outlined"
+                size={width < 460 ? ("small") : "normal"}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Typography
+                id="discrete-slider"
+                gutterBottom
+                variant="body1"
+                // variant={width < 460 ? ("caption") : "body1"}
+              >
+                Workload
+              </Typography>
+              <Typography
+                id="discrete-slider"
+                gutterBottom
+                variant="body1"
+                // variant={width < 460 ? ("caption") : "body1"}
+              >
+                (1: light - 5: heavy)
+              </Typography>
+              <Slider
+                defaultValue={3}
+                getAriaValueText={valuetext}
+                aria-labelledby="discrete-slider"
+                valueLabelDisplay="auto"
+                step={0.1}
+                marks
+                min={1}
+                max={5}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Typography
+                id="discrete-slider"
+                gutterBottom
+                variant="body1"
+                // variant={width < 460 ? ("caption") : "body1"}
+              >
+                Grading
+              </Typography>
+              <Typography
+                id="discrete-slider"
+                gutterBottom
+                variant="body1"
+                // variant={width < 460 ? ("caption") : "body1"}
+              >
+                (1: easy - 5: hard)
+              </Typography>
+              <Slider
+                defaultValue={3}
+                getAriaValueText={valuetext}
+                aria-labelledby="discrete-slider"
+                valueLabelDisplay="auto"
+                step={0.1}
+                marks
+                min={1}
+                max={5}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Typography
+                id="discrete-slider"
+                gutterBottom
+                variant="body1"
+                // variant={width < 460 ? ("caption") : "body1"}
+              >
+                Enthusiasm
+              </Typography>
+              <Typography
+                id="discrete-slider"
+                gutterBottom
+                variant="body1"
+                // variant={width < 460 ? ("caption") : "body1"}
+              >
+                (1: little - 5: lot)
+              </Typography>
+              <Slider
+                defaultValue={3}
+                getAriaValueText={valuetext}
+                aria-labelledby="discrete-slider"
+                valueLabelDisplay="auto"
+                step={0.1}
+                marks
+                min={1}
+                max={5}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Typography
+                id="discrete-slider"
+                gutterBottom
+                variant="body1"
+                // variant={width < 460 ? ("caption") : "body1"}
+              >
+                Textbook Usage
+              </Typography>
+              <Typography
+                id="discrete-slider"
+                gutterBottom
+                // variant={width < 460 ? ("caption") : "body1"}
+                variant="body1"
+              >
+                (1: light - 5: heavy)
+              </Typography>
+              <Slider
+                defaultValue={3}
+                getAriaValueText={valuetext}
+                aria-labelledby="discrete-slider"
+                valueLabelDisplay="auto"
+                step={0.1}
+                marks
+                min={1}
+                max={5}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                required
+                id="review_text"
+                name="review_text"
+                label="Comment"
+                fullWidth
+                autoComplete="review_text"
+                variant="outlined"
+                size='normal'
+                // size={width < 460 ? ("small") : "normal"}
+                rows={2}
+              />
+            </Grid>
+            <Grid container xs={12}>
+              <Grid container direction="row" justify="space-evenly" alignItems="center" spacing={2} >
+                <Grid item xs={12} justify = 'center' alignItems='center'>
+                  <FormControlLabel
+                    control={<Checkbox color="primary" name="anonymous" value="yes" />}
+                    label="Stay anonymous"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <CancelButton text='Cancel Editing' />
+                </Grid>
+                <Grid item xs={12}>
+                  <AddReviewButton text='Confirm your change' />
+                </Grid>
+                <Grid item xs={12}>
+                  <p></p>
+                </Grid>
+              </Grid>
+
+            </Grid>
+
           </Grid>
+          {/* </Grid> */}
         </Grid>
       </Grid>
     );
