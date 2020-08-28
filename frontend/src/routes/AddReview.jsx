@@ -127,6 +127,12 @@ export default function EditReview() {
   const [isLoggedIn] = React.useState(true);
   const history = useHistory();
 
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
   const [autocompLength] = width < 460 ? ("37vh") : "50vh";
   console.log(height);
   console.log(width);
@@ -203,7 +209,9 @@ export default function EditReview() {
             >
 
 
-              <Accordion className={classes.accordionStyle}>
+              <Accordion 
+              className={classes.accordionStyle} 
+              expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="accordion-summary-basics"
@@ -309,7 +317,10 @@ export default function EditReview() {
                 </AccordionDetails>
               </Accordion>
 
-              <Accordion className={classes.accordionStyle}>
+              <Accordion 
+              className={classes.accordionStyle}
+              expanded={expanded === 'panel2'} 
+              onChange={handleChange('panel2')}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="accordion-summary-instructor"
@@ -461,13 +472,14 @@ export default function EditReview() {
 
                 </AccordionDetails>
               </Accordion>
-              <Accordion className={classes.accordionStyle}>
+
+              <Accordion className={classes.accordionStyle} expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
-                  aria-controls="accordion-summary-instructor"
-                  id="accordion-summary-instructor"
+                  aria-controls="accordion-summary-workload"
+                  id="accordion-summary-workload"
                 >
-                  <Typography className={classes.heading}>Instructor Information</Typography>
+                  <Typography className={classes.heading}>Workload Information</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
 
@@ -478,21 +490,6 @@ export default function EditReview() {
                     justify="flex-start"
                     alignItems="baseline"
                   >
-
-                    <Grid item xs={12} sm={12}>
-                      <TextField
-                        required
-                        id="instructor"
-                        name="instructor"
-                        label="Instructor Name"
-                        fullWidth
-                        autoComplete="instructor"
-                        variant="outlined"
-                        size="small"
-                      // size={width < 460 ? ("small") : "normal"}
-                      />
-                    </Grid>
-
                     <Grid item xs={12} sm={6}>
                       <Typography
                         id="discrete-slider"
@@ -500,7 +497,7 @@ export default function EditReview() {
                         variant="body1"
                       // variant={width < 460 ? ("caption") : "body1"}
                       >
-                        Enthusiasm*
+                        Overall Workload*
                       </Typography>
                       <Typography
                         id="discrete-slider"
@@ -508,10 +505,38 @@ export default function EditReview() {
                         variant="body1"
                       // variant={width < 460 ? ("caption") : "body1"}
                       >
-                        (0: light - 10: heavy)
-                    </Typography>
+                        (0: easy - 10: hard)
+                      </Typography>
                       <Slider
-                        defaultValue={6}
+                        defaultValue={3}
+                        getAriaValueText={valuetext}
+                        aria-labelledby="discrete-slider"
+                        valueLabelDisplay="auto"
+                        step={0.1}
+                        marks
+                        min={1}
+                        max={5}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Typography
+                        id="discrete-slider"
+                        gutterBottom
+                        variant="body1"
+                      // variant={width < 460 ? ("caption") : "body1"}
+                      >
+                        Lab*
+                      </Typography>
+                      <Typography
+                        id="discrete-slider"
+                        gutterBottom
+                        variant="body1"
+                      // variant={width < 460 ? ("caption") : "body1"}
+                      >
+                        (0: little - 10: lot)
+                      </Typography>
+                      <Slider
+                        defaultValue={3}
                         getAriaValueText={valuetext}
                         aria-labelledby="discrete-slider"
                         valueLabelDisplay="auto"
@@ -529,18 +554,18 @@ export default function EditReview() {
                         variant="body1"
                       // variant={width < 460 ? ("caption") : "body1"}
                       >
-                        Grading*
+                        Homework*
                       </Typography>
                       <Typography
                         id="discrete-slider"
                         gutterBottom
+                        // variant={width < 460 ? ("caption") : "body1"}
                         variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
                       >
                         (0: light - 10: heavy)
                       </Typography>
                       <Slider
-                        defaultValue={6}
+                        defaultValue={3}
                         getAriaValueText={valuetext}
                         aria-labelledby="discrete-slider"
                         valueLabelDisplay="auto"
@@ -551,211 +576,63 @@ export default function EditReview() {
                       />
                     </Grid>
 
-                    
-
+                    <Grid item xs={12} sm={6}>
+                      <Typography
+                        id="discrete-slider"
+                        gutterBottom
+                        variant="body1"
+                      // variant={width < 460 ? ("caption") : "body1"}
+                      >
+                        Class Participation*
+                      </Typography>
+                      <Typography
+                        id="discrete-slider"
+                        gutterBottom
+                        // variant={width < 460 ? ("caption") : "body1"}
+                        variant="body1"
+                      >
+                        (0: light - 10: heavy)
+                      </Typography>
+                      <Slider
+                        defaultValue={3}
+                        getAriaValueText={valuetext}
+                        aria-labelledby="discrete-slider"
+                        valueLabelDisplay="auto"
+                        step={0.1}
+                        marks
+                        min={1}
+                        max={5}
+                      />
+                    </Grid>
                   </Grid>
 
                 </AccordionDetails>
               </Accordion>
-            </Grid>
-
-            <Grid
-              container
-              spacing={2}
-              direction="row"
-              justify="flex-start"
-              alignItems="baseline"
-            >
-              <Grid item xs={12} sm={6}>
-                <Autocomplete
-                  value={valueDept}
-                  onChange={(event, newValue) => {
-                    setValueDept(newValue);
-                  }}
-                  inputValue={inputValueDept}
-                  onInputChange={(event, newInputValue) => {
-                    setInputValueDept(newInputValue);
-                  }}
-                  id="controllable-states-demo"
-                  options={departments}
-                  style={{ width: autocompLength }}
-                  renderOption={(option) => (
-                    <React.Fragment>
-                      <span>{option}</span>
-                    </React.Fragment>
-                  )}
-                  renderInput={(params) =>
-                    <TextField {...params}
-                      label="Department"
+              <Accordion className={classes.accordionStyle} expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="accordion-summary-comment"
+                  id="accordion-summary-comment"
+                >
+                  <Typography className={classes.heading}>Comment</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Grid item xs={12} sm={12}>
+                    <TextField
+                      required
+                      id="review_text"
+                      name="review_text"
+                      label="Leave your thought here! "
+                      fullWidth
+                      // autoComplete="review_text"
                       variant="outlined"
-                      size="small"
-                    // size={width < 460 ? ("small") : "normal"}
-                    />}
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="course_id"
-                  name="course_id"
-                  label="Course #"
-                  autoComplete="course_id"
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                // size={width < 460 ? ("small") : "normal"}
-                />
-              </Grid>
-
-              {/* <Grid xs={10}>
-                <Typography
-                  variant='h6'
-                  gutterBottom
-                >
-                  Workload Info
-              </Typography>
-              </Grid> */}
-
-              {/* <Grid item xs={12} sm={6}>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant="body1"
-                // variant={width < 460 ? ("caption") : "body1"}
-                >
-                  Overall Workload*
-              </Typography>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant="body1"
-                // variant={width < 460 ? ("caption") : "body1"}
-                >
-                  (0: easy - 10: hard)
-              </Typography>
-                <Slider
-                  defaultValue={3}
-                  getAriaValueText={valuetext}
-                  aria-labelledby="discrete-slider"
-                  valueLabelDisplay="auto"
-                  step={0.1}
-                  marks
-                  min={1}
-                  max={5}
-                />
-              </Grid> */}
-
-              {/* <Grid item xs={12} sm={6}>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant="body1"
-                // variant={width < 460 ? ("caption") : "body1"}
-                >
-                  Lab*
-              </Typography>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant="body1"
-                // variant={width < 460 ? ("caption") : "body1"}
-                >
-                  (0: little - 10: lot)
-              </Typography>
-                <Slider
-                  defaultValue={3}
-                  getAriaValueText={valuetext}
-                  aria-labelledby="discrete-slider"
-                  valueLabelDisplay="auto"
-                  step={0.1}
-                  marks
-                  min={1}
-                  max={5}
-                />
-              </Grid> */}
-
-              {/* <Grid item xs={12} sm={6}>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant="body1"
-                // variant={width < 460 ? ("caption") : "body1"}
-                >
-                  Homework*
-              </Typography>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  // variant={width < 460 ? ("caption") : "body1"}
-                  variant="body1"
-                >
-                  (0: light - 10: heavy)
-              </Typography>
-                <Slider
-                  defaultValue={3}
-                  getAriaValueText={valuetext}
-                  aria-labelledby="discrete-slider"
-                  valueLabelDisplay="auto"
-                  step={0.1}
-                  marks
-                  min={1}
-                  max={5}
-                />
-              </Grid> */}
-
-              {/* <Grid item xs={12} sm={6}>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  variant="body1"
-                // variant={width < 460 ? ("caption") : "body1"}
-                >
-                  Class Participation*
-              </Typography>
-                <Typography
-                  id="discrete-slider"
-                  gutterBottom
-                  // variant={width < 460 ? ("caption") : "body1"}
-                  variant="body1"
-                >
-                  (0: light - 10: heavy)
-              </Typography>
-                <Slider
-                  defaultValue={3}
-                  getAriaValueText={valuetext}
-                  aria-labelledby="discrete-slider"
-                  valueLabelDisplay="auto"
-                  step={0.1}
-                  marks
-                  min={1}
-                  max={5}
-                />
-              </Grid> */}
-
-              {/* <Grid xs={10}>
-                <Typography
-                  variant='h6'
-                  gutterBottom
-                >
-                  Review Comment
-              </Typography>
-              </Grid> */}
-
-              {/* <Grid item xs={12} sm={12}>
-                <TextField
-                  required
-                  id="review_text"
-                  name="review_text"
-                  label="Comment"
-                  fullWidth
-                  autoComplete="review_text"
-                  variant="outlined"
-                  size="small"
-                  rows={2}
-                />
-              </Grid> */}
-              {/* <Grid container xs={12}>
+                      // size="small"
+                      rows={5}
+                    />
+                  </Grid>
+                </AccordionDetails>
+              </Accordion>
+              <Grid container xs={12}>
                 <Grid container direction="row" justify="space-evenly" alignItems="center" spacing={2} >
                   <Grid item xs={12} justify='center' alignItems='center'>
                     <FormControlLabel
@@ -774,12 +651,12 @@ export default function EditReview() {
                   </Grid>
                 </Grid>
 
-              </Grid> */}
-
+              </Grid> 
+            </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+    
     );
   }
 }
