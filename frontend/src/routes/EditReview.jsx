@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
   headerTextStyle:{
     fontWeight: "700",
   },
-
   p: {
     textAlign: "center",
     // color: grey[700],
@@ -61,29 +60,6 @@ const useStyles = makeStyles((theme) => ({
     height: "80vh",
     background: 'transparent',
 
-  },
-
-  tableStyles: {
-    height: "60vh",
-    [theme.breakpoints.between('xs', 'sm')]: {
-      width: '30vh',
-      font: '9px',
-    },
-    [theme.breakpoints.between('sm', 'md')]: {
-      width: '54vh',
-    },
-    [theme.breakpoints.between('md', 'lg')]: {
-      width: '84vh',
-    },
-    [theme.breakpoints.between('lg', 'xl')]: {
-      width: '115vh',
-    },
-    [theme.breakpoints.up('xl')]: {
-      width: '140vh',
-    },
-    // width: '130vh',
-    background: "white",
-    borderRadius: 16,
   },
   notFound: {
     padding: "0 50px 0 50px",
