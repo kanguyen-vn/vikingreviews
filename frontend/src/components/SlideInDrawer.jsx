@@ -70,7 +70,7 @@ const SlideInDrawer = ({ onClose, content }) => {
         justify="center"
         alignItems="center"
       >
-        <Grid
+        {/* <Grid
           //className={classes.scroll}
           item
           xs={10}
@@ -78,9 +78,9 @@ const SlideInDrawer = ({ onClose, content }) => {
           container
           direction="column"
           justify="center"
-        >
-          {content}
-        </Grid>
+        > */}
+        {content}
+        {/* </Grid> */}
       </Grid>
     </>
   );

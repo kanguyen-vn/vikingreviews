@@ -15,7 +15,7 @@ const Settings = () => {
 
   return (
     <>
-      <DrawerHeader text="Settings" />
+      <DrawerHeader>Settings</DrawerHeader>
     </>
   );
 };

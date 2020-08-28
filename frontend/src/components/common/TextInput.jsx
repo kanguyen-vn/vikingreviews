@@ -8,13 +8,15 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import red from "@material-ui/core/colors/red";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   textField: {
     background: "white",
-    boxShadow: "7px 7px 0px 0px rgba(0,0,0,0.15)",
+    boxShadow: theme.shadows[7],
+    borderRadius: 0,
   },
   textFieldNoShadow: {
     background: "white",
+    borderRadius: 0,
   },
   notchedOutline: {
     borderWidth: "1px",
@@ -45,7 +47,6 @@ const TextInput = ({
   name,
   outline = false,
   noShadow = false,
-  backgroundColor = "white",
 }) => {
   const classes = useStyles();
 
@@ -68,7 +69,6 @@ const TextInput = ({
           placeholder={placeholder}
           autoFocus={autoFocus}
           onChange={onChange}
-          classes={{ backgroundColor: backgroundColor }}
           name={name}
           classes={{
             notchedOutline:
@@ -97,7 +97,6 @@ const TextInput = ({
           multiline={multiline}
           autoFocus={autoFocus}
           onChange={onChange}
-          classes={{ backgroundColor: backgroundColor }}
           name={name}
           defaultValue={defaultValue}
           InputProps={{

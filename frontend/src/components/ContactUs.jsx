@@ -6,8 +6,9 @@ import TextInput from "./common/TextInput";
 import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
 import { contactUsSchema, maxComment } from "../utils/validationSchemas";
-import { validate, validateProperty, handleChange } from "../utils/validation";
+import * as validation from "../utils/validation";
 import StyledParagraph from "./common/StyledParagraph";
+import ScrollableGrid from "./common/ScrollableGrid";
 
 const useStyles = () => ({
   counter: {
@@ -26,9 +27,9 @@ class ContactUs extends Component {
     if (props.user) state.data.email = props.user.email;
     this.state = state;
     this.schema = contactUsSchema;
-    this.validate = validate.bind(this);
-    this.validateProperty = validateProperty.bind(this);
-    this.handleChange = handleChange.bind(this);
+    this.validate = validation.validate.bind(this);
+    this.validateProperty = validation.validateProperty.bind(this);
+    this.handleChange = validation.handleChange.bind(this);
   }
 
   handleSubmit = () => {
@@ -43,45 +44,47 @@ class ContactUs extends Component {
 
     return (
       <>
-        <DrawerHeader text="Contact Us" />
-        <StyledParagraph>
-          Fill out this form if you want to report incorrect information, report
-          a bug, or suggest new features.
-        </StyledParagraph>
-        <Grid container direction="column" justify="center" spacing={2}>
-          <Grid item container direction="column" justify="center">
-            <TextInput
-              placeholder="Email"
-              name="email"
-              autoFocus
-              defaultValue={data.email}
-              onChange={this.handleChange}
-              errorText={errors && errors.email ? errors.email : null}
-            />
+        <ScrollableGrid>
+          <DrawerHeader>Contact Us</DrawerHeader>
+          <StyledParagraph>
+            Fill out this form if you want to report incorrect information,
+            report a bug, or suggest new features.
+          </StyledParagraph>
+          <Grid container direction="column" justify="center" spacing={2}>
+            <Grid item container direction="column" justify="center">
+              <TextInput
+                placeholder="Email"
+                name="email"
+                autoFocus
+                defaultValue={data.email}
+                onChange={this.handleChange}
+                errorText={errors && errors.email ? errors.email : null}
+              />
+            </Grid>
+            <Grid item container direction="column" justify="center">
+              <p
+                className={classes.counter}
+                style={{
+                  color: data.comment.length >= maxComment - 10 && red[300],
+                }}
+              >{`${maxComment - data.comment.length}/${maxComment}`}</p>
+              <TextInput
+                placeholder="What do you want us to know about?"
+                multiline
+                name="comment"
+                defaultValue=""
+                onChange={this.handleChange}
+                errorText={errors && errors.comment ? errors.comment : null}
+              />
+            </Grid>
+            <Grid item container direction="row" justify="center">
+              <StyledButton
+                text="Submit"
+                disabled={this.validate() ? true : false}
+              />
+            </Grid>
           </Grid>
-          <Grid item container direction="column" justify="center">
-            <p
-              className={classes.counter}
-              style={{
-                color: data.comment.length >= maxComment - 10 && red[300],
-              }}
-            >{`${maxComment - data.comment.length}/${maxComment}`}</p>
-            <TextInput
-              placeholder="What do you want us to know about?"
-              multiline
-              name="comment"
-              defaultValue=""
-              onChange={this.handleChange}
-              errorText={errors && errors.comment ? errors.comment : null}
-            />
-          </Grid>
-          <Grid item container direction="row" justify="center">
-            <StyledButton
-              text="Submit"
-              disabled={this.validate() ? true : false}
-            />
-          </Grid>
-        </Grid>
+        </ScrollableGrid>
       </>
     );
   }

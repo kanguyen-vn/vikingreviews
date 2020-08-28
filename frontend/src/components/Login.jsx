@@ -5,24 +5,27 @@ import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
 import auth from "../services/authService";
 import { loginSchema } from "../utils/validationSchemas";
-import { validate, validateProperty, handleChange } from "../utils/validation";
+import * as validation from "../utils/validation";
 import StyledParagraph from "./common/StyledParagraph";
+import SignUp from "./SignUp";
+import ScrollableGrid from "./common/ScrollableGrid";
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = { data: { email: "", password: "" }, errors: {} };
     this.schema = loginSchema;
-    this.validate = validate.bind(this);
-    this.validateProperty = validateProperty.bind(this);
-    this.handleChange = handleChange.bind(this);
+    this.validate = validation.validate.bind(this);
+    this.validateProperty = validation.validateProperty.bind(this);
+    this.handleChange = validation.handleChange.bind(this);
   }
 
-  handleSubmit = async () => {
+  handleSubmit = async (location) => {
     try {
       const { data } = this.state;
       await auth.login(data.email, data.password);
-      window.location = "/";
+      if (location) window.location = location.pathname;
+      else window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -34,41 +37,47 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
+    const { location, switchTo, ...props } = this.props;
     return (
       <>
-        <DrawerHeader text="Login" />
-        <Grid item container direction="column" justify="center" spacing={2}>
-          <Grid item container direction="column" justify="center">
-            <TextInput
-              placeholder="Email"
-              name="email"
-              autoFocus
-              defaultValue=""
-              onChange={this.handleChange}
-              errorText={errors && errors.email ? errors.email : null}
-            />
+        <ScrollableGrid>
+          <DrawerHeader>Login</DrawerHeader>
+          <Grid item container direction="column" justify="center" spacing={2}>
+            <Grid item container direction="column" justify="center">
+              <TextInput
+                placeholder="Email"
+                name="email"
+                autoFocus
+                defaultValue=""
+                onChange={this.handleChange}
+                errorText={errors && errors.email ? errors.email : null}
+              />
+            </Grid>
+            <Grid item container direction="column" justify="center">
+              <TextInput
+                placeholder="Password"
+                name="password"
+                password
+                defaultValue=""
+                onChange={this.handleChange}
+                errorText={errors && errors.password ? errors.password : null}
+              />
+            </Grid>
+            <Grid item container direction="row" justify="center">
+              <StyledButton
+                text="Log in"
+                disabled={this.validate() ? true : false}
+                onClick={() => this.handleSubmit(location)}
+              />
+            </Grid>
+            <StyledParagraph
+              onClick={() => switchTo(SignUp, props)}
+              textAlign="center"
+            >
+              Don't have an account yet? Click here to sign up!
+            </StyledParagraph>
           </Grid>
-          <Grid item container direction="column" justify="center">
-            <TextInput
-              placeholder="Password"
-              name="password"
-              password
-              defaultValue=""
-              onChange={this.handleChange}
-              errorText={errors && errors.password ? errors.password : null}
-            />
-          </Grid>
-          <Grid item container direction="row" justify="center">
-            <StyledButton
-              text="Log in"
-              disabled={this.validate() ? true : false}
-              onClick={this.handleSubmit}
-            />
-          </Grid>
-          <StyledParagraph onClick={this.props.toSignUp} textAlign="center">
-            Don't have an account yet? Click here to sign up!
-          </StyledParagraph>
-        </Grid>
+        </ScrollableGrid>
       </>
     );
   }
