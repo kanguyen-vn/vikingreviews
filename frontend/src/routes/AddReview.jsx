@@ -42,14 +42,14 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px 0 0 0",
   },
   headerTextStyle: {
-    fontWeight: "700",
+    // fontWeight: "700",
+    [theme.breakpoints.down('sm')]: {
+      fontWeight: "300",
+    },
+    [theme.breakpoints.up('sm')]: {
+      fontWeight: "700",
+    },
   },
-
-  // headerStyle: {
-  //   height: '10vh',
-  //   width: '100vh'
-  // },
-
 
   p: {
     textAlign: "center",
@@ -60,12 +60,12 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     // height: useWindowDimensions()[0],
     weight: '100vh',
-    // background: theme.palette.secondary.main,
+    background: theme.palette.secondary.main,
   },
 
   paperStyles: {
-    height: "90vh",
-    background: "grey",
+    // height: "90vh",
+    // background: "grey",
     // boxShadow: "10px 10px 0px 0px rgba(0,0,0,0.15)",
     borderRadius: 16,
   },
@@ -161,20 +161,29 @@ export default function EditReview() {
         className={classes.pageStyles}
         justify="center"
         alignItems="center"
-        direction="row"
+        direction="column"
       >
         <Grid
           container
           item
           xs={11}
-          // sm={6}
           md={6}
           container
           className={classes.paperStyles}
-          justify="center"
+          // justify="center"
           alignItems="center"
           direction="row"
+          style={{ overflow: "auto", height: "85vh" }}
         >
+
+          {/* this is to fix overwraping of menu btn and title */}
+          <Grid item xs={12}>
+            <p></p>
+          </Grid>
+          <Grid item xs={12}>
+            <p></p>
+          </Grid>
+
           <Grid
             container
             xs={12}
@@ -184,12 +193,16 @@ export default function EditReview() {
             alignContent="center"
             direction="column"
           >
+
+
             <Grid
               item
               xs={12}
               md={12}>
+
+
               <Typography
-                variant="h4"
+                variant={width < 460 ? ("h4") : "h1"}
                 gutterBottom
                 className={classes.headerTextStyle}
               // font-weight='700'
@@ -207,11 +220,9 @@ export default function EditReview() {
               alignContent="flex-start"
               direction="row"
             >
-
-
-              <Accordion 
-              className={classes.accordionStyle} 
-              expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+              <Accordion
+                className={classes.accordionStyle}
+                expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="accordion-summary-basics"
@@ -251,8 +262,8 @@ export default function EditReview() {
                           <TextField {...params}
                             label="Department"
                             variant="outlined"
-                            size="small"
-                          // size={width < 460 ? ("small") : "normal"}
+                            // size="small"
+                            size={width < 460 ? ("small") : "normal"}
                           />}
                       />
                     </Grid>
@@ -265,8 +276,8 @@ export default function EditReview() {
                         autoComplete="course_id"
                         variant="outlined"
                         fullWidth
-                        size="small"
-                      // size={width < 460 ? ("small") : "normal"}
+                        // size="small"
+                        size={width < 460 ? ("small") : "normal"}
                       />
                     </Grid>
                     <Grid item xs={12} sm={12}>
@@ -286,8 +297,8 @@ export default function EditReview() {
                           <TextField {...params}
                             label="Term"
                             variant="outlined"
-                            size="small"
-                          // size={width < 460 ? ("small") : "normal"}
+                            // size="small"
+                            size={width < 460 ? ("small") : "normal"}
                           />}
                       />
                     </Grid>
@@ -306,8 +317,8 @@ export default function EditReview() {
                         style={{ width: autocompLength }}
                         renderInput={(params) => <TextField {...params}
                           label="Year" variant="outlined"
-                          size="small"
-                        // size={width < 460 ? ("small") : "normal"} 
+                          // size="small"
+                          size={width < 460 ? ("small") : "normal"}
                         />}
                       />
                     </Grid>
@@ -317,10 +328,10 @@ export default function EditReview() {
                 </AccordionDetails>
               </Accordion>
 
-              <Accordion 
-              className={classes.accordionStyle}
-              expanded={expanded === 'panel2'} 
-              onChange={handleChange('panel2')}>
+              <Accordion
+                className={classes.accordionStyle}
+                expanded={expanded === 'panel2'}
+                onChange={handleChange('panel2')}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="accordion-summary-instructor"
@@ -347,8 +358,8 @@ export default function EditReview() {
                         fullWidth
                         autoComplete="instructor"
                         variant="outlined"
-                        size="small"
-                      // size={width < 460 ? ("small") : "normal"}
+                        // size="small"
+                        size={width < 460 ? ("small") : "normal"}
                       />
                     </Grid>
 
@@ -356,16 +367,16 @@ export default function EditReview() {
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         Enthusiasm*
                       </Typography>
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         (0: light - 10: heavy)
                     </Typography>
@@ -385,16 +396,16 @@ export default function EditReview() {
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         Grading*
                       </Typography>
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         (0: light - 10: heavy)
                       </Typography>
@@ -414,16 +425,16 @@ export default function EditReview() {
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         Flexibility*
                       </Typography>
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         (0: light - 10: heavy)
                       </Typography>
@@ -443,8 +454,8 @@ export default function EditReview() {
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         Textbook  Usage*
                       </Typography>
@@ -462,14 +473,12 @@ export default function EditReview() {
                         style={{ width: autocompLength }}
                         renderInput={(params) => <TextField {...params}
                           variant="outlined"
-                          size="small"
-                        // size={width < 460 ? ("small") : "normal"} 
+                          // size="small"
+                          size={width < 460 ? ("small") : "normal"}
                         />}
                       />
                     </Grid>
-
                   </Grid>
-
                 </AccordionDetails>
               </Accordion>
 
@@ -494,16 +503,16 @@ export default function EditReview() {
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         Overall Workload*
                       </Typography>
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         (0: easy - 10: hard)
                       </Typography>
@@ -522,16 +531,16 @@ export default function EditReview() {
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         Lab*
                       </Typography>
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         (0: little - 10: lot)
                       </Typography>
@@ -551,16 +560,16 @@ export default function EditReview() {
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         Homework*
                       </Typography>
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        // variant={width < 460 ? ("caption") : "body1"}
-                        variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
+                      // variant="body1"
                       >
                         (0: light - 10: heavy)
                       </Typography>
@@ -580,16 +589,16 @@ export default function EditReview() {
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        variant="body1"
-                      // variant={width < 460 ? ("caption") : "body1"}
+                        // variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
                       >
                         Class Participation*
                       </Typography>
                       <Typography
                         id="discrete-slider"
                         gutterBottom
-                        // variant={width < 460 ? ("caption") : "body1"}
-                        variant="body1"
+                        variant={width < 460 ? ("caption") : "body1"}
+                      // variant="body1"
                       >
                         (0: light - 10: heavy)
                       </Typography>
@@ -651,12 +660,12 @@ export default function EditReview() {
                   </Grid>
                 </Grid>
 
-              </Grid> 
-            </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-    
+      </Grid>
+
     );
   }
 }
