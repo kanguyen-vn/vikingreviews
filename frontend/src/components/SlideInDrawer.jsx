@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+import ScrollableGrid from "./common/ScrollableGrid";
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -14,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     },
     height: "100vh",
     background: `linear-gradient(${theme.palette.primary.light}, ${theme.palette.secondary.main})`,
-    //background: theme.palette.primary.light,
   },
   button: {
     boxShadow: "5px 5px 0px 0px rgba(0,0,0,0.15)",
@@ -29,9 +29,6 @@ const useStyles = makeStyles((theme) => ({
   },
   scroll: {
     height: "80%",
-    margin: 0,
-    width: "100%",
-    overflow: "auto",
   },
 }));
 
@@ -70,17 +67,17 @@ const SlideInDrawer = ({ onClose, content }) => {
         justify="center"
         alignItems="center"
       >
-        {/* <Grid
-          //className={classes.scroll}
+        <Grid
+          className={classes.scroll}
           item
           xs={10}
           sm={6}
           container
           direction="column"
           justify="center"
-        > */}
-        {content}
-        {/* </Grid> */}
+        >
+          <ScrollableGrid>{content}</ScrollableGrid>
+        </Grid>
       </Grid>
     </>
   );
