@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+import ScrollableGrid from "./common/ScrollableGrid";
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -75,7 +76,7 @@ const SlideInDrawer = ({ onClose, content }) => {
           direction="column"
           justify="center"
         >
-          {content}
+          <ScrollableGrid>{content}</ScrollableGrid>
         </Grid>
       </Grid>
     </>
