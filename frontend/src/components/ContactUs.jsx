@@ -8,7 +8,6 @@ import DrawerHeader from "./common/DrawerHeader";
 import { contactUsSchema, maxComment } from "../utils/validationSchemas";
 import * as validation from "../utils/validation";
 import StyledParagraph from "./common/StyledParagraph";
-import ScrollableGrid from "./common/ScrollableGrid";
 
 const useStyles = () => ({
   counter: {
@@ -44,47 +43,45 @@ class ContactUs extends Component {
 
     return (
       <>
-        <ScrollableGrid>
-          <DrawerHeader>Contact Us</DrawerHeader>
-          <StyledParagraph>
-            Fill out this form if you want to report incorrect information,
-            report a bug, or suggest new features.
-          </StyledParagraph>
-          <Grid container direction="column" justify="center" spacing={2}>
-            <Grid item container direction="column" justify="center">
-              <TextInput
-                placeholder="Email"
-                name="email"
-                autoFocus
-                defaultValue={data.email}
-                onChange={this.handleChange}
-                errorText={errors && errors.email ? errors.email : null}
-              />
-            </Grid>
-            <Grid item container direction="column" justify="center">
-              <p
-                className={classes.counter}
-                style={{
-                  color: data.comment.length >= maxComment - 10 && red[300],
-                }}
-              >{`${maxComment - data.comment.length}/${maxComment}`}</p>
-              <TextInput
-                placeholder="What do you want us to know about?"
-                multiline
-                name="comment"
-                defaultValue=""
-                onChange={this.handleChange}
-                errorText={errors && errors.comment ? errors.comment : null}
-              />
-            </Grid>
-            <Grid item container direction="row" justify="center">
-              <StyledButton
-                text="Submit"
-                disabled={this.validate() ? true : false}
-              />
-            </Grid>
+        <DrawerHeader>Contact Us</DrawerHeader>
+        <StyledParagraph>
+          Fill out this form if you want to report incorrect information, report
+          a bug, or suggest new features.
+        </StyledParagraph>
+        <Grid container direction="column" justify="center" spacing={2}>
+          <Grid item container direction="column" justify="center">
+            <TextInput
+              placeholder="Email"
+              name="email"
+              autoFocus
+              defaultValue={data.email}
+              onChange={this.handleChange}
+              errorText={errors && errors.email ? errors.email : null}
+            />
           </Grid>
-        </ScrollableGrid>
+          <Grid item container direction="column" justify="center">
+            <p
+              className={classes.counter}
+              style={{
+                color: data.comment.length >= maxComment - 10 && red[300],
+              }}
+            >{`${maxComment - data.comment.length}/${maxComment}`}</p>
+            <TextInput
+              placeholder="What do you want us to know about?"
+              multiline
+              name="comment"
+              defaultValue=""
+              onChange={this.handleChange}
+              errorText={errors && errors.comment ? errors.comment : null}
+            />
+          </Grid>
+          <Grid item container direction="row" justify="center">
+            <StyledButton
+              text="Submit"
+              disabled={this.validate() ? true : false}
+            />
+          </Grid>
+        </Grid>
       </>
     );
   }
