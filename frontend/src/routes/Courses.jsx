@@ -217,7 +217,6 @@ export default function EnhancedTable() {
           <Table stickyHeader size="small">
             <TableContainer
               className={classes.tableStyles}
-
             >
               <EnhancedTableHead
                 classes={classes}
