@@ -5,6 +5,7 @@ import NotFound from "./routes/NotFound";
 import EditReview from "./routes/EditReview";
 import AddReview from "./routes/AddReview";
 import AddReview2 from "./routes/AddReview2";
+import AddReview3 from "./routes/AddReview3";
 import Reviews from "./routes/Reviews";
 import Courses from "./routes/Courses";
 import auth from "./services/authService";
@@ -41,6 +42,7 @@ class App extends Component {
           <Route path="/reviews/edit" render={this.addMenu(EditReview)} />
           <Route path="/reviews/add" render={this.addMenu(AddReview)} />
           <Route path="/reviews/add2" render={this.addMenu(AddReview2)} />
+          <Route path="/reviews/add3" render={this.addMenu(AddReview3)} />
           <Route path="/profile/edit" render={this.addMenu(EditReview)} />
           <Route path="/courses" render={this.addMenu(Courses)} />
           <Route path="/reviews" render={this.addMenu(Reviews)} />

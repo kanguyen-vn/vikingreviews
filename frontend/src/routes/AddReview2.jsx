@@ -10,6 +10,7 @@ import DrawerHeader from "../components/common/DrawerHeader";
 import StyledAccordion from "../components/common/StyledAccordion";
 import SearchBar from "../components/SearchBar";
 import LoginError from "../components/LoginError";
+import ScrollableGrid from "../components/common/ScrollableGrid";
 
 const useStyles = (theme) => ({
   pageStyles: {
@@ -63,7 +64,7 @@ const useStyles = (theme) => ({
   },
   header: {
     color: theme.palette.secondary.light,
-    margin: "0 0 10px 0",
+    // margin: "0 0 10px 0",
     fontWeight: "300",
     [theme.breakpoints.down("md")]: {
       fontSize: theme.typography.h6.fontSize,
@@ -127,7 +128,9 @@ class AddReview2 extends Component {
                       <Typography className={classes.header}>COURSE</Typography>
                     </Grid>
                   </Grid>
-                  <SearchBar types={["Course"]} inherit />
+                  <ScrollableGrid>
+                    <SearchBar types={["Course"]} inherit />
+                  </ScrollableGrid>
                 </Grid>
               </Grid>
               <Grid
