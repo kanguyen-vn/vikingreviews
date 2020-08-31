@@ -36,6 +36,9 @@ const useStyles = (theme) => ({
       fontWeight: "bold",
     },
   },
+  customOption: {
+    fontSize: 15,
+  },
 });
 
 const choices = [
@@ -67,40 +70,74 @@ class SearchBar extends Component {
   };
 
   render() {
-    const { home = false, classes, types, inherit = false } = this.props;
+    const {
+      home = false,
+      classes,
+      types,
+      inherit = false,
+      children,
+      options = null,
+    } = this.props;
     return (
-      <Autocomplete
-        className={(!inherit && !home && classes.textFieldPosition) || ""}
-        options={types ? this.filterChoices(types) : choices}
-        getOptionLabel={(option) => `${option.left} ${option.right}`}
-        groupBy={(option) => option.type}
-        classes={{
-          option: classes.option,
-        }}
-        renderOption={(option) => (
-          <React.Fragment>
-            <span>{option.left}</span>
-            {option.right}
-          </React.Fragment>
-        )}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            placeholder={
-              (home && "Search for department, class, or professor...") ||
-              "Search..."
-            }
-            variant="outlined"
-            className={classes.textField}
-            InputProps={{
-              ...params.InputProps,
-              classes: {
-                notchedOutline: classes.notchedOutline,
-              },
-            }}
-          />
-        )}
-      />
+      (options && (
+        <Autocomplete
+          className={(!inherit && !home && classes.textFieldPosition) || ""}
+          options={options}
+          getOptionLabel={(option) => option}
+          classes={{
+            option: classes.customOption,
+          }}
+          renderOption={(option) => option}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              placeholder={children}
+              variant="outlined"
+              className={classes.textField}
+              InputProps={{
+                ...params.InputProps,
+                classes: {
+                  notchedOutline: classes.notchedOutline,
+                },
+              }}
+            />
+          )}
+        />
+      )) || (
+        <Autocomplete
+          className={(!inherit && !home && classes.textFieldPosition) || ""}
+          options={types ? this.filterChoices(types) : choices}
+          getOptionLabel={(option) => `${option.left} ${option.right}`}
+          groupBy={(option) => option.type}
+          classes={{
+            option: classes.option,
+          }}
+          renderOption={(option) => (
+            <React.Fragment>
+              <span>{option.left}</span>
+              {option.right}
+            </React.Fragment>
+          )}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              placeholder={
+                children ||
+                (home && "Search for department, class, or professor...") ||
+                "Search..."
+              }
+              variant="outlined"
+              className={classes.textField}
+              InputProps={{
+                ...params.InputProps,
+                classes: {
+                  notchedOutline: classes.notchedOutline,
+                },
+              }}
+            />
+          )}
+        />
+      )
     );
   }
 }

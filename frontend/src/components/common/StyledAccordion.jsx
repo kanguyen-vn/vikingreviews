@@ -8,18 +8,27 @@ import StyledParagraph from "./StyledParagraph";
 
 const useStyles = (theme) => ({
   accordion: {
-    boxShadow: "7px 7px 0px rgba(0,0,0,0.15)",
+    boxShadow: theme.shadows[7],
   },
   header: {
     backgroundColor: theme.palette.primary.light,
-    // backgroundColor: "white",
     fontSize: "120%",
+  },
+  bodyHighlighted: {
+    backgroundColor: theme.palette.primary.main,
   },
 });
 
 class StyledAccordion extends Component {
   render() {
-    const { classes, children, header, expanded, onChange } = this.props;
+    const {
+      classes,
+      children,
+      header,
+      expanded,
+      onChange,
+      highlighted,
+    } = this.props;
     return (
       <Accordion
         square
@@ -33,8 +42,12 @@ class StyledAccordion extends Component {
         >
           <StyledParagraph color="white">{header}</StyledParagraph>
         </AccordionSummary>
-        <AccordionDetails>
-          <StyledParagraph>{children}</StyledParagraph>
+        <AccordionDetails
+          className={highlighted ? classes.bodyHighlighted : ""}
+        >
+          {/* <StyledParagraph color={highlighted ? "white" : false}> */}
+          {children}
+          {/* </StyledParagraph> */}
         </AccordionDetails>
       </Accordion>
     );
