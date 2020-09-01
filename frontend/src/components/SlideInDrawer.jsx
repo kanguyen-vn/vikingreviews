@@ -71,7 +71,7 @@ const SlideInDrawer = ({ onClose, content }) => {
           className={classes.scroll}
           item
           xs={10}
-          sm={6}
+          sm={8}
           container
           direction="column"
           justify="center"

@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import TextInput from "./common/TextInput";
 import StyledButton from "./common/StyledButton";
 import DrawerHeader from "./common/DrawerHeader";
-import { contactUsSchema, maxComment } from "../utils/validationSchemas";
+import { contactUsSchema, maxContact } from "../utils/validationSchemas";
 import * as validation from "../utils/validation";
 import StyledParagraph from "./common/StyledParagraph";
 
@@ -63,9 +63,9 @@ class ContactUs extends Component {
             <p
               className={classes.counter}
               style={{
-                color: data.comment.length >= maxComment - 10 && red[300],
+                color: data.comment.length >= maxContact - 10 && red[300],
               }}
-            >{`${maxComment - data.comment.length}/${maxComment}`}</p>
+            >{`${maxContact - data.comment.length}/${maxContact}`}</p>
             <TextInput
               placeholder="What do you want us to know about?"
               multiline
