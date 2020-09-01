@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Menu = (props) => {
   const {
-    user,
     home,
     handleDialClick,
     toggleDrawer,
@@ -60,6 +59,7 @@ const Menu = (props) => {
     drawerContent,
     ...other
   } = props;
+  const user = auth.currentUser();
 
   const guestActions = [
     {

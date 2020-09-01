@@ -3,10 +3,13 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./routes/Home";
 import NotFound from "./routes/NotFound";
 import EditReview from "./routes/EditReview";
-import AddReviewPage from "./routes/AddReview";
+import AddReviewPage from "./routes/AddReviewPage";
 import Reviews from "./routes/Reviews";
 import Courses from "./routes/Courses";
 import auth from "./services/authService";
+import departments from "./services/departmentService";
+import courses from "./services/courseService";
+import instructors from "./services/instructorService";
 import menuActions from "./utils/menuActions";
 
 class App extends Component {
@@ -26,9 +29,14 @@ class App extends Component {
     this.addMenu = menuActions.addMenu.bind(this);
   }
 
-  componentDidMount() {
-    const user = auth.getCurrentUser();
-    this.setState({ user });
+  async componentDidMount() {
+    const user = auth.currentUser();
+    await departments.getAll(true);
+    await courses.getAll(true);
+    await instructors.getAll(true);
+    this.setState({
+      user,
+    });
   }
 
   render() {

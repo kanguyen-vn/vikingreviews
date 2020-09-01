@@ -8,7 +8,9 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const instructors = await Instructor.find().sort("lastName");
+  const instructors = await Instructor.find()
+    .populate("department")
+    .sort("lastName");
   res.send(instructors);
 });
 

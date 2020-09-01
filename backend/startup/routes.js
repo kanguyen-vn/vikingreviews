@@ -9,6 +9,7 @@ const error = require("../middleware/error");
 
 module.exports = function (app) {
   app.use(express.json());
+  app.disable("etag");
   app.use("/api/departments", departments);
   app.use("/api/instructors", instructors);
   app.use("/api/courses", courses);
