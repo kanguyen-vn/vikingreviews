@@ -3,8 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./routes/Home";
 import NotFound from "./routes/NotFound";
 import EditReview from "./routes/EditReview";
-import AddReview from "./routes/AddReview";
-import AddReview2 from "./routes/AddReview2";
+import AddReviewPage from "./routes/AddReview";
 import Reviews from "./routes/Reviews";
 import Courses from "./routes/Courses";
 import auth from "./services/authService";
@@ -39,8 +38,7 @@ class App extends Component {
           <Route exact path="/" render={this.addMenu(Home, true)} />
           <Route path="/404" render={this.addMenu(NotFound)} />
           <Route path="/reviews/edit" render={this.addMenu(EditReview)} />
-          <Route path="/reviews/add" render={this.addMenu(AddReview)} />
-          <Route path="/reviews/add2" render={this.addMenu(AddReview2)} />
+          <Route path="/reviews/add" render={this.addMenu(AddReviewPage)} />
           <Route path="/profile/edit" render={this.addMenu(EditReview)} />
           <Route path="/courses" render={this.addMenu(Courses)} />
           <Route path="/reviews" render={this.addMenu(Reviews)} />

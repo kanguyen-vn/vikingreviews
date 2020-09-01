@@ -6,7 +6,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import red from "@material-ui/core/colors/red";
+import { red, yellow } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -18,18 +18,29 @@ const useStyles = makeStyles((theme) => ({
     background: "white",
     borderRadius: 0,
   },
-  notchedOutline: {
+  whiteOutline: {
     borderWidth: "1px",
     borderColor: "white !important",
   },
-  notchedOutlineRed: {
+  errorOutline: {
     borderWidth: "2px",
     borderColor: `${red[300]} !important`,
+  },
+  errorOutlineOnPrimary: {
+    borderWidth: "2px",
+    borderColor: `#9F2929 !important`,
   },
   errorText: {
     fontStyle: "italic",
     fontWeight: 500,
     color: red[300],
+    fontSize: "85%",
+    margin: "10px 0 0 0",
+  },
+  errorTextOnPrimary: {
+    fontStyle: "italic",
+    fontWeight: 500,
+    color: "#9F2929",
     fontSize: "85%",
     margin: "10px 0 0 0",
   },
@@ -47,6 +58,7 @@ const TextInput = ({
   name,
   outline = false,
   noShadow = false,
+  onPrimaryBackground = false,
 }) => {
   const classes = useStyles();
 
@@ -73,7 +85,11 @@ const TextInput = ({
           classes={{
             notchedOutline:
               !outline &&
-              (errorText ? classes.notchedOutlineRed : classes.notchedOutline),
+              ((errorText &&
+                (onPrimaryBackground
+                  ? classes.errorOutlineOnPrimary
+                  : classes.errorOutline)) ||
+                classes.whiteOutline),
           }}
           endAdornment={
             <InputAdornment position="end">
@@ -86,7 +102,17 @@ const TextInput = ({
             </InputAdornment>
           }
         />
-        {errorText && <p className={classes.errorText}>{errorText}</p>}
+        {errorText && (
+          <p
+            className={
+              onPrimaryBackground
+                ? classes.errorTextOnPrimary
+                : classes.errorText
+            }
+          >
+            {errorText}
+          </p>
+        )}
       </>
     )) || (
       <>
@@ -106,13 +132,25 @@ const TextInput = ({
             classes: {
               notchedOutline:
                 !outline &&
-                (errorText
-                  ? classes.notchedOutlineRed
-                  : classes.notchedOutline),
+                ((errorText &&
+                  (onPrimaryBackground
+                    ? classes.errorOutlineOnPrimary
+                    : classes.errorOutline)) ||
+                  classes.whiteOutline),
             },
           }}
         />
-        {errorText && <p className={classes.errorText}>{errorText}</p>}
+        {errorText && (
+          <p
+            className={
+              onPrimaryBackground
+                ? classes.errorTextOnPrimary
+                : classes.errorText
+            }
+          >
+            {errorText}
+          </p>
+        )}
       </>
     )
   );

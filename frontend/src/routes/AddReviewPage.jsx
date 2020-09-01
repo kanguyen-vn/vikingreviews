@@ -5,13 +5,12 @@ import Drawer from "@material-ui/core/Drawer";
 import Box from "@material-ui/core/Box";
 import ErrorIcon from "@material-ui/icons/Error";
 import StyledButton from "../components/common/StyledButton";
-import Login from "./../components/Login";
+import Login from "../components/Login";
 import DrawerHeader from "../components/common/DrawerHeader";
 import StyledAccordion from "../components/common/StyledAccordion";
 import SearchBar from "../components/SearchBar";
 import LoginError from "../components/LoginError";
 import ScrollableGrid from "../components/common/ScrollableGrid";
-import SlideInDrawer from "../components/SlideInDrawer";
 import AddReview from "../components/AddReview";
 
 const useStyles = (theme) => ({
@@ -21,7 +20,7 @@ const useStyles = (theme) => ({
   },
 });
 
-class AddReview2 extends Component {
+class AddReviewPage extends Component {
   render() {
     const { classes, user, draw, ...other } = this.props;
     return (
@@ -42,4 +41,4 @@ class AddReview2 extends Component {
   }
 }
 
-export default withStyles(useStyles)(AddReview2);
+export default withStyles(useStyles)(AddReviewPage);

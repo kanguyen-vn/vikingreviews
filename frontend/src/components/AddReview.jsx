@@ -8,6 +8,8 @@ import StyledSlider from "./common/StyledSlider";
 import TextInput from "./common/TextInput";
 import StyledButton from "./common/StyledButton";
 import StyledCheckbox from "./common/StyledCheckbox";
+import { addReviewSchema, maxComment } from "../utils/validationSchemas";
+import * as validation from "../utils/validation";
 
 const terms = [
   { key: "Fall", value: "F" },
@@ -16,12 +18,36 @@ const terms = [
   { key: "December", value: "D" },
 ];
 
-const maxComment = 1000;
-
 class AddReview extends Component {
-  state = { expanded: "", anonymous: false };
+  constructor(props) {
+    super(props);
+    this.state = {
+      expanded: "",
+      checkboxes: { anonymous: false, lab: false },
+      data: {
+        course: null,
+        instructor: null,
+        comment: "",
+        workload: null,
+        lab: null,
+        homework: null,
+        classParticipation: null,
+        instructorEnthusiasm: null,
+        grading: null,
+        flexibility: null,
+        textbookUse: null,
+        term: null,
+        year: null,
+      },
+      errors: {},
+    };
+    this.schema = addReviewSchema;
+    this.validate = validation.validate.bind(this);
+    this.validateProperty = validation.validateProperty.bind(this);
+    this.handleChange = validation.handleChange.bind(this);
+  }
 
-  handleChange = (panel) => (event, newExpanded) => {
+  handlePanelExpand = (panel) => (event, newExpanded) => {
     const expanded = newExpanded ? panel : false;
     this.setState({ expanded });
   };
@@ -50,11 +76,19 @@ class AddReview extends Component {
   };
 
   handleCheckbox = (event) => {
-    this.setState({ [event.target.name]: event.target.checked });
+    const checkboxes = { ...this.state.checkboxes };
+    checkboxes[event.target.name] = event.target.checked;
+    this.setState({ checkboxes });
+  };
+
+  handleInputChange = (name) => (event, newValue) => {
+    const data = { ...this.state.data };
+    data[name] = newValue;
+    this.setState({ data });
   };
 
   render() {
-    const { expanded } = this.state;
+    const { expanded, checkboxes, data, errors } = this.state;
     return (
       <>
         <DrawerHeader>Add Review</DrawerHeader>
@@ -63,7 +97,7 @@ class AddReview extends Component {
             <StyledAccordion
               header="Course Information"
               expanded={expanded === "panel1"}
-              onChange={this.handleChange("panel1")}
+              onChange={this.handlePanelExpand("panel1")}
               highlighted
             >
               <Grid container justify="center" style={{ width: "100%" }}>
@@ -78,7 +112,12 @@ class AddReview extends Component {
                   }}
                 >
                   <Grid item>
-                    <SearchBar types={["Course"]} inherit>
+                    <SearchBar
+                      types={["course"]}
+                      inherit
+                      value={data.course}
+                      onChange={this.handleInputChange("course")}
+                    >
                       Course...
                     </SearchBar>
                   </Grid>
@@ -86,12 +125,19 @@ class AddReview extends Component {
                     <SearchBar
                       options={["Fall", "Winter", "Spring", "December"]}
                       inherit
+                      value={data.term}
+                      onChange={this.handleInputChange("term")}
                     >
                       Term...
                     </SearchBar>
                   </Grid>
                   <Grid item>
-                    <SearchBar options={this.getYearsArray()} inherit>
+                    <SearchBar
+                      options={this.getYearsArray()}
+                      inherit
+                      value={data.year}
+                      onChange={this.handleInputChange("year")}
+                    >
                       Year...
                     </SearchBar>
                   </Grid>
@@ -101,7 +147,7 @@ class AddReview extends Component {
             <StyledAccordion
               header="Instructor"
               expanded={expanded === "panel2"}
-              onChange={this.handleChange("panel2")}
+              onChange={this.handlePanelExpand("panel2")}
               highlighted
             >
               <Grid container justify="center" style={{ width: "100%" }}>
@@ -116,7 +162,12 @@ class AddReview extends Component {
                   }}
                 >
                   <Grid item>
-                    <SearchBar types={["Instructor"]} inherit>
+                    <SearchBar
+                      types={["instructor"]}
+                      inherit
+                      value={data.instructor}
+                      onChange={this.handleInputChange("instructor")}
+                    >
                       Instructor...
                     </SearchBar>
                   </Grid>
@@ -160,6 +211,8 @@ class AddReview extends Component {
                     <SearchBar
                       options={["Never", "Sometimes", "Always"]}
                       inherit
+                      value={data.textbookUse}
+                      onChange={this.handleInputChange("textbookUse")}
                     >
                       Textbook usage...
                     </SearchBar>
@@ -170,7 +223,7 @@ class AddReview extends Component {
             <StyledAccordion
               header="Workload"
               expanded={expanded === "panel3"}
-              onChange={this.handleChange("panel3")}
+              onChange={this.handlePanelExpand("panel3")}
               highlighted
             >
               <Grid container justify="center" style={{ width: "100%" }}>
@@ -204,13 +257,23 @@ class AddReview extends Component {
                       Class Participation:
                     </StyledSlider>
                   </Grid>
-                  <Grid item>
+                  <Grid item container direction="column">
                     <StyledSlider
                       textColor="white"
-                      marks={this.generateMarks("A lot", "OK", "Not required")}
+                      marks={this.generateMarks("Very easy", "OK", "Very hard")}
+                      disabled={checkboxes.lab}
                     >
                       Lab:
                     </StyledSlider>
+                    <Grid item container justify="flex-end">
+                      <StyledCheckbox
+                        checked={checkboxes.lab}
+                        onChange={this.handleCheckbox}
+                        name="lab"
+                        label="Not applicable"
+                        onPrimaryBackground
+                      />
+                    </Grid>
                   </Grid>
                   <Grid item>
                     <StyledSlider
@@ -226,31 +289,36 @@ class AddReview extends Component {
             <StyledAccordion
               header="Review"
               expanded={expanded === "panel4"}
-              onChange={this.handleChange("panel4")}
+              onChange={this.handlePanelExpand("panel4")}
               highlighted
             >
               <Grid item container direction="column" justify="center">
-                {/* <p
-              className={classes.counter}
-              style={{
-                color: data.comment.length >= maxComment - 10 && red[300],
-              }}
-            >{`${maxComment - data.comment.length}/${maxComment}`}</p> */}
-                <p>lol</p>
+                <p
+                  style={{
+                    color:
+                      (data.comment.length >= maxComment - 10 && "#9F2929") ||
+                      "white",
+                    fontStyle: "italic",
+                    textAlign: "right",
+                    margin: "0 0 5px 0",
+                    fontSize: "85%",
+                  }}
+                >{`${maxComment - data.comment.length}/${maxComment}`}</p>
                 <TextInput
-                  placeholder="Your review..."
+                  placeholder="Any other specific thing you want to say about this course?"
                   multiline
                   name="comment"
                   defaultValue=""
-                  // onChange={this.handleChange}
-                  // errorText={errors && errors.comment ? errors.comment : null}
+                  onChange={this.handleChange}
+                  errorText={errors && errors.comment ? errors.comment : null}
+                  onPrimaryBackground
                 />
               </Grid>
             </StyledAccordion>
           </Grid>
           <Grid item container justify="center" alignItems="center">
             <StyledCheckbox
-              checked={this.state.anonymous}
+              checked={checkboxes.anonymous}
               onChange={this.handleCheckbox}
               name="anonymous"
               label="Stay anonymous"

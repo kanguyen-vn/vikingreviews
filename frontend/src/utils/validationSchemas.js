@@ -53,7 +53,7 @@ const signUpSchema = Joi.object({
     }),
 });
 
-const maxComment = 500;
+const maxContact = 500;
 
 const contactUsSchema = Joi.object({
   email: Joi.string()
@@ -64,6 +64,19 @@ const contactUsSchema = Joi.object({
     }),
   comment: Joi.string()
     .min(10)
+    .max(maxContact)
+    .messages({
+      "string.empty": "Say something :-).",
+      "string.min": "Comment should have a minimum length of 10.",
+      "string.max": `Comment should have a maximum length of ${maxContact}.`,
+    }),
+});
+
+const maxComment = 1000;
+
+const addReviewSchema = Joi.object({
+  comment: Joi.string()
+    .min(10)
     .max(maxComment)
     .messages({
       "string.empty": "Say something :-).",
@@ -72,4 +85,11 @@ const contactUsSchema = Joi.object({
     }),
 });
 
-export { loginSchema, signUpSchema, contactUsSchema, maxComment };
+export {
+  loginSchema,
+  signUpSchema,
+  contactUsSchema,
+  maxContact,
+  addReviewSchema,
+  maxComment,
+};

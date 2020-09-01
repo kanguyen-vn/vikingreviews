@@ -7,6 +7,7 @@ import { register } from "../services/userService";
 import { signUpSchema } from "../utils/validationSchemas";
 import * as validation from "../utils/validation";
 import auth from "../services/authService";
+import _ from "lodash";
 
 class SignUp extends Component {
   constructor(props) {
