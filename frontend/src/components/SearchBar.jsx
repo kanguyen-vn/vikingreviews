@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Autocomplete } from "@material-ui/lab";
+import courses from "../services/courseService";
+import departments from "../services/departmentService";
+import instructors from "../services/instructorService";
 
 const useStyles = (theme) => ({
   margin: {
@@ -41,42 +44,78 @@ const useStyles = (theme) => ({
   },
 });
 
-const choices = [
-  // sort groups before display
-  { left: "CMSC", right: "Computer Science", type: "Department", _id: 0 },
-  { left: "ECON", right: "Economics", type: "Department", _id: 1 },
-  { left: "MUTH", right: "Music Theory", type: "Department", _id: 2 },
-  { left: "PSYC", right: "Psychology", type: "Department", _id: 3 },
-  { left: "SPAN", right: "Spanish", type: "Department", _id: 4 },
-  {
-    left: "CMSC 150",
-    right: "Intro to Computer Science",
-    type: "Course",
-    _id: 5,
-  },
-  { left: "ECON 120", right: "Some Kind of Economics", type: "Course", _id: 6 },
-  { left: "MUTH 420", right: "Schenkerian Analysis", type: "Course", _id: 7 },
-  { left: "PSYC 270", right: "Social Psychology", type: "Course", _id: 8 },
-  {
-    left: "SPAN 100",
-    right: "Introduction to Spanish",
-    type: "Course",
-    _id: 9,
-  },
-  { left: "Joseph Gregg", right: "CMSC", type: "Instructor", _id: 10 },
-  { left: "Barack Obama", right: "ECON", type: "Instructor", _id: 11 },
-  { left: "Ian Bates", right: "MUTH", type: "Instructor", _id: 12 },
-  { left: "Cardi B", right: "PSYC", type: "Instructor", _id: 13 },
-  { left: "Ariana Grande", right: "SPAN", type: "Instructor", _id: 14 },
-];
+// const choices = [
+//   // sort groups before display
+//   { left: "CMSC", right: "Computer Science", type: "Department", _id: 0 },
+//   { left: "ECON", right: "Economics", type: "Department", _id: 1 },
+//   { left: "MUTH", right: "Music Theory", type: "Department", _id: 2 },
+//   { left: "PSYC", right: "Psychology", type: "Department", _id: 3 },
+//   { left: "SPAN", right: "Spanish", type: "Department", _id: 4 },
+//   {
+//     left: "CMSC 150",
+//     right: "Intro to Computer Science",
+//     type: "Course",
+//     _id: 5,
+//   },
+//   { left: "ECON 120", right: "Some Kind of Economics", type: "Course", _id: 6 },
+//   { left: "MUTH 420", right: "Schenkerian Analysis", type: "Course", _id: 7 },
+//   { left: "PSYC 270", right: "Social Psychology", type: "Course", _id: 8 },
+//   {
+//     left: "SPAN 100",
+//     right: "Introduction to Spanish",
+//     type: "Course",
+//     _id: 9,
+//   },
+//   { left: "Joseph Gregg", right: "CMSC", type: "Instructor", _id: 10 },
+//   { left: "Barack Obama", right: "ECON", type: "Instructor", _id: 11 },
+//   { left: "Ian Bates", right: "MUTH", type: "Instructor", _id: 12 },
+//   { left: "Cardi B", right: "PSYC", type: "Instructor", _id: 13 },
+//   { left: "Ariana Grande", right: "SPAN", type: "Instructor", _id: 14 },
+// ];
 
 class SearchBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { choices: [] };
+  }
+
+  async componentDidMount() {
+    const allCourses = await courses.getAll();
+    const allDepartments = await departments.getAll();
+    const allInstructors = await instructors.getAll();
+
+    const choices = [
+      ...allDepartments.map((department) => ({
+        _id: department._id,
+        left: department.code,
+        right: department.name,
+        type: "Department",
+      })),
+      ...allCourses.map((course) => ({
+        _id: course._id,
+        left: `${course.department.code} ${course.number}`,
+        right: course.title,
+        type: "Course",
+      })),
+      ...allInstructors.map((instructor) => ({
+        _id: instructor._id,
+        left: `${instructor.firstName} ${instructor.lastName}`,
+        right: instructor.department.code,
+        type: "Instructor",
+      })),
+    ];
+
+    this.setState({ choices });
+  }
+
   filterChoices = (types) => {
     let all = [];
     types.map((type) => {
       all = [
         ...all,
-        ...choices.filter((choice) => choice.type.toLowerCase() === type),
+        ...this.state.choices.filter(
+          (choice) => choice.type.toLowerCase() === type
+        ),
       ];
     });
     return all;
@@ -125,7 +164,7 @@ class SearchBar extends Component {
       )) || (
         <Autocomplete
           className={(!inherit && !home && classes.textFieldPosition) || ""}
-          options={types ? this.filterChoices(types) : choices}
+          options={types ? this.filterChoices(types) : this.state.choices}
           getOptionLabel={(option) => `${option.left} ${option.right}`}
           groupBy={(option) => option.type}
           classes={{

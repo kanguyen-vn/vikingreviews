@@ -4,7 +4,6 @@ import { uri } from "../config.json";
 const apiEndpoint = uri + "/api/users";
 
 export function register(user) {
-  console.log(apiEndpoint);
   return http.post(apiEndpoint, {
     email: user.email,
     password: user.password,

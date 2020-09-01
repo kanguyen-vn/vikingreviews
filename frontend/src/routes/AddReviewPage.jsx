@@ -12,6 +12,7 @@ import SearchBar from "../components/SearchBar";
 import LoginError from "../components/LoginError";
 import ScrollableGrid from "../components/common/ScrollableGrid";
 import AddReview from "../components/AddReview";
+import courses from "../services/courseService";
 
 const useStyles = (theme) => ({
   pageStyles: {
