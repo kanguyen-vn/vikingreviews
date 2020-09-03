@@ -16,6 +16,8 @@ import courses from "../services/courseService";
 import { Typography } from "@material-ui/core";
 import reviews from "../services/reviewService";
 import auth from "../services/authService";
+import { Link } from "react-router-dom";
+
 
 const useStyles = (theme) => ({
   pageStyles: {
@@ -25,67 +27,43 @@ const useStyles = (theme) => ({
 });
 
 class Course extends Component {
-  state = {reviews: [] };
-  async componentDidMount(){
+  state = { reviews: [] };
+  async componentDidMount() {
     const courseId = this.props.match.params.id;
+    console.log(courseId);
     const data = await reviews.getById(courseId);
+    // console.log('data!!!!!!');
+    // console.log(data);
     this.setState({ reviews: data });
   }
-  // constructor(props){
-  //   super(props);
-  //   this.state = {
-  //     user: null,
-  //     reviews: []
-  //   };
-  //   this.getCourseById = this.getCourseById.bind(this);
-  //   console.log('*************************************************');
-  //   console.log(props);
-  //   console.log('*************************************************');
-  // };
-  
-  // async getCourseById(){
-  //   const courseId = this.props.match.params.id;
-  //   const Reviews = await reviews.getById(courseId);
-  //   console.log(Reviews);
-  //   this.setState({Reviews});
-  // }
-
-  // async componentDidMount() {
-  //   const user = auth.currentUser();
-  //   this.setState({ user });
-  //   await this.getCourseById(true);
-  // }
 
   render() {
     const { classes, user, draw, ...other } = this.props;
     const detail = other.location.state
       ? other.location.state.detail
       : courses.getById(other.match.params.id);
+    console.log('detail!!!!!!!!');
     console.log(detail);
-    return (
-      (!user && <LoginError draw={draw} {...other} />) || (
-        <Grid
-          container
-          className={classes.pageStyles}
-          justify="center"
-          alignItems="center"
-        >
-          <Grid>
+    if (!user) {
+      return (<LoginError draw={draw} {...other} />);
+    } else {
+
+      const reviews = this.state.reviews;
+
+      console.log('data!!!!!!!!!');
+      console.log(this.state.reviews);
+
+      return (
+        <Grid>
+          {reviews.map((review) => (
             <Typography>
-              {detail.left}
+              {review.content[0]}
             </Typography>
-            <Typography>
-              {detail.right}
-            </Typography>
-          </Grid>
-          {/* <Typography>{other.match.params.id}</Typography> */}
-          <StyledButton
-            onClick={() => draw({ detail, ...other })(AddReview)}
-            text="Add Review"
-          />
+          ))}
         </Grid>
-      )
-    );
+
+      );
+    }
   }
 }
 

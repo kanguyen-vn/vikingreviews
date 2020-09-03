@@ -11,6 +11,7 @@ async function getById(id) {
     // }
     // http://localhost:3000/api/reviews?course=5f467c93d475cd0578930bde
     const { data } = await http.get(`${apiEndpoint}?course=${id}`);
+    console.log(data);
     return data;
   }
   
