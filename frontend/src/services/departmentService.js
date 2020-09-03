@@ -15,4 +15,14 @@ async function getAll(clear) {
   return data;
 }
 
-export default { getAll };
+async function getById(id) {
+  if (localStorage.departments) {
+    return JSON.parse(localStorage.departments).find(
+      (department) => department._id === id
+    );
+  }
+  const { data } = await http.get(`${apiEndpoint}/${id}`);
+  return data;
+}
+
+export default { getAll, getById };

@@ -73,7 +73,7 @@ const Menu = (props) => {
       });
     } else if (searchValue.type.toLowerCase() === "department") {
       other.history.push({
-        pathname: `/courses?department=${searchValue._id}`,
+        pathname: `/departments/${searchValue._id}`,
         state: { detail: searchValue },
       });
     }

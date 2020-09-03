@@ -15,15 +15,13 @@ class Department extends Component {
   state = { courses: [] };
 
   async componentDidMount() {
-    const data = await courses.getByDepartment(
-      this.props.location.state.detail._id
-    );
+    const departmentId = this.props.match.params.id;
+    const data = await courses.getByDepartment(departmentId);
     this.setState({ courses: data });
   }
 
   render() {
     const { classes, user, draw, ...other } = this.props;
-    console.log("Department", other);
     return this.state.courses.map((course) => {
       return (
         <Link

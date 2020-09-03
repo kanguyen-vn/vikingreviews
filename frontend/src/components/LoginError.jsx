@@ -24,9 +24,6 @@ const useStyles = (theme) => ({
   halfHeight: {
     height: "50%",
   },
-  root: {
-    padding: 0,
-  },
 });
 
 class LoginError extends Component {
