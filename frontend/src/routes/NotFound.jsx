@@ -55,10 +55,7 @@ const NotFound = () => {
             image="https://www.lawrence.edu/sites/default/files/bss/desktop/ref_db20.jpg"
             title="Lawrence 404"
           />
-          <CardContent
-            style={{ height: "40%" }}
-            classes={{ root: { padding: 0 } }}
-          >
+          <CardContent style={{ height: "40%" }}>
             <Grid
               container
               direction="column"
