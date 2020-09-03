@@ -8,8 +8,8 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", auth, async (req, res) => {
-  const courses = await Course.find();
-  res.send(courses);
+  const reviews = await Review.find();
+  res.send(reviews);
 });
 
 router.get("/course=:id", validateObjectId, async (req, res) => {

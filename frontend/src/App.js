@@ -82,13 +82,9 @@ class App extends Component {
           <Route path="/reviews/edit" render={this.addMenu(EditReview)} />
           <Route path="/reviews/add" render={this.addMenu(AddReviewPage)} />
           <Route path="/profile/edit" render={this.addMenu(EditReview)} />
-          <Route
-            exact
-            path="/courses?department=:id"
-            render={this.addMenu(Department)}
-          />
-          <Route exact path="/courses/:id" render={this.addMenu(Course)} />
-          <Route exact path="/courses" render={this.addMenu(Courses)} />
+          <Route path="/departments/:id" render={this.addMenu(Department)} />
+          <Route path="/courses/:id" render={this.addMenu(Course)} />
+          {/* <Route exact path="/courses" render={this.addMenu(Courses)} /> */}
           <Route path="/reviews" render={this.addMenu(Reviews)} />
           <Redirect to="/404" />
         </Switch>

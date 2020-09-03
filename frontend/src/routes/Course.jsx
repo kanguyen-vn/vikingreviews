@@ -22,11 +22,12 @@ const useStyles = (theme) => ({
   },
 });
 
-class Courses2 extends Component {
+class Course extends Component {
   render() {
     const { classes, user, draw, ...other } = this.props;
-    const detail = other.location.state.detail;
-    console.log("Courses2 other", other);
+    const detail = other.location.state
+      ? other.location.state.detail
+      : courses.getById(other.match.params.id);
     return (
       (!user && <LoginError draw={draw} {...other} />) || (
         <Grid
@@ -46,4 +47,4 @@ class Courses2 extends Component {
   }
 }
 
-export default withStyles(useStyles)(Courses2);
+export default withStyles(useStyles)(Course);
