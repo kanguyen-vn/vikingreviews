@@ -10,6 +10,7 @@ import StyledButton from "./common/StyledButton";
 import StyledCheckbox from "./common/StyledCheckbox";
 import { addReviewSchema, maxComment } from "../utils/validationSchemas";
 import * as validation from "../utils/validation";
+import { pink } from "@material-ui/core/colors";
 
 const terms = [
   { key: "Fall", value: "F" },
@@ -25,7 +26,7 @@ class AddReview extends Component {
       expanded: "",
       checkboxes: { anonymous: false, lab: false },
       data: {
-        course: null,
+        course: this.props.detail,
         instructor: null,
         comment: "",
         workload: null,
@@ -117,6 +118,8 @@ class AddReview extends Component {
                       inherit
                       value={data.course}
                       onChange={this.handleInputChange("course")}
+                      choices={this.props.searchChoices}
+                      disabled={this.props.detail !== null}
                     >
                       Course...
                     </SearchBar>
@@ -167,6 +170,7 @@ class AddReview extends Component {
                       inherit
                       value={data.instructor}
                       onChange={this.handleInputChange("instructor")}
+                      choices={this.props.searchChoices}
                     >
                       Instructor...
                     </SearchBar>
@@ -296,7 +300,7 @@ class AddReview extends Component {
                 <p
                   style={{
                     color:
-                      (data.comment.length >= maxComment - 10 && "#9F2929") ||
+                      (data.comment.length >= maxComment - 10 && pink[100]) ||
                       "white",
                     fontStyle: "italic",
                     textAlign: "right",

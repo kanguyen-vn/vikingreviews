@@ -61,9 +61,21 @@ function addMenu(Component, home = false) {
         open={this.state.open}
         openDrawer={this.state.openDrawer}
         drawerContent={this.state.drawerContent}
+        handleSearchChange={!home && this.handleSearchChange}
+        searchValue={!home && this.state.searchValue}
+        updateSearchChoices={!home && this.updateSearchChoices}
+        searchChoices={!home && this.state.searchChoices}
         {...props}
       />
-      <Component user={this.state.user} draw={this.draw} {...props} />
+      <Component
+        user={this.state.user}
+        draw={this.draw}
+        handleSearchChange={home && this.handleSearchChange}
+        searchValue={home && this.state.searchValue}
+        updateSearchChoices={home && this.updateSearchChoices}
+        searchChoices={this.state.searchChoices}
+        {...props}
+      />
     </div>
   );
 }

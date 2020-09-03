@@ -5,7 +5,6 @@ import Typography from "@material-ui/core/Typography";
 const themeObject = (theme) => ({
   header: {
     color: theme.palette.secondary.light,
-    margin: "0 0 10px 0",
     fontWeight: "300",
     fontStyle: "italic",
     [theme.breakpoints.down("md")]: {

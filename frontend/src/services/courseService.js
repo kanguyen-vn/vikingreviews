@@ -15,4 +15,9 @@ async function getAll(clear) {
   return data;
 }
 
-export default { getAll };
+async function getByDepartment(id) {
+  const { data } = await http.get(`${apiEndpoint}/department=${id}`);
+  return data;
+}
+
+export default { getAll, getByDepartment };

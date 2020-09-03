@@ -12,6 +12,18 @@ router.get("/", auth, async (req, res) => {
   res.send(courses);
 });
 
+router.get("/course=:id", validateObjectId, async (req, res) => {
+  const course = await Course.findById(req.params.id);
+  if (!course) return res.status(400).send("Invalid course.");
+
+  const reviews = await Review.find({
+    course: ObjectId(course._id),
+  })
+    .populate("department")
+    .sort("title");
+  res.send(reviews);
+});
+
 router.post("/", [auth, validate(validateReview)], async (req, res) => {
   const course = await Course.findById(req.body.course);
   if (!course) return res.status(400).send("Invalid course.");
