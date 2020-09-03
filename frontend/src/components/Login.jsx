@@ -36,7 +36,9 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
-    const { location, switchTo, ...props } = this.props;
+    const { location, switchTo, ...other } = this.props;
+    console.log("Login location", location);
+    console.log("Login other", other);
     return (
       <>
         <DrawerHeader>Login</DrawerHeader>
@@ -69,7 +71,7 @@ class Login extends Component {
             />
           </Grid>
           <StyledParagraph
-            onClick={() => switchTo(SignUp, props)}
+            onClick={() => switchTo(SignUp, other)}
             textAlign="center"
           >
             Don't have an account yet? Click here to sign up!

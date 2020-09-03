@@ -57,16 +57,34 @@ const Menu = (props) => {
     open,
     openDrawer,
     drawerContent,
+    searchValue,
+    handleSearchChange,
+    updateSearchChoices,
+    searchChoices,
     ...other
   } = props;
   const user = auth.currentUser();
+
+  const handleClick = () => {
+    if (searchValue.type.toLowerCase() === "course") {
+      other.history.push({
+        pathname: `/courses/${searchValue._id}`,
+        state: { detail: searchValue },
+      });
+    } else if (searchValue.type.toLowerCase() === "department") {
+      other.history.push({
+        pathname: `/courses?department=${searchValue._id}`,
+        state: { detail: searchValue },
+      });
+    }
+  };
 
   const guestActions = [
     {
       icon: <FontAwesomeIcon icon={faArrowRight} />,
       name: "Search",
       highlighted: true,
-      action: null,
+      action: handleClick,
     },
     {
       icon: <FontAwesomeIcon icon={faSignInAlt} />,
@@ -99,7 +117,7 @@ const Menu = (props) => {
       icon: <FontAwesomeIcon icon={faArrowRight} />,
       name: "Search",
       highlighted: true,
-      action: null,
+      action: handleClick,
     },
     {
       icon: <FontAwesomeIcon icon={faCog} />,
@@ -144,7 +162,13 @@ const Menu = (props) => {
     <>
       {!home && (
         <Slide in={open} direction="down" mountOnEnter unmountOnExit>
-          <SearchBar home={false} />
+          <SearchBar
+            home={false}
+            value={searchValue}
+            onChange={handleSearchChange}
+            update={updateSearchChoices}
+            choices={searchChoices}
+          />
         </Slide>
       )}
       <SpeedDial
@@ -176,7 +200,6 @@ const Menu = (props) => {
                     ? {
                         backgroundColor: theme.palette.secondary.dark,
                         color: "white",
-
                         boxShadow: theme.shadows[4],
                       }
                     : {

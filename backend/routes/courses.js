@@ -6,9 +6,22 @@ const validateObjectId = require("../middleware/validateObjectId");
 const { Department } = require("../models/department");
 const express = require("express");
 const router = express.Router();
+const ObjectId = require("mongoose").Types.ObjectId;
 
 router.get("/", async (req, res) => {
   const courses = await Course.find().populate("department").sort("title");
+  res.send(courses);
+});
+
+router.get("/department=:id", validateObjectId, async (req, res) => {
+  const department = await Department.findById(req.params.id);
+  if (!department) return res.status(400).send("Invalid department.");
+
+  const courses = await Course.find({
+    department: ObjectId(department._id),
+  })
+    .populate("department")
+    .sort("number");
   res.send(courses);
 });
 

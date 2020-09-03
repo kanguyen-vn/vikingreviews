@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import ErrorIcon from "@material-ui/icons/Error";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 import StyledButton from "../components/common/StyledButton";
-import Login from "./../components/Login";
+import DrawerHeader from "../components/common/DrawerHeader";
+import Login from "./Login";
 
 const useStyles = (theme) => ({
   pageStyles: {
@@ -12,32 +15,24 @@ const useStyles = (theme) => ({
     background: theme.palette.secondary.main,
   },
   paperStyles: {
-    height: "85vh",
+    height: "70vh",
     background: "white",
     boxShadow: theme.shadows[10],
     borderRadius: 16,
+    overflow: "auto",
   },
-  notFound: {
-    padding: "0 50px 0 50px",
-    textAlign: "center",
-    fontWeight: 500,
-    fontStyle: "italic",
-    color: theme.palette.secondary.dark,
+  halfHeight: {
+    height: "50%",
   },
-  errorIcon: {
-    color: theme.palette.primary.main,
-    [theme.breakpoints.down("md")]: {
-      fontSize: "200px",
-    },
-    [theme.breakpoints.up("lg")]: {
-      fontSize: "300px",
-    },
+  root: {
+    padding: 0,
   },
 });
 
 class LoginError extends Component {
   render() {
     const { classes, draw, ...other } = this.props;
+    console.log("LoginError", other);
     return (
       <Grid
         container
@@ -49,22 +44,53 @@ class LoginError extends Component {
         <Grid
           item
           xs={10}
-          sm={8}
-          md={6}
-          lg={4}
+          sm={6}
+          md={4}
           container
-          className={classes.paperStyles}
           justify="center"
           alignItems="center"
           direction="column"
         >
-          <Typography className={classes.notFound} variant="h4">
-            You have to be logged in to leave a review.
-          </Typography>
-          <Grid container type="row" justify="center">
-            <ErrorIcon className={classes.errorIcon} />
-          </Grid>
-          <StyledButton text="Log in" onClick={() => draw(other)(Login)} />
+          <Card className={classes.paperStyles}>
+            <CardMedia
+              component="img"
+              alt="Lawrence 404"
+              style={{ height: "50%" }}
+              image="https://www.lawrence.edu/sites/default/files/bss/desktop/ref_db20.jpg"
+              title="Lawrence 404"
+            />
+            <CardContent style={{ height: "40%" }}>
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                spacing={2}
+              >
+                <Grid item>
+                  <DrawerHeader primary>Error</DrawerHeader>
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    style={{ textAlign: "center" }}
+                  >
+                    You have to be logged in to leave a review.
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <StyledButton
+                    text="Log in"
+                    onClick={() => {
+                      console.log("LoginError", other);
+                      draw(other)(Login);
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
     );

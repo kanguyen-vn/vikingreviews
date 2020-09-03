@@ -74,46 +74,12 @@ const useStyles = (theme) => ({
 // ];
 
 class SearchBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { choices: [] };
-  }
-
-  async componentDidMount() {
-    const allCourses = await courses.getAll();
-    const allDepartments = await departments.getAll();
-    const allInstructors = await instructors.getAll();
-
-    const choices = [
-      ...allDepartments.map((department) => ({
-        _id: department._id,
-        left: department.code,
-        right: department.name,
-        type: "Department",
-      })),
-      ...allCourses.map((course) => ({
-        _id: course._id,
-        left: `${course.department.code} ${course.number}`,
-        right: course.title,
-        type: "Course",
-      })),
-      ...allInstructors.map((instructor) => ({
-        _id: instructor._id,
-        left: `${instructor.firstName} ${instructor.lastName}`,
-        right: instructor.department.code,
-        type: "Instructor",
-      })),
-    ];
-
-    this.setState({ choices });
-  }
-
   filterChoices = (types) => {
     let all = [];
     types.map((type) => {
       all = [
         ...all,
-        ...this.state.choices.filter(
+        ...this.props.choices.filter(
           (choice) => choice.type.toLowerCase() === type
         ),
       ];
@@ -132,11 +98,14 @@ class SearchBar extends Component {
       value,
       onChange,
       name,
+      choices,
+      disabled,
     } = this.props;
     return (
       (options && (
         <Autocomplete
           className={(!inherit && !home && classes.textFieldPosition) || ""}
+          disabled={disabled}
           options={options}
           getOptionLabel={(option) => option}
           classes={{
@@ -164,7 +133,8 @@ class SearchBar extends Component {
       )) || (
         <Autocomplete
           className={(!inherit && !home && classes.textFieldPosition) || ""}
-          options={types ? this.filterChoices(types) : this.state.choices}
+          disabled={disabled}
+          options={types ? this.filterChoices(types) : choices}
           getOptionLabel={(option) => `${option.left} ${option.right}`}
           groupBy={(option) => option.type}
           classes={{
