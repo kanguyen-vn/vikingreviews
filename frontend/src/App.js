@@ -6,7 +6,7 @@ import EditReview from "./routes/EditReview";
 import AddReviewPage from "./routes/AddReviewPage";
 import Reviews from "./routes/Reviews";
 import Courses from "./routes/Courses";
-import Courses2 from "./routes/Courses2";
+import Course from "./routes/Course";
 import Department from "./routes/Department";
 import auth from "./services/authService";
 import departments from "./services/departmentService";
@@ -87,7 +87,7 @@ class App extends Component {
             path="/courses?department=:id"
             render={this.addMenu(Department)}
           />
-          <Route exact path="/courses/:id" render={this.addMenu(Courses2)} />
+          <Route exact path="/courses/:id" render={this.addMenu(Course)} />
           <Route exact path="/courses" render={this.addMenu(Courses)} />
           <Route path="/reviews" render={this.addMenu(Reviews)} />
           <Redirect to="/404" />
