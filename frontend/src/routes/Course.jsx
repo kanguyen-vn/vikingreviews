@@ -18,7 +18,6 @@ import reviews from "../services/reviewService";
 import auth from "../services/authService";
 import { Link } from "react-router-dom";
 
-
 const useStyles = (theme) => ({
   pageStyles: {
     height: "100vh",
@@ -27,18 +26,22 @@ const useStyles = (theme) => ({
 });
 
 class Course extends Component {
-  state = { 
-    reviews: [], 
+  state = {
+    reviews: [],
     courseDetails: null,
     deptAbb: null,
-    values: null
+    values: null,
+    detail: null,
   };
 
   async componentDidMount() {
     const courseId = this.props.match.params.id;
     console.log(courseId);
-    const data = await reviews.getById(courseId);
-    await this.setState({ reviews: data });
+    const detail = other.location.state
+      ? other.location.state.detail
+      : await courses.getById(other.match.params.id);
+    const reviews = await reviews.getByCourse(courseId);
+    this.setState({ detail, reviews });
   }
 
   // async updateCourseInfo(){
@@ -48,30 +51,27 @@ class Course extends Component {
 
   render() {
     const { classes, user, draw, ...other } = this.props;
-    const detail = other.location.state
-      ? other.location.state.detail
-      : courses.getById(other.match.params.id);
     // console.log('props');
     // console.log(this.props);
     // console.log('detail!!!!!!!!');
     // this.setState({courseDetails: detail});
     // console.log(other);
     if (!user) {
-      return (<LoginError draw={draw} {...other} />);
+      return <LoginError draw={draw} {...other} />;
     } else {
       const reviews = this.state.reviews;
-      console.log('detail');
+      console.log("detail");
       console.log(detail);
       console.log("other");
       console.log(other);
       console.log(this.state);
 
-    // var courseDetails = NaN;
-    //   let deptAbb = NaN;
-    //   var courseNum = NaN;
-    //   var deptName = NaN;
-    //   console.log('data!!!!!!!!!');
-      // console.log(department);  
+      // var courseDetails = NaN;
+      //   let deptAbb = NaN;
+      //   var courseNum = NaN;
+      //   var deptName = NaN;
+      //   console.log('data!!!!!!!!!');
+      // console.log(department);
       // detail.then(values => {
       //   console.log(values);
       //   deptAbb = values.department.code;
@@ -90,12 +90,9 @@ class Course extends Component {
       return (
         <Grid>
           {reviews.map((review) => (
-            <Typography>
-              {review.content[0]}
-            </Typography>
+            <Typography>{review.content[0]}</Typography>
           ))}
         </Grid>
-
       );
     }
   }
