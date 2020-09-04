@@ -37,7 +37,7 @@ class Course extends Component {
   async componentDidMount() {
     const courseId = this.props.match.params.id;
     console.log(courseId);
-    const data = await reviews.getById(courseId);
+    const data = await reviews.getByCourseId(courseId);
     await this.setState({ reviews: data });
   }
 
