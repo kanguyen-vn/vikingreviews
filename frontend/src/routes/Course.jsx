@@ -37,11 +37,16 @@ class Course extends Component {
   async componentDidMount() {
     const courseId = this.props.match.params.id;
     console.log(courseId);
+<<<<<<< HEAD
     const detail = other.location.state
       ? other.location.state.detail
       : await courses.getById(other.match.params.id);
     const reviews = await reviews.getByCourse(courseId);
     this.setState({ detail, reviews });
+=======
+    const data = await reviews.getByCourseId(courseId);
+    await this.setState({ reviews: data });
+>>>>>>> 7c98ce7579c8aead74dd1b53145151e66fa48926
   }
 
   // async updateCourseInfo(){
