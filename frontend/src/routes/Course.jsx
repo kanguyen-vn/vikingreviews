@@ -27,14 +27,29 @@ const useStyles = (theme) => ({
 });
 
 class Course extends Component {
-  state = { reviews: [] };
+  state = { 
+    reviews: [], 
+    courseDetails: null,
+    deptAbb: null,
+    values: null
+  };
+
   async componentDidMount() {
     const courseId = this.props.match.params.id;
     console.log(courseId);
     const data = await reviews.getById(courseId);
+    const { classes, user, draw, ...other } = this.props;
+    const detail = other.location.state
+      ? other.location.state.detail
+      : courses.getById(courseId);
     // console.log('data!!!!!!');
     // console.log(data);
-    this.setState({ reviews: data });
+    await detail.then(function(value){
+      this.setState({deptAbb: value});
+    });
+    this.setState({courseDetails: detail});
+
+    await this.setState({ reviews: data });
   }
 
   render() {
@@ -42,16 +57,41 @@ class Course extends Component {
     const detail = other.location.state
       ? other.location.state.detail
       : courses.getById(other.match.params.id);
-    console.log('detail!!!!!!!!');
-    console.log(detail);
+    console.log('props');
+    console.log(this.props);
+    // console.log('detail!!!!!!!!');
+    // this.setState({courseDetails: detail});
+    // console.log(other);
     if (!user) {
       return (<LoginError draw={draw} {...other} />);
     } else {
-
       const reviews = this.state.reviews;
+      console.log('detail');
+      console.log(detail);
+      console.log("other");
+      console.log(other);
+      console.log(this.state);
 
+    var courseDetails = NaN;
+      let deptAbb = NaN;
+      var courseNum = NaN;
+      var deptName = NaN;
       console.log('data!!!!!!!!!');
-      console.log(this.state.reviews);
+      // console.log(department);  
+      // detail.then(values => {
+      //   console.log(values);
+      //   deptAbb = values.department.code;
+      //   deptName = values.department.name;
+      //   courseDetails = values;
+      //   courseNum = values.number;
+      //   this.setState({values: values});
+      // });
+      // console.log(deptName);
+      // console.log(deptAbb);
+      // console.log(courseNum)
+      // console.log(courseDetails);
+      // console.log('data!!!!!!!!!');
+      // console.log(this.state.reviews);
 
       return (
         <Grid>
