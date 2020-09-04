@@ -27,74 +27,41 @@ const useStyles = (theme) => ({
 
 class Course extends Component {
   state = {
-    reviews: [],
-    courseDetails: null,
-    deptAbb: null,
-    values: null,
+    reviewsList: [],
     detail: null,
   };
 
   async componentDidMount() {
     const courseId = this.props.match.params.id;
     console.log(courseId);
-<<<<<<< HEAD
-    const detail = other.location.state
-      ? other.location.state.detail
-      : await courses.getById(other.match.params.id);
-    const reviews = await reviews.getByCourse(courseId);
-    this.setState({ detail, reviews });
-=======
-    const data = await reviews.getByCourseId(courseId);
-    await this.setState({ reviews: data });
->>>>>>> 7c98ce7579c8aead74dd1b53145151e66fa48926
+    const detail = this.props.location.state
+      ? this.props.location.state.detail
+      : await courses.getById(this.props.match.params.id);
+    const reviewsList = await reviews.getByCourse(courseId);
+    this.setState({ detail, reviewsList });
   }
-
-  // async updateCourseInfo(){
-  //   const deptAbbreviation = null;
-  //   await this.setState({deptAbb: deptAbbreviation});
-  // }
 
   render() {
     const { classes, user, draw, ...other } = this.props;
-    // console.log('props');
-    // console.log(this.props);
-    // console.log('detail!!!!!!!!');
-    // this.setState({courseDetails: detail});
-    // console.log(other);
     if (!user) {
       return <LoginError draw={draw} {...other} />;
     } else {
-      const reviews = this.state.reviews;
-      console.log("detail");
-      console.log(detail);
-      console.log("other");
-      console.log(other);
-      console.log(this.state);
+      const reviewsList = this.state.reviewsList;
+      const courseTitle = this.state.detail? this.state.detail.title : null;
+      const courseNumber = this.state.detail? this.state.detail.number : null;
 
-      // var courseDetails = NaN;
-      //   let deptAbb = NaN;
-      //   var courseNum = NaN;
-      //   var deptName = NaN;
-      //   console.log('data!!!!!!!!!');
-      // console.log(department);
-      // detail.then(values => {
-      //   console.log(values);
-      //   deptAbb = values.department.code;
-      //   deptName = values.department.name;
-      //   courseDetails = values;
-      //   courseNum = values.number;
-      //   this.setState({values: values});
-      // });
-      // console.log(deptName);
-      // console.log(deptAbb);
-      // console.log(courseNum)
-      // console.log(courseDetails);
-      // console.log('data!!!!!!!!!');
-      // console.log(this.state.reviews);
+      const departmentCode = this.state.detail? this.state.detail.department.code : null;
+      const departmentName = this.state.detail? this.state.detail.department.name : null;
+
+      console.log(courseTitle);
+      console.log(courseNumber);
+      console.log(departmentCode);
+      console.log(departmentName);
+      console.log(this.state);
 
       return (
         <Grid>
-          {reviews.map((review) => (
+          {reviewsList.map((review) => (
             <Typography>{review.content[0]}</Typography>
           ))}
         </Grid>
