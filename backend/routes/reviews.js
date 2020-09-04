@@ -13,11 +13,12 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.get("/course=:id", validateObjectId, async (req, res) => {
+  console.log(req.params.id);
   const course = await Course.findById(req.params.id);
   if (!course) return res.status(400).send("Invalid course.");
 
   const reviews = await Review.find({
-    course: ObjectId(course._id),
+    course: course._id,
   })
     .populate("department")
     .sort("title");

@@ -33,6 +33,7 @@ class Course extends Component {
 
   async componentDidMount() {
     const courseId = this.props.match.params.id;
+    console.log('courseId');
     console.log(courseId);
     const detail = this.props.location.state
       ? this.props.location.state.detail
@@ -46,12 +47,15 @@ class Course extends Component {
     if (!user) {
       return <LoginError draw={draw} {...other} />;
     } else {
+      console.log('this.state');
+      console.log(this.state);
+    
       const reviewsList = this.state.reviewsList;
-      const courseTitle = this.state.detail? this.state.detail.title : null;
-      const courseNumber = this.state.detail? this.state.detail.number : null;
+      const courseTitle = this.state.detail ? this.state.detail.title : null;
+      const courseNumber = this.state.detail ? this.state.detail.number : null;
 
-      const departmentCode = this.state.detail? this.state.detail.department.code : null;
-      const departmentName = this.state.detail? this.state.detail.department.name : null;
+      const departmentCode = this.state.detail ? this.state.detail.department.code : null;
+      const departmentName = this.state.detail ? this.state.detail.department.name : null;
 
       console.log(courseTitle);
       console.log(courseNumber);
@@ -61,10 +65,24 @@ class Course extends Component {
 
       return (
         <Grid>
-          {reviewsList.map((review) => (
-            <Typography>{review.content[0]}</Typography>
-          ))}
+          <Grid>
+            <Typography>
+              Course Title: {courseTitle}
+            </Typography>
+            <Typography>
+            Course Number: {courseNumber}
+            </Typography>
+            <Typography>
+
+            </Typography>
+          </Grid>
+          <Grid>
+            {reviewsList.map((review) => (
+              <Typography>{review.content[0]}</Typography>
+            ))}
+          </Grid>
         </Grid>
+
       );
     }
   }
