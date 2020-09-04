@@ -38,27 +38,21 @@ class Course extends Component {
     const courseId = this.props.match.params.id;
     console.log(courseId);
     const data = await reviews.getById(courseId);
-    const { classes, user, draw, ...other } = this.props;
-    const detail = other.location.state
-      ? other.location.state.detail
-      : courses.getById(courseId);
-    // console.log('data!!!!!!');
-    // console.log(data);
-    await detail.then(function(value){
-      this.setState({deptAbb: value});
-    });
-    this.setState({courseDetails: detail});
-
     await this.setState({ reviews: data });
   }
+
+  // async updateCourseInfo(){
+  //   const deptAbbreviation = null;
+  //   await this.setState({deptAbb: deptAbbreviation});
+  // }
 
   render() {
     const { classes, user, draw, ...other } = this.props;
     const detail = other.location.state
       ? other.location.state.detail
       : courses.getById(other.match.params.id);
-    console.log('props');
-    console.log(this.props);
+    // console.log('props');
+    // console.log(this.props);
     // console.log('detail!!!!!!!!');
     // this.setState({courseDetails: detail});
     // console.log(other);
@@ -72,11 +66,11 @@ class Course extends Component {
       console.log(other);
       console.log(this.state);
 
-    var courseDetails = NaN;
-      let deptAbb = NaN;
-      var courseNum = NaN;
-      var deptName = NaN;
-      console.log('data!!!!!!!!!');
+    // var courseDetails = NaN;
+    //   let deptAbb = NaN;
+    //   var courseNum = NaN;
+    //   var deptName = NaN;
+    //   console.log('data!!!!!!!!!');
       // console.log(department);  
       // detail.then(values => {
       //   console.log(values);
