@@ -80,8 +80,6 @@ class Course extends Component {
 
   async componentDidMount() {
     const courseId = this.props.match.params.id;
-    console.log('courseId');
-    console.log(courseId);
     const detail = this.props.location.state
       ? this.props.location.state.detail
       : await courses.getById(this.props.match.params.id);
@@ -150,14 +148,42 @@ class Course extends Component {
     return summary;
   }
 
+  EnhancedBox(props) {
+    const { value, title, classes } = props;
+    return (
+      <Grid
+        xs={5}
+        item
+        container
+        direction="column"
+        justify="center"
+        alignItems="center"
+        className={classes.scoreStyle}>
+        <Grid className={classes.scoreNumberStyle}>
+          <Typography variant="h4">
+            {title == "Textbook" ?
+              (value == "N/A" ?
+                (<Typography variant="h4"> {value}</Typography>) :
+                (<Typography variant="body1"> {value}</Typography>)
+              ) :
+              (value)}
+          </Typography>
+        </Grid>
+        <Grid>
+          <Typography variant="body2">
+            {title}
+          </Typography>
+        </Grid>
+      </Grid>
+    )
+  }
+
   render() {
     const { classes, user, draw, ...other } = this.props;
     if (!user) {
       return <LoginError draw={draw} {...other} />;
     } else {
       const summary = this.summarizeInfo(this.state);
-      const workloadMetrics = ['workload', 'homework', 'participation', 'lab'];
-      const instructorMetrics = ['grading', 'flexibility', ' enthusiasm', 'textbook'];
 
       return (
         <Grid
@@ -178,14 +204,6 @@ class Course extends Component {
             alignItems="center"
             className={classes.courseGrid}
           >
-            {/* <Grid
-              xs={10}
-              container
-              item
-              // direction="column"
-              // justify="center"
-              className={classes.courseDetails}
-            > */}
             <Grid
               xs={11}
               item
@@ -229,85 +247,26 @@ class Course extends Component {
                   </Typography>
                 </Grid>
 
-                <Grid
-                  xs={5}
-                  item
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                  className={classes.scoreStyle}>
-                  <Grid className={classes.scoreNumberStyle}>
-                    <Typography variant="h4">
-                      {summary.workload}
-                    </Typography>
-                  </Grid>
-                  <Grid>
-                    <Typography variant="body2">
-                      Overall
-                  </Typography>
-                  </Grid>
-                </Grid>
-                <Grid
-                  xs={5}
-                  item
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                  className={classes.scoreStyle}>
-                  <Grid className={classes.scoreNumberStyle}>
-                    <Typography variant="h4">
-                      {summary.homework}
-                    </Typography>
-                  </Grid>
-                  <Grid>
-                    <Typography variant="body2">
-                      Homework
-                  </Typography>
-                  </Grid>
-                </Grid>
-                <Grid
-                  xs={5}
-                  item
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                  className={classes.scoreStyle}>
-                  <Grid className={classes.scoreNumberStyle}>
-                    <Grid>
-                      <Typography variant="h4">
-                        {summary.participation}
-                      </Typography>
-                    </Grid>
-
-                  </Grid>
-                  <Grid>
-                    <Typography variant="body2">
-                      Participation
-                  </Typography>
-                  </Grid>
-                </Grid>
-                <Grid
-                  xs={5}
-                  item
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                  className={classes.scoreStyle}>
-                  <Grid className={classes.scoreNumberStyle}>
-                    <Typography variant="h4">
-                      {summary.lab}
-                    </Typography>
-                  </Grid>
-                  <Grid>
-                    <Typography variant="body2">
-                      Lab
-                  </Typography>
-                  </Grid>
-                </Grid>
+                <this.EnhancedBox
+                  classes={classes}
+                  title="Overall"
+                  value={summary.workload}
+                />
+                <this.EnhancedBox
+                  classes={classes}
+                  title="Homework"
+                  value={summary.homework}
+                />
+                <this.EnhancedBox
+                  classes={classes}
+                  title="Participation"
+                  value={summary.participation}
+                />
+                <this.EnhancedBox
+                  classes={classes}
+                  title="Lab"
+                  value={summary.lab}
+                />
 
               </Grid>
               <Grid
@@ -328,118 +287,77 @@ class Course extends Component {
                   </Typography>
                 </Grid>
 
-                <Grid
-                  xs={5}
-                  item
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                  className={classes.scoreStyle}>
-                  <Grid className={classes.scoreNumberStyle}>
-                    <Typography variant="h4">
-                      {summary.grading}
-                    </Typography>
-                  </Grid>
-                  <Grid>
-                    <Typography variant="body2">
-                      Grading
-                  </Typography>
-                  </Grid>
-                </Grid>
-                <Grid
-                  xs={5}
-                  item
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                  className={classes.scoreStyle}>
-                  <Grid className={classes.scoreNumberStyle}>
-                    <Typography variant="h4">
-                      {summary.flexibility}
-                    </Typography>
-                  </Grid>
-                  <Grid>
-                    <Typography variant="body2">
-                      Flexibility
-                  </Typography>
-                  </Grid>
-                </Grid>
-                <Grid
-                  xs={5}
-                  item
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                  className={classes.scoreStyle}>
-                  <Grid className={classes.scoreNumberStyle}>
-                    <Grid>
-                      <Typography variant="h4">
-                        {summary.enthusiasm}
-                      </Typography>
-                    </Grid>
-
-                  </Grid>
-                  <Grid>
-                    <Typography variant="body2">
-                      Enthusiasm
-                  </Typography>
-                  </Grid>
-                </Grid>
-                <Grid
-                  xs={5}
-                  item
-                  container
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
-                  className={classes.scoreStyle}>
-                  <Grid className={classes.scoreNumberStyle}>
-                    {summary.textbook == "N/A" ? (<Typography variant="h4"> {summary.textbook}</Typography>) : (<Typography variant="body1"> {summary.textbook}</Typography>)}
-                  </Grid>
-                  <Grid>
-                    <Typography variant="body2">
-                      Textbook
-                  </Typography>
-                  </Grid>
-                </Grid>
+                <this.EnhancedBox
+                  classes={classes}
+                  title="Grading"
+                  value={summary.grading}
+                />
+                <this.EnhancedBox
+                  classes={classes}
+                  title="Flexibility"
+                  value={summary.flexibility}
+                />
+                <this.EnhancedBox
+                  classes={classes}
+                  title="Enthusiasm"
+                  value={summary.enthusiasm}
+                />
+                <this.EnhancedBox
+                  classes={classes}
+                  title="Textbook"
+                  value={summary.textbook}
+                />
               </Grid>
-
             </Grid>
           </Grid>
-
-          {/* </Grid> */}
 
           <Grid
             xs={11}
             lg={7}
             className={classes.reviewsGrid}
           >
-            {summary.reviews.map((review) => (
-              <Box pb={2} >
-                <Grid
-                  className={classes.reviewGrid}
-                >
-                  <Box p={1}>
-                    <Typography
-                      variant='body1'
-                    >
-                      {review.content[0]}
-                      <IconButton aria-label="like">
-                        <ThumbUpIcon />
-                      </IconButton>
-                      <IconButton aria-label="dislike">
-                        <ThumbDownIcon />
-                      </IconButton>
-                      <Button color="primary">See more</Button>
-                    </Typography>
-                  </Box>
+            {summary.reviews.length == 0 ?
+              (
+                <Box pb={2} >
+                  <Grid
+                    className={classes.reviewGrid}
+                  >
+                    <Box p={1}>
+                      <Typography
+                        variant='body1'
+                      >
+                        Oops, there are no reviews left for this course yet.
+                          </Typography>
+                    </Box>
 
-                </Grid>
-              </Box>
-            ))}
+                  </Grid>
+                </Box>
+              ) :
+              (
+                summary.reviews.map((review) => (
+                  <Box pb={2} >
+                    <Grid
+                      className={classes.reviewGrid}
+                    >
+                      <Box p={1}>
+                        <Typography
+                          variant='body1'
+                        >
+                          {review.content[0]}
+                          <IconButton aria-label="like">
+                            <ThumbUpIcon />
+                          </IconButton>
+                          <IconButton aria-label="dislike">
+                            <ThumbDownIcon />
+                          </IconButton>
+                          <Button color="primary">See more</Button>
+                        </Typography>
+                      </Box>
+
+                    </Grid>
+                  </Box>
+                ))
+              )}
           </Grid>
         </Grid>
 
