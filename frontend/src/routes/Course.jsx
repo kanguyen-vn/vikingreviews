@@ -23,6 +23,7 @@ import grey from "@material-ui/core/colors/grey";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import { toPlainObject } from "lodash";
+import * as stringHandler from "../utils/stringHandler";
 
 
 const useStyles = (theme) => ({
@@ -46,8 +47,8 @@ const useStyles = (theme) => ({
     borderRadius: 16,
     // margin: theme.spacing(2),
   },
-  reviewsBoxGrid:{
-    maxHeight: '90vh', 
+  reviewsBoxGrid: {
+    maxHeight: '90vh',
     overflow: 'auto',
     borderRadius: 16,
   },
@@ -206,6 +207,14 @@ class Course extends Component {
     )
   }
 
+  truncateString(str, limit){
+    if (typeof str != "string" || typeof limit != "number") {
+        console.log('input type error');
+        return NaN;
+    }
+    return str.length > limit ? str.substring(0, limit) + "..." : str;
+  }
+
   render() {
     const { classes, user, draw, ...other } = this.props;
     if (!user) {
@@ -338,8 +347,6 @@ class Course extends Component {
               </Grid>
             </Grid>
           </Grid>
-
-
           {summary.reviews.length == 0 ?
             (<this.NoReviewsFoundBox classes={classes} />) :
             (
@@ -348,8 +355,7 @@ class Course extends Component {
                 lg={7}
                 className={classes.reviewsGrid}
               >
-                <Box className = {classes.reviewsBoxGrid}>
-
+                <Box className={classes.reviewsBoxGrid}>
                   {summary.reviews.map((review) => (
                     <Box pb={2} >
                       <Grid
@@ -359,14 +365,14 @@ class Course extends Component {
                           <Typography
                             variant='body1'
                           >
-                            {review.content[0]}
+                            {this.truncateString(review.content[0], 350)}
                             <IconButton aria-label="like">
                               <ThumbUpIcon />
                             </IconButton>
                             <IconButton aria-label="dislike">
                               <ThumbDownIcon />
                             </IconButton>
-                            <Button color="primary">See more</Button>
+                            <Button color="primary">See Details</Button>
                           </Typography>
                         </Box>
                       </Grid>
