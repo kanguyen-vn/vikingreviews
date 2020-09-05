@@ -17,7 +17,7 @@ import { Typography } from "@material-ui/core";
 import reviews from "../services/reviewService";
 import auth from "../services/authService";
 import { Link } from "react-router-dom";
-import { Paper, Button, IconButton } from '@material-ui/core';
+import { Paper, Button, IconButton, GridList } from '@material-ui/core';
 import { DeleteIcon } from '@material-ui/icons';
 import grey from "@material-ui/core/colors/grey";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -43,13 +43,18 @@ const useStyles = (theme) => ({
     height: "90vh",
     weight: "90vh",
     // background: "white",
-    // borderRadius: 16,
+    borderRadius: 16,
     // margin: theme.spacing(2),
+  },
+  reviewsBoxGrid:{
+    maxHeight: '90vh', 
+    overflow: 'auto',
+    borderRadius: 16,
   },
   reviewGrid: {
     // height: "5vh",
     background: "white",
-    borderRadius: 8,
+    borderRadius: 16,
     // margin: theme.spacing(2),
   },
   courseDetails: {
@@ -174,6 +179,29 @@ class Course extends Component {
             {title}
           </Typography>
         </Grid>
+      </Grid>
+    )
+  }
+
+  NoReviewsFoundBox(props) {
+    const { classes } = props;
+    return (
+      <Grid
+        xs={11}
+        lg={7}
+        className={classes.reviewsGrid}
+      >
+        <Box pb={2} >
+          <Grid className={classes.reviewGrid}>
+            <Box p={1}>
+              <Typography
+                variant='body1'
+              >
+                Oops, there are no reviews left for this course yet.
+                  </Typography>
+            </Box>
+          </Grid>
+        </Box>
       </Grid>
     )
   }
@@ -311,54 +339,45 @@ class Course extends Component {
             </Grid>
           </Grid>
 
-          <Grid
-            xs={11}
-            lg={7}
-            className={classes.reviewsGrid}
-          >
-            {summary.reviews.length == 0 ?
-              (
-                <Box pb={2} >
-                  <Grid
-                    className={classes.reviewGrid}
-                  >
-                    <Box p={1}>
-                      <Typography
-                        variant='body1'
+
+          {summary.reviews.length == 0 ?
+            (<this.NoReviewsFoundBox classes={classes} />) :
+            (
+              <Grid
+                xs={11}
+                lg={7}
+                className={classes.reviewsGrid}
+              >
+                <Box className = {classes.reviewsBoxGrid}>
+
+                  {summary.reviews.map((review) => (
+                    <Box pb={2} >
+                      <Grid
+                        className={classes.reviewGrid}
                       >
-                        Oops, there are no reviews left for this course yet.
+                        <Box p={1}>
+                          <Typography
+                            variant='body1'
+                          >
+                            {review.content[0]}
+                            <IconButton aria-label="like">
+                              <ThumbUpIcon />
+                            </IconButton>
+                            <IconButton aria-label="dislike">
+                              <ThumbDownIcon />
+                            </IconButton>
+                            <Button color="primary">See more</Button>
                           </Typography>
+                        </Box>
+                      </Grid>
                     </Box>
 
-                  </Grid>
-                </Box>
-              ) :
-              (
-                summary.reviews.map((review) => (
-                  <Box pb={2} >
-                    <Grid
-                      className={classes.reviewGrid}
-                    >
-                      <Box p={1}>
-                        <Typography
-                          variant='body1'
-                        >
-                          {review.content[0]}
-                          <IconButton aria-label="like">
-                            <ThumbUpIcon />
-                          </IconButton>
-                          <IconButton aria-label="dislike">
-                            <ThumbDownIcon />
-                          </IconButton>
-                          <Button color="primary">See more</Button>
-                        </Typography>
-                      </Box>
+                  ))}</Box>
+                {/* </ScrollableGrid> */}
+                {/* <ScrollableGrid>scrollable grid?</ScrollableGrid> */}
 
-                    </Grid>
-                  </Box>
-                ))
-              )}
-          </Grid>
+              </Grid>
+            )}
         </Grid>
 
       );
