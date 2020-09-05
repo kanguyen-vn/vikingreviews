@@ -17,12 +17,46 @@ import { Typography } from "@material-ui/core";
 import reviews from "../services/reviewService";
 import auth from "../services/authService";
 import { Link } from "react-router-dom";
+import { Paper } from '@material-ui/core';
+import grey from "@material-ui/core/colors/grey";
+
 
 const useStyles = (theme) => ({
   pageStyles: {
     height: "100vh",
+    weight: "100vh",
     background: theme.palette.secondary.main,
   },
+  courseGrid: {
+    height: "90vh",
+    weight: "90vh",
+    background: "white",
+    borderRadius: 16,
+  },
+  reviewGrid: {
+    height: "90vh",
+    weight: "90vh",
+    background: "white",
+    borderRadius: 16,
+    margin: theme.spacing(2),
+  },
+  courseDetails: {
+    height: "80vh"
+  },
+  sectionStyle: {
+  },
+  sectionHeaderStyle: {},
+  sectionScoresStyle: {},
+  scoreStyle: {
+    background: theme.palette.secondary.main,
+    borderRadius: 8,
+    margin: theme.spacing(1),
+  },
+  scoreNumberStyle: {
+    // background: 'white',
+    // borderRadius: 3,
+    // margin: theme.spacing(1),
+  }
 });
 
 class Course extends Component {
@@ -47,36 +81,174 @@ class Course extends Component {
     if (!user) {
       return <LoginError draw={draw} {...other} />;
     } else {
-      console.log('this.state');
-      console.log(this.state);
-    
       const reviewsList = this.state.reviewsList;
-      const courseTitle = this.state.detail ? this.state.detail.title : null;
-      const courseNumber = this.state.detail ? this.state.detail.number : null;
-
-      const departmentCode = this.state.detail ? this.state.detail.department.code : null;
-      const departmentName = this.state.detail ? this.state.detail.department.name : null;
-
-      console.log(courseTitle);
-      console.log(courseNumber);
-      console.log(departmentCode);
-      console.log(departmentName);
-      console.log(this.state);
+      const courseTitle = this.state.detail ? this.state.detail.left : null;
+      const courseNumber = this.state.detail ? this.state.detail.right : null;
 
       return (
-        <Grid>
-          <Grid>
-            <Typography>
-              Course Title: {courseTitle}
-            </Typography>
-            <Typography>
-            Course Number: {courseNumber}
-            </Typography>
-            <Typography>
+        <Grid
+          container
+          className={classes.pageStyles}
+          justify="center"
+          alignItems="center"
+          direction="row"
 
-            </Typography>
-          </Grid>
-          <Grid>
+        >
+          <Grid
+            xs={11}
+            md={2}
+            container
+            item
+            direction="column"
+            justify="center"
+            alignItems="center"
+            className={classes.courseGrid}
+          >
+            {/* <Grid
+              xs={10}
+              container
+              item
+              // direction="column"
+              // justify="center"
+              className={classes.courseDetails}
+            > */}
+            <Grid
+              xs={11}
+              item
+              container
+              className={classes.courseDetails}
+              direction="row"
+              justify="flex-start"
+              alignItems="flex-start"
+            >
+              <Grid
+                xs={12}
+                item
+              >
+                <Typography variant="h4">
+                  {courseTitle}
+                </Typography>
+              </Grid>
+
+              <Grid
+                xs={12}
+                item>
+                <Typography variant="h4">
+                  {courseNumber}
+                </Typography>
+              </Grid>
+              <Grid
+                xs={12}
+                item
+                container
+                direction="row"
+                justify="space-evenly"
+                className={classes.sectionStyle}
+                spacing={1}
+              >
+                <Grid
+                  xs={12}
+                  item
+                >
+                  <Typography variant="h5">
+                    Workload
+                  </Typography>
+                </Grid>
+
+                <Grid
+                  xs={5}
+                  item
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                  className={classes.scoreStyle}>
+                  <Grid className={classes.scoreNumberStyle}>
+                    <Typography variant="h4">
+                      3.4
+                  </Typography>
+                  </Grid>
+                  <Grid>
+                    <Typography>
+                      Overall
+                  </Typography>
+                  </Grid>
+                </Grid>
+                <Grid
+                  xs={5}
+                  item
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                  className={classes.scoreStyle}>
+                  <Grid className={classes.scoreNumberStyle}>
+                    <Typography variant="h4">
+                      3.4
+                  </Typography>
+                  </Grid>
+                  <Grid>
+                    <Typography>
+                      Overall
+                  </Typography>
+                  </Grid>
+                </Grid>
+                <Grid
+                  xs={5}
+                  item
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                  className={classes.scoreStyle}>
+                  <Grid className={classes.scoreNumberStyle}>
+                    <Grid>
+                      <Typography variant="h4">
+                        3.4
+                      </Typography>
+                    </Grid>
+
+                  </Grid>
+                  <Grid>
+                    <Typography>
+                      Overall
+                  </Typography>
+                  </Grid>
+                </Grid>
+                <Grid
+                  xs={5}
+                  item
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                  className={classes.scoreStyle}>
+                  <Grid className={classes.scoreNumberStyle}>
+                    <Typography variant="h4">
+                      3.4
+                  </Typography>
+                  </Grid>
+                  <Grid>
+                    <Typography>
+                      Overall
+                  </Typography>
+                  </Grid>
+                </Grid>
+
+              </Grid>
+
+
+
+
+            </Grid> </Grid>
+
+          {/* </Grid> */}
+
+          <Grid
+            xs={11}
+            md={8}
+            className={classes.reviewGrid}
+          >
             {reviewsList.map((review) => (
               <Typography>{review.content[0]}</Typography>
             ))}
