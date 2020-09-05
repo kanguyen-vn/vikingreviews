@@ -17,8 +17,12 @@ import { Typography } from "@material-ui/core";
 import reviews from "../services/reviewService";
 import auth from "../services/authService";
 import { Link } from "react-router-dom";
-import { Paper } from '@material-ui/core';
+import { Paper, Button, IconButton } from '@material-ui/core';
+import { DeleteIcon } from '@material-ui/icons';
 import grey from "@material-ui/core/colors/grey";
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import { toPlainObject } from "lodash";
 
 
 const useStyles = (theme) => ({
@@ -26,22 +30,31 @@ const useStyles = (theme) => ({
     height: "100vh",
     weight: "100vh",
     background: theme.palette.secondary.main,
+    overflow: "auto",
   },
   courseGrid: {
     height: "90vh",
     weight: "90vh",
     background: "white",
     borderRadius: 16,
-  },
-  reviewGrid: {
-    height: "90vh",
-    weight: "90vh",
-    background: "white",
-    borderRadius: 16,
     margin: theme.spacing(2),
   },
+  reviewsGrid: {
+    height: "90vh",
+    weight: "90vh",
+    // background: "white",
+    // borderRadius: 16,
+    // margin: theme.spacing(2),
+  },
+  reviewGrid: {
+    // height: "5vh",
+    background: "white",
+    borderRadius: 8,
+    // margin: theme.spacing(2),
+  },
   courseDetails: {
-    height: "80vh"
+    height: "80vh",
+    // display: 'inline-block'
   },
   sectionStyle: {
   },
@@ -76,48 +89,75 @@ class Course extends Component {
     this.setState({ detail, reviewsList });
   }
 
+  summarizeInfo(state) {
+    var summary = {};
+    const reviewsList = state.reviewsList;
+    const courseTitle = state.detail ? state.detail.left : null;
+    const courseNumber = state.detail ? state.detail.right : null;
+    const reviews = state.reviewsList
+
+    var sumEnthusiasm = 0
+    var sumWorkloadOverall = 0
+    var sumFlexibility = 0
+    var sumGrading = 0
+    var sumLab = 0
+    var sumHomework = 0
+    var sumClassParticipation = 0
+
+    var textUsageFrequencyMap = {}
+    var maxTextUsageFrequency = 1
+    var maxTextUsage = NaN
+
+    for (let i = 0; i < reviews.length; i++) {
+      sumWorkloadOverall = sumWorkloadOverall + reviews[i].workload;
+      sumFlexibility = sumFlexibility + reviews[i].flexibility;
+      sumEnthusiasm = sumEnthusiasm + reviews[i].instructorEnthusiasm;
+      sumGrading = sumGrading + reviews[i].grading;
+      sumLab = sumLab + reviews[i].lab;
+      sumHomework = sumHomework + reviews[i].homework;
+      sumClassParticipation = sumClassParticipation + reviews[i].classParticipation;
+      if (textUsageFrequencyMap[reviews[i].textbookUse] == null) {
+        textUsageFrequencyMap[reviews[i].textbookUse] = 1;
+      } else {
+        textUsageFrequencyMap[reviews[i].textbookUse]++;
+      }
+      if (textUsageFrequencyMap[reviews[i].textbookUse] > maxTextUsageFrequency) {
+        maxTextUsage = reviews[i].textbookUse;
+        maxTextUsageFrequency = textUsageFrequencyMap[reviews[i].textbookUse];
+      }
+    }
+
+    const avgEnthusiasm = (isNaN((sumEnthusiasm / reviews.length).toFixed(1))) ? "N/A" : (sumEnthusiasm / reviews.length).toFixed(1);
+    const avgGrading = (isNaN((sumGrading / reviews.length).toFixed(1))) ? "N/A" : (sumGrading / reviews.length).toFixed(1);
+    const avgLab = (isNaN((sumLab / reviews.length).toFixed(1))) ? "N/A" : (sumLab / reviews.length).toFixed(1);
+    const avgClassParticipation = (isNaN((sumClassParticipation / reviews.length).toFixed(1))) ? "N/A" : (sumClassParticipation / reviews.length).toFixed(1);
+    const avgWorkloadOverall = (isNaN((sumWorkloadOverall / reviews.length).toFixed(1))) ? "N/A" : (sumWorkloadOverall / reviews.length).toFixed(1);
+    const avgFlexibility = (isNaN((sumFlexibility / reviews.length).toFixed(1))) ? "N/A" : (sumFlexibility / reviews.length).toFixed(1);
+    const avgHomework = (isNaN((sumHomework / reviews.length).toFixed(1))) ? "N/A" : (sumHomework / reviews.length).toFixed(1);
+    const avgTextbookUsage = (Object.keys(textUsageFrequencyMap).length == 0) ? "N/A" : maxTextUsage;
+
+    summary['reviews'] = reviewsList;
+    summary['number'] = courseTitle;
+    summary['title'] = courseNumber;
+    summary['enthusiasm'] = avgEnthusiasm;
+    summary['grading'] = avgGrading;
+    summary['lab'] = avgLab;
+    summary['participation'] = avgClassParticipation;
+    summary['workload'] = avgWorkloadOverall;
+    summary['flexibility'] = avgFlexibility;
+    summary['homework'] = avgHomework;
+    summary['textbook'] = avgTextbookUsage;
+    return summary;
+  }
+
   render() {
     const { classes, user, draw, ...other } = this.props;
     if (!user) {
       return <LoginError draw={draw} {...other} />;
     } else {
-      const reviewsList = this.state.reviewsList;
-      const courseTitle = this.state.detail ? this.state.detail.left : null;
-      const courseNumber = this.state.detail ? this.state.detail.right : null;
-      const reviews = this.state.reviewsList
-      
-      var sumEnthusiasm = 0
-      var sumWorkloadOverall = 0
-      var sumFlexibility = 0
-      var sumGrading = 0
-      var sumLab = 0
-      var sumHomework = 0
-      var sumClassParticipation = 0
-      var textUsageFrequencyMap = {}
-      var maxTextUsageFrequency = 1
-      var maxTextUsage = NaN
-
-      for (let i = 0 ; i < reviews.length ; i++){
-        // console.log(reviews[i].instructorEnthusiasm);
-        sumWorkloadOverall = sumWorkloadOverall + reviews[i].workload;
-        sumFlexibility = sumFlexibility + reviews[i].flexibility;
-        sumEnthusiasm = sumEnthusiasm + reviews[i].instructorEnthusiasm;
-        sumGrading = sumGrading + reviews[i].grading;
-        sumLab = sumLab + reviews[i].lab;
-        sumHomework = sumHomework + reviews[i].homework;
-        sumClassParticipation = sumClassParticipation + reviews[i].classParticipation;
-        if(textUsageFrequencyMap[reviews[i].textbookUse] == null){
-          textUsageFrequencyMap[reviews[i].textbookUse] = 1;
-        } else {
-          textUsageFrequencyMap[reviews[i].textbookUse]++;
-        }
-        if (textUsageFrequencyMap[reviews[i].textbookUse] > maxTextUsageFrequency){
-          maxTextUsage = reviews[i].textbookUse;
-          maxTextUsageFrequency = textUsageFrequencyMap[reviews[i].textbookUse];
-        }
-      }
-      const avgEnthusiasm = sumEnthusiasm/reviews.length;
-      console.log(maxTextUsage);
+      const summary = this.summarizeInfo(this.state);
+      const workloadMetrics = ['workload', 'homework', 'participation', 'lab'];
+      const instructorMetrics = ['grading', 'flexibility', ' enthusiasm', 'textbook'];
 
       return (
         <Grid
@@ -130,7 +170,7 @@ class Course extends Component {
         >
           <Grid
             xs={11}
-            md={2}
+            lg={3}
             container
             item
             direction="column"
@@ -159,16 +199,16 @@ class Course extends Component {
                 xs={12}
                 item
               >
-                <Typography variant="h4">
-                  {courseTitle}
+                <Typography variant="h3">
+                  {summary.number}
                 </Typography>
               </Grid>
 
               <Grid
                 xs={12}
                 item>
-                <Typography variant="h4">
-                  {courseNumber}
+                <Typography variant="h3" >
+                  {summary.title}
                 </Typography>
               </Grid>
               <Grid
@@ -199,8 +239,8 @@ class Course extends Component {
                   className={classes.scoreStyle}>
                   <Grid className={classes.scoreNumberStyle}>
                     <Typography variant="h4">
-                      3.4
-                  </Typography>
+                      {summary.workload}
+                    </Typography>
                   </Grid>
                   <Grid>
                     <Typography variant="body2">
@@ -218,8 +258,8 @@ class Course extends Component {
                   className={classes.scoreStyle}>
                   <Grid className={classes.scoreNumberStyle}>
                     <Typography variant="h4">
-                      3.4
-                  </Typography>
+                      {summary.homework}
+                    </Typography>
                   </Grid>
                   <Grid>
                     <Typography variant="body2">
@@ -238,7 +278,7 @@ class Course extends Component {
                   <Grid className={classes.scoreNumberStyle}>
                     <Grid>
                       <Typography variant="h4">
-                        3.4
+                        {summary.participation}
                       </Typography>
                     </Grid>
 
@@ -259,8 +299,8 @@ class Course extends Component {
                   className={classes.scoreStyle}>
                   <Grid className={classes.scoreNumberStyle}>
                     <Typography variant="h4">
-                      3.4
-                  </Typography>
+                      {summary.lab}
+                    </Typography>
                   </Grid>
                   <Grid>
                     <Typography variant="body2">
@@ -298,8 +338,8 @@ class Course extends Component {
                   className={classes.scoreStyle}>
                   <Grid className={classes.scoreNumberStyle}>
                     <Typography variant="h4">
-                      3.4
-                  </Typography>
+                      {summary.grading}
+                    </Typography>
                   </Grid>
                   <Grid>
                     <Typography variant="body2">
@@ -317,8 +357,8 @@ class Course extends Component {
                   className={classes.scoreStyle}>
                   <Grid className={classes.scoreNumberStyle}>
                     <Typography variant="h4">
-                      3.4
-                  </Typography>
+                      {summary.flexibility}
+                    </Typography>
                   </Grid>
                   <Grid>
                     <Typography variant="body2">
@@ -337,7 +377,7 @@ class Course extends Component {
                   <Grid className={classes.scoreNumberStyle}>
                     <Grid>
                       <Typography variant="h4">
-                        {avgEnthusiasm}
+                        {summary.enthusiasm}
                       </Typography>
                     </Grid>
 
@@ -357,9 +397,7 @@ class Course extends Component {
                   alignItems="center"
                   className={classes.scoreStyle}>
                   <Grid className={classes.scoreNumberStyle}>
-                    <Typography variant="h6">
-                      {maxTextUsage}
-                  </Typography>
+                    {summary.textbook == "N/A" ? (<Typography variant="h4"> {summary.textbook}</Typography>) : (<Typography variant="body1"> {summary.textbook}</Typography>)}
                   </Grid>
                   <Grid>
                     <Typography variant="body2">
@@ -376,11 +414,31 @@ class Course extends Component {
 
           <Grid
             xs={11}
-            md={8}
-            className={classes.reviewGrid}
+            lg={7}
+            className={classes.reviewsGrid}
           >
-            {reviewsList.map((review) => (
-              <Typography>{review.content[0]}</Typography>
+            {summary.reviews.map((review) => (
+              <Box pb={2} >
+                <Grid
+                  className={classes.reviewGrid}
+                >
+                  <Box p={1}>
+                    <Typography
+                      variant='body1'
+                    >
+                      {review.content[0]}
+                      <IconButton aria-label="like">
+                        <ThumbUpIcon />
+                      </IconButton>
+                      <IconButton aria-label="dislike">
+                        <ThumbDownIcon />
+                      </IconButton>
+                      <Button color="primary">See more</Button>
+                    </Typography>
+                  </Box>
+
+                </Grid>
+              </Box>
             ))}
           </Grid>
         </Grid>
