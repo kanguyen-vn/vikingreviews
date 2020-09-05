@@ -207,10 +207,10 @@ class Course extends Component {
     )
   }
 
-  truncateString(str, limit){
+  truncateString(str, limit) {
     if (typeof str != "string" || typeof limit != "number") {
-        console.log('input type error');
-        return NaN;
+      console.log('input type error');
+      return NaN;
     }
     return str.length > limit ? str.substring(0, limit) + "..." : str;
   }
@@ -379,9 +379,6 @@ class Course extends Component {
                     </Box>
 
                   ))}</Box>
-                {/* </ScrollableGrid> */}
-                {/* <ScrollableGrid>scrollable grid?</ScrollableGrid> */}
-
               </Grid>
             )}
         </Grid>
