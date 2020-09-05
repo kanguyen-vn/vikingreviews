@@ -12,6 +12,7 @@ import SearchBar from "../components/SearchBar";
 import LoginError from "../components/LoginError";
 import ScrollableGrid from "../components/common/ScrollableGrid";
 import AddReview from "../components/AddReview";
+import SeeReviewDetails from "../components/SeeReviewDetails";
 import courses from "../services/courseService";
 import { Typography } from "@material-ui/core";
 import reviews from "../services/reviewService";
@@ -217,6 +218,10 @@ class Course extends Component {
 
   render() {
     const { classes, user, draw, ...other } = this.props;
+    const detail = other.location.state
+      ? other.location.state.detail
+      : courses.getById(other.match.params.id);
+
     if (!user) {
       return <LoginError draw={draw} {...other} />;
     } else {
@@ -275,12 +280,17 @@ class Course extends Component {
                 className={classes.sectionStyle}
                 spacing={1}
               >
+                <StyledButton
+                  onClick={() => draw({ detail, ...other })(AddReview)}
+                  text="Add Your Review"
+                />
                 <Grid
                   xs={12}
                   item
                 >
                   <Typography variant="h5">
-                    Workload
+                    {/* Workload */}
+                    Ratings
                   </Typography>
                 </Grid>
 
@@ -320,7 +330,7 @@ class Course extends Component {
                   item
                 >
                   <Typography variant="h5">
-                    Instructor
+                    {/* Instructor */}
                   </Typography>
                 </Grid>
 
@@ -372,7 +382,11 @@ class Course extends Component {
                             <IconButton aria-label="dislike">
                               <ThumbDownIcon />
                             </IconButton>
-                            <Button color="primary">See Details</Button>
+                            <Button
+                              onClick={() => draw({ detail, review , ...other })(SeeReviewDetails)}
+                              color="primary">
+                              See Details
+                            </Button>
                           </Typography>
                         </Box>
                       </Grid>
